@@ -121,7 +121,7 @@ export default async function QuestionPage({ params }: Props) {
           ))
         ) : (
           <p className="text-gray-500">
-            You haven't submitted any answers yet.
+            You haven&apos;t submitted any answers yet.
           </p>
         )}
       </section>
