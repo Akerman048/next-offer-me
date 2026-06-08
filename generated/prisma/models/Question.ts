@@ -207,6 +207,7 @@ export type QuestionWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   topic?: Prisma.XOR<Prisma.TopicScalarRelationFilter, Prisma.TopicWhereInput>
+  userAnswers?: Prisma.UserAnswerListRelationFilter
   progress?: Prisma.UserProgressListRelationFilter
 }
 
@@ -220,6 +221,7 @@ export type QuestionOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   topic?: Prisma.TopicOrderByWithRelationInput
+  userAnswers?: Prisma.UserAnswerOrderByRelationAggregateInput
   progress?: Prisma.UserProgressOrderByRelationAggregateInput
 }
 
@@ -236,6 +238,7 @@ export type QuestionWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   topic?: Prisma.XOR<Prisma.TopicScalarRelationFilter, Prisma.TopicWhereInput>
+  userAnswers?: Prisma.UserAnswerListRelationFilter
   progress?: Prisma.UserProgressListRelationFilter
 }, "id">
 
@@ -276,6 +279,7 @@ export type QuestionCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   topic: Prisma.TopicCreateNestedOneWithoutQuestionsInput
+  userAnswers?: Prisma.UserAnswerCreateNestedManyWithoutQuestionInput
   progress?: Prisma.UserProgressCreateNestedManyWithoutQuestionInput
 }
 
@@ -288,6 +292,7 @@ export type QuestionUncheckedCreateInput = {
   level: $Enums.Level
   createdAt?: Date | string
   updatedAt?: Date | string
+  userAnswers?: Prisma.UserAnswerUncheckedCreateNestedManyWithoutQuestionInput
   progress?: Prisma.UserProgressUncheckedCreateNestedManyWithoutQuestionInput
 }
 
@@ -300,6 +305,7 @@ export type QuestionUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   topic?: Prisma.TopicUpdateOneRequiredWithoutQuestionsNestedInput
+  userAnswers?: Prisma.UserAnswerUpdateManyWithoutQuestionNestedInput
   progress?: Prisma.UserProgressUpdateManyWithoutQuestionNestedInput
 }
 
@@ -312,6 +318,7 @@ export type QuestionUncheckedUpdateInput = {
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userAnswers?: Prisma.UserAnswerUncheckedUpdateManyWithoutQuestionNestedInput
   progress?: Prisma.UserProgressUncheckedUpdateManyWithoutQuestionNestedInput
 }
 
@@ -395,6 +402,11 @@ export type QuestionScalarRelationFilter = {
   isNot?: Prisma.QuestionWhereInput
 }
 
+export type QuestionNullableScalarRelationFilter = {
+  is?: Prisma.QuestionWhereInput | null
+  isNot?: Prisma.QuestionWhereInput | null
+}
+
 export type QuestionCreateNestedManyWithoutTopicInput = {
   create?: Prisma.XOR<Prisma.QuestionCreateWithoutTopicInput, Prisma.QuestionUncheckedCreateWithoutTopicInput> | Prisma.QuestionCreateWithoutTopicInput[] | Prisma.QuestionUncheckedCreateWithoutTopicInput[]
   connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutTopicInput | Prisma.QuestionCreateOrConnectWithoutTopicInput[]
@@ -459,6 +471,22 @@ export type QuestionUpdateOneRequiredWithoutProgressNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.QuestionUpdateToOneWithWhereWithoutProgressInput, Prisma.QuestionUpdateWithoutProgressInput>, Prisma.QuestionUncheckedUpdateWithoutProgressInput>
 }
 
+export type QuestionCreateNestedOneWithoutUserAnswersInput = {
+  create?: Prisma.XOR<Prisma.QuestionCreateWithoutUserAnswersInput, Prisma.QuestionUncheckedCreateWithoutUserAnswersInput>
+  connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutUserAnswersInput
+  connect?: Prisma.QuestionWhereUniqueInput
+}
+
+export type QuestionUpdateOneWithoutUserAnswersNestedInput = {
+  create?: Prisma.XOR<Prisma.QuestionCreateWithoutUserAnswersInput, Prisma.QuestionUncheckedCreateWithoutUserAnswersInput>
+  connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutUserAnswersInput
+  upsert?: Prisma.QuestionUpsertWithoutUserAnswersInput
+  disconnect?: Prisma.QuestionWhereInput | boolean
+  delete?: Prisma.QuestionWhereInput | boolean
+  connect?: Prisma.QuestionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.QuestionUpdateToOneWithWhereWithoutUserAnswersInput, Prisma.QuestionUpdateWithoutUserAnswersInput>, Prisma.QuestionUncheckedUpdateWithoutUserAnswersInput>
+}
+
 export type QuestionCreateWithoutTopicInput = {
   id?: string
   title: string
@@ -467,6 +495,7 @@ export type QuestionCreateWithoutTopicInput = {
   level: $Enums.Level
   createdAt?: Date | string
   updatedAt?: Date | string
+  userAnswers?: Prisma.UserAnswerCreateNestedManyWithoutQuestionInput
   progress?: Prisma.UserProgressCreateNestedManyWithoutQuestionInput
 }
 
@@ -478,6 +507,7 @@ export type QuestionUncheckedCreateWithoutTopicInput = {
   level: $Enums.Level
   createdAt?: Date | string
   updatedAt?: Date | string
+  userAnswers?: Prisma.UserAnswerUncheckedCreateNestedManyWithoutQuestionInput
   progress?: Prisma.UserProgressUncheckedCreateNestedManyWithoutQuestionInput
 }
 
@@ -530,6 +560,7 @@ export type QuestionCreateWithoutProgressInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   topic: Prisma.TopicCreateNestedOneWithoutQuestionsInput
+  userAnswers?: Prisma.UserAnswerCreateNestedManyWithoutQuestionInput
 }
 
 export type QuestionUncheckedCreateWithoutProgressInput = {
@@ -541,6 +572,7 @@ export type QuestionUncheckedCreateWithoutProgressInput = {
   level: $Enums.Level
   createdAt?: Date | string
   updatedAt?: Date | string
+  userAnswers?: Prisma.UserAnswerUncheckedCreateNestedManyWithoutQuestionInput
 }
 
 export type QuestionCreateOrConnectWithoutProgressInput = {
@@ -568,6 +600,7 @@ export type QuestionUpdateWithoutProgressInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   topic?: Prisma.TopicUpdateOneRequiredWithoutQuestionsNestedInput
+  userAnswers?: Prisma.UserAnswerUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionUncheckedUpdateWithoutProgressInput = {
@@ -579,6 +612,71 @@ export type QuestionUncheckedUpdateWithoutProgressInput = {
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userAnswers?: Prisma.UserAnswerUncheckedUpdateManyWithoutQuestionNestedInput
+}
+
+export type QuestionCreateWithoutUserAnswersInput = {
+  id?: string
+  title: string
+  answer: string
+  explanation?: string | null
+  level: $Enums.Level
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  topic: Prisma.TopicCreateNestedOneWithoutQuestionsInput
+  progress?: Prisma.UserProgressCreateNestedManyWithoutQuestionInput
+}
+
+export type QuestionUncheckedCreateWithoutUserAnswersInput = {
+  id?: string
+  topicId: string
+  title: string
+  answer: string
+  explanation?: string | null
+  level: $Enums.Level
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  progress?: Prisma.UserProgressUncheckedCreateNestedManyWithoutQuestionInput
+}
+
+export type QuestionCreateOrConnectWithoutUserAnswersInput = {
+  where: Prisma.QuestionWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuestionCreateWithoutUserAnswersInput, Prisma.QuestionUncheckedCreateWithoutUserAnswersInput>
+}
+
+export type QuestionUpsertWithoutUserAnswersInput = {
+  update: Prisma.XOR<Prisma.QuestionUpdateWithoutUserAnswersInput, Prisma.QuestionUncheckedUpdateWithoutUserAnswersInput>
+  create: Prisma.XOR<Prisma.QuestionCreateWithoutUserAnswersInput, Prisma.QuestionUncheckedCreateWithoutUserAnswersInput>
+  where?: Prisma.QuestionWhereInput
+}
+
+export type QuestionUpdateToOneWithWhereWithoutUserAnswersInput = {
+  where?: Prisma.QuestionWhereInput
+  data: Prisma.XOR<Prisma.QuestionUpdateWithoutUserAnswersInput, Prisma.QuestionUncheckedUpdateWithoutUserAnswersInput>
+}
+
+export type QuestionUpdateWithoutUserAnswersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  answer?: Prisma.StringFieldUpdateOperationsInput | string
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  topic?: Prisma.TopicUpdateOneRequiredWithoutQuestionsNestedInput
+  progress?: Prisma.UserProgressUpdateManyWithoutQuestionNestedInput
+}
+
+export type QuestionUncheckedUpdateWithoutUserAnswersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  topicId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  answer?: Prisma.StringFieldUpdateOperationsInput | string
+  explanation?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  progress?: Prisma.UserProgressUncheckedUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionCreateManyTopicInput = {
@@ -599,6 +697,7 @@ export type QuestionUpdateWithoutTopicInput = {
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userAnswers?: Prisma.UserAnswerUpdateManyWithoutQuestionNestedInput
   progress?: Prisma.UserProgressUpdateManyWithoutQuestionNestedInput
 }
 
@@ -610,6 +709,7 @@ export type QuestionUncheckedUpdateWithoutTopicInput = {
   level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userAnswers?: Prisma.UserAnswerUncheckedUpdateManyWithoutQuestionNestedInput
   progress?: Prisma.UserProgressUncheckedUpdateManyWithoutQuestionNestedInput
 }
 
@@ -629,10 +729,12 @@ export type QuestionUncheckedUpdateManyWithoutTopicInput = {
  */
 
 export type QuestionCountOutputType = {
+  userAnswers: number
   progress: number
 }
 
 export type QuestionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  userAnswers?: boolean | QuestionCountOutputTypeCountUserAnswersArgs
   progress?: boolean | QuestionCountOutputTypeCountProgressArgs
 }
 
@@ -644,6 +746,13 @@ export type QuestionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Ext
    * Select specific fields to fetch from the QuestionCountOutputType
    */
   select?: Prisma.QuestionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * QuestionCountOutputType without action
+ */
+export type QuestionCountOutputTypeCountUserAnswersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserAnswerWhereInput
 }
 
 /**
@@ -664,6 +773,7 @@ export type QuestionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   createdAt?: boolean
   updatedAt?: boolean
   topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
+  userAnswers?: boolean | Prisma.Question$userAnswersArgs<ExtArgs>
   progress?: boolean | Prisma.Question$progressArgs<ExtArgs>
   _count?: boolean | Prisma.QuestionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["question"]>
@@ -706,6 +816,7 @@ export type QuestionSelectScalar = {
 export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "topicId" | "title" | "answer" | "explanation" | "level" | "createdAt" | "updatedAt", ExtArgs["result"]["question"]>
 export type QuestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   topic?: boolean | Prisma.TopicDefaultArgs<ExtArgs>
+  userAnswers?: boolean | Prisma.Question$userAnswersArgs<ExtArgs>
   progress?: boolean | Prisma.Question$progressArgs<ExtArgs>
   _count?: boolean | Prisma.QuestionCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -720,6 +831,7 @@ export type $QuestionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Question"
   objects: {
     topic: Prisma.$TopicPayload<ExtArgs>
+    userAnswers: Prisma.$UserAnswerPayload<ExtArgs>[]
     progress: Prisma.$UserProgressPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1126,6 +1238,7 @@ readonly fields: QuestionFieldRefs;
 export interface Prisma__QuestionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   topic<T extends Prisma.TopicDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.TopicDefaultArgs<ExtArgs>>): Prisma.Prisma__TopicClient<runtime.Types.Result.GetResult<Prisma.$TopicPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  userAnswers<T extends Prisma.Question$userAnswersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Question$userAnswersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserAnswerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   progress<T extends Prisma.Question$progressArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Question$progressArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserProgressPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1562,6 +1675,30 @@ export type QuestionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Questions to delete.
    */
   limit?: number
+}
+
+/**
+ * Question.userAnswers
+ */
+export type Question$userAnswersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserAnswer
+   */
+  select?: Prisma.UserAnswerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserAnswer
+   */
+  omit?: Prisma.UserAnswerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAnswerInclude<ExtArgs> | null
+  where?: Prisma.UserAnswerWhereInput
+  orderBy?: Prisma.UserAnswerOrderByWithRelationInput | Prisma.UserAnswerOrderByWithRelationInput[]
+  cursor?: Prisma.UserAnswerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserAnswerScalarFieldEnum | Prisma.UserAnswerScalarFieldEnum[]
 }
 
 /**

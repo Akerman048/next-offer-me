@@ -390,7 +390,8 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
-  UserProgress: 'UserProgress'
+  UserProgress: 'UserProgress',
+  UserAnswer: 'UserAnswer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "topic" | "question" | "user" | "account" | "session" | "verificationToken" | "userProgress"
+    modelProps: "topic" | "question" | "user" | "account" | "session" | "verificationToken" | "userProgress" | "userAnswer"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -928,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    UserAnswer: {
+      payload: Prisma.$UserAnswerPayload<ExtArgs>
+      fields: Prisma.UserAnswerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.UserAnswerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAnswerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.UserAnswerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAnswerPayload>
+        }
+        findFirst: {
+          args: Prisma.UserAnswerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAnswerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.UserAnswerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAnswerPayload>
+        }
+        findMany: {
+          args: Prisma.UserAnswerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAnswerPayload>[]
+        }
+        create: {
+          args: Prisma.UserAnswerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAnswerPayload>
+        }
+        createMany: {
+          args: Prisma.UserAnswerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.UserAnswerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAnswerPayload>[]
+        }
+        delete: {
+          args: Prisma.UserAnswerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAnswerPayload>
+        }
+        update: {
+          args: Prisma.UserAnswerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAnswerPayload>
+        }
+        deleteMany: {
+          args: Prisma.UserAnswerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.UserAnswerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.UserAnswerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAnswerPayload>[]
+        }
+        upsert: {
+          args: Prisma.UserAnswerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$UserAnswerPayload>
+        }
+        aggregate: {
+          args: Prisma.UserAnswerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateUserAnswer>
+        }
+        groupBy: {
+          args: Prisma.UserAnswerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserAnswerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.UserAnswerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.UserAnswerCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1052,6 +1127,21 @@ export const UserProgressScalarFieldEnum = {
 } as const
 
 export type UserProgressScalarFieldEnum = (typeof UserProgressScalarFieldEnum)[keyof typeof UserProgressScalarFieldEnum]
+
+
+export const UserAnswerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  questionId: 'questionId',
+  questionText: 'questionText',
+  answerText: 'answerText',
+  aiFeedback: 'aiFeedback',
+  aiScore: 'aiScore',
+  aiRoadmap: 'aiRoadmap',
+  createdAt: 'createdAt'
+} as const
+
+export type UserAnswerScalarFieldEnum = (typeof UserAnswerScalarFieldEnum)[keyof typeof UserAnswerScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1277,6 +1367,7 @@ export type GlobalOmitConfig = {
   session?: Prisma.SessionOmit
   verificationToken?: Prisma.VerificationTokenOmit
   userProgress?: Prisma.UserProgressOmit
+  userAnswer?: Prisma.UserAnswerOmit
 }
 
 /* Types for Logging */

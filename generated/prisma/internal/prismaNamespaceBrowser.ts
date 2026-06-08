@@ -57,7 +57,8 @@ export const ModelName = {
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
-  UserProgress: 'UserProgress'
+  UserProgress: 'UserProgress',
+  UserAnswer: 'UserAnswer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -161,6 +162,21 @@ export const UserProgressScalarFieldEnum = {
 } as const
 
 export type UserProgressScalarFieldEnum = (typeof UserProgressScalarFieldEnum)[keyof typeof UserProgressScalarFieldEnum]
+
+
+export const UserAnswerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  questionId: 'questionId',
+  questionText: 'questionText',
+  answerText: 'answerText',
+  aiFeedback: 'aiFeedback',
+  aiScore: 'aiScore',
+  aiRoadmap: 'aiRoadmap',
+  createdAt: 'createdAt'
+} as const
+
+export type UserAnswerScalarFieldEnum = (typeof UserAnswerScalarFieldEnum)[keyof typeof UserAnswerScalarFieldEnum]
 
 
 export const SortOrder = {

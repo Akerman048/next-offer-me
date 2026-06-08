@@ -52,3 +52,8 @@ export type VerificationToken = Prisma.VerificationTokenModel
  * 
  */
 export type UserProgress = Prisma.UserProgressModel
+/**
+ * Model UserAnswer
+ * 
+ */
+export type UserAnswer = Prisma.UserAnswerModel
