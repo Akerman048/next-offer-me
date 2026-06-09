@@ -9,6 +9,14 @@
 * 🟢 You can import this file directly.
 */
 
+export const InterviewStatus = {
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type InterviewStatus = (typeof InterviewStatus)[keyof typeof InterviewStatus]
+
+
 export const Level = {
   JUNIOR: 'JUNIOR',
   MIDDLE: 'MIDDLE',

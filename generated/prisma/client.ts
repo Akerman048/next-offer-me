@@ -91,3 +91,13 @@ export type UserProgress = Prisma.UserProgressModel
  * 
  */
 export type UserAnswer = Prisma.UserAnswerModel
+/**
+ * Model InterviewSession
+ * 
+ */
+export type InterviewSession = Prisma.InterviewSessionModel
+/**
+ * Model InterviewAnswer
+ * 
+ */
+export type InterviewAnswer = Prisma.InterviewAnswerModel

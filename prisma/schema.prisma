@@ -64,6 +64,8 @@ model Question {
   lessonPart   LessonPart @relation(fields: [lessonPartId], references: [id], onDelete: Cascade)
   userAnswers  UserAnswer[]
 
+interviewAnswers InterviewAnswer[]
+
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -80,6 +82,8 @@ model User {
 
   progress      UserProgress[]
   answer        UserAnswer[]
+
+  interviewSessions InterviewSession[]
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -155,6 +159,43 @@ model UserAnswer {
 
   user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   question   Question? @relation(fields: [questionId], references: [id], onDelete: SetNull)
+}
+
+model InterviewSession {
+  id              String   @id @default(cuid())
+  userId          String
+
+  level           Level?
+  questionCount   Int
+  durationSeconds Int
+  status          InterviewStatus @default(IN_PROGRESS)
+
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers         InterviewAnswer[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model InterviewAnswer {
+  id         String @id @default(cuid())
+  sessionId  String
+  questionId String
+
+  answerText String?
+  aiScore    Int?
+  aiFeedback String?
+
+  session    InterviewSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+enum InterviewStatus {
+  IN_PROGRESS
+  COMPLETED
 }
 
 enum Level {

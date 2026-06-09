@@ -60,7 +60,9 @@ export const ModelName = {
   Session: 'Session',
   VerificationToken: 'VerificationToken',
   UserProgress: 'UserProgress',
-  UserAnswer: 'UserAnswer'
+  UserAnswer: 'UserAnswer',
+  InterviewSession: 'InterviewSession',
+  InterviewAnswer: 'InterviewAnswer'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -206,6 +208,34 @@ export const UserAnswerScalarFieldEnum = {
 } as const
 
 export type UserAnswerScalarFieldEnum = (typeof UserAnswerScalarFieldEnum)[keyof typeof UserAnswerScalarFieldEnum]
+
+
+export const InterviewSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  level: 'level',
+  questionCount: 'questionCount',
+  durationSeconds: 'durationSeconds',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InterviewSessionScalarFieldEnum = (typeof InterviewSessionScalarFieldEnum)[keyof typeof InterviewSessionScalarFieldEnum]
+
+
+export const InterviewAnswerScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  questionId: 'questionId',
+  answerText: 'answerText',
+  aiScore: 'aiScore',
+  aiFeedback: 'aiFeedback',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InterviewAnswerScalarFieldEnum = (typeof InterviewAnswerScalarFieldEnum)[keyof typeof InterviewAnswerScalarFieldEnum]
 
 
 export const SortOrder = {

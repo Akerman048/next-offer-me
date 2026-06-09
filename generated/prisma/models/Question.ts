@@ -242,6 +242,7 @@ export type QuestionWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   lessonPart?: Prisma.XOR<Prisma.LessonPartScalarRelationFilter, Prisma.LessonPartWhereInput>
   userAnswers?: Prisma.UserAnswerListRelationFilter
+  interviewAnswers?: Prisma.InterviewAnswerListRelationFilter
 }
 
 export type QuestionOrderByWithRelationInput = {
@@ -255,6 +256,7 @@ export type QuestionOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   lessonPart?: Prisma.LessonPartOrderByWithRelationInput
   userAnswers?: Prisma.UserAnswerOrderByRelationAggregateInput
+  interviewAnswers?: Prisma.InterviewAnswerOrderByRelationAggregateInput
 }
 
 export type QuestionWhereUniqueInput = Prisma.AtLeast<{
@@ -271,6 +273,7 @@ export type QuestionWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Question"> | Date | string
   lessonPart?: Prisma.XOR<Prisma.LessonPartScalarRelationFilter, Prisma.LessonPartWhereInput>
   userAnswers?: Prisma.UserAnswerListRelationFilter
+  interviewAnswers?: Prisma.InterviewAnswerListRelationFilter
 }, "id">
 
 export type QuestionOrderByWithAggregationInput = {
@@ -313,6 +316,7 @@ export type QuestionCreateInput = {
   updatedAt?: Date | string
   lessonPart: Prisma.LessonPartCreateNestedOneWithoutQuestionsInput
   userAnswers?: Prisma.UserAnswerCreateNestedManyWithoutQuestionInput
+  interviewAnswers?: Prisma.InterviewAnswerCreateNestedManyWithoutQuestionInput
 }
 
 export type QuestionUncheckedCreateInput = {
@@ -325,6 +329,7 @@ export type QuestionUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   userAnswers?: Prisma.UserAnswerUncheckedCreateNestedManyWithoutQuestionInput
+  interviewAnswers?: Prisma.InterviewAnswerUncheckedCreateNestedManyWithoutQuestionInput
 }
 
 export type QuestionUpdateInput = {
@@ -337,6 +342,7 @@ export type QuestionUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonPart?: Prisma.LessonPartUpdateOneRequiredWithoutQuestionsNestedInput
   userAnswers?: Prisma.UserAnswerUpdateManyWithoutQuestionNestedInput
+  interviewAnswers?: Prisma.InterviewAnswerUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionUncheckedUpdateInput = {
@@ -349,6 +355,7 @@ export type QuestionUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAnswers?: Prisma.UserAnswerUncheckedUpdateManyWithoutQuestionNestedInput
+  interviewAnswers?: Prisma.InterviewAnswerUncheckedUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionCreateManyInput = {
@@ -439,6 +446,11 @@ export type QuestionNullableScalarRelationFilter = {
   isNot?: Prisma.QuestionWhereInput | null
 }
 
+export type QuestionScalarRelationFilter = {
+  is?: Prisma.QuestionWhereInput
+  isNot?: Prisma.QuestionWhereInput
+}
+
 export type QuestionCreateNestedManyWithoutLessonPartInput = {
   create?: Prisma.XOR<Prisma.QuestionCreateWithoutLessonPartInput, Prisma.QuestionUncheckedCreateWithoutLessonPartInput> | Prisma.QuestionCreateWithoutLessonPartInput[] | Prisma.QuestionUncheckedCreateWithoutLessonPartInput[]
   connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutLessonPartInput | Prisma.QuestionCreateOrConnectWithoutLessonPartInput[]
@@ -501,6 +513,20 @@ export type QuestionUpdateOneWithoutUserAnswersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.QuestionUpdateToOneWithWhereWithoutUserAnswersInput, Prisma.QuestionUpdateWithoutUserAnswersInput>, Prisma.QuestionUncheckedUpdateWithoutUserAnswersInput>
 }
 
+export type QuestionCreateNestedOneWithoutInterviewAnswersInput = {
+  create?: Prisma.XOR<Prisma.QuestionCreateWithoutInterviewAnswersInput, Prisma.QuestionUncheckedCreateWithoutInterviewAnswersInput>
+  connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutInterviewAnswersInput
+  connect?: Prisma.QuestionWhereUniqueInput
+}
+
+export type QuestionUpdateOneRequiredWithoutInterviewAnswersNestedInput = {
+  create?: Prisma.XOR<Prisma.QuestionCreateWithoutInterviewAnswersInput, Prisma.QuestionUncheckedCreateWithoutInterviewAnswersInput>
+  connectOrCreate?: Prisma.QuestionCreateOrConnectWithoutInterviewAnswersInput
+  upsert?: Prisma.QuestionUpsertWithoutInterviewAnswersInput
+  connect?: Prisma.QuestionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.QuestionUpdateToOneWithWhereWithoutInterviewAnswersInput, Prisma.QuestionUpdateWithoutInterviewAnswersInput>, Prisma.QuestionUncheckedUpdateWithoutInterviewAnswersInput>
+}
+
 export type QuestionCreateWithoutLessonPartInput = {
   id?: string
   title: string
@@ -510,6 +536,7 @@ export type QuestionCreateWithoutLessonPartInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   userAnswers?: Prisma.UserAnswerCreateNestedManyWithoutQuestionInput
+  interviewAnswers?: Prisma.InterviewAnswerCreateNestedManyWithoutQuestionInput
 }
 
 export type QuestionUncheckedCreateWithoutLessonPartInput = {
@@ -521,6 +548,7 @@ export type QuestionUncheckedCreateWithoutLessonPartInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   userAnswers?: Prisma.UserAnswerUncheckedCreateNestedManyWithoutQuestionInput
+  interviewAnswers?: Prisma.InterviewAnswerUncheckedCreateNestedManyWithoutQuestionInput
 }
 
 export type QuestionCreateOrConnectWithoutLessonPartInput = {
@@ -572,6 +600,7 @@ export type QuestionCreateWithoutUserAnswersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   lessonPart: Prisma.LessonPartCreateNestedOneWithoutQuestionsInput
+  interviewAnswers?: Prisma.InterviewAnswerCreateNestedManyWithoutQuestionInput
 }
 
 export type QuestionUncheckedCreateWithoutUserAnswersInput = {
@@ -583,6 +612,7 @@ export type QuestionUncheckedCreateWithoutUserAnswersInput = {
   order?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  interviewAnswers?: Prisma.InterviewAnswerUncheckedCreateNestedManyWithoutQuestionInput
 }
 
 export type QuestionCreateOrConnectWithoutUserAnswersInput = {
@@ -610,6 +640,7 @@ export type QuestionUpdateWithoutUserAnswersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   lessonPart?: Prisma.LessonPartUpdateOneRequiredWithoutQuestionsNestedInput
+  interviewAnswers?: Prisma.InterviewAnswerUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionUncheckedUpdateWithoutUserAnswersInput = {
@@ -621,6 +652,71 @@ export type QuestionUncheckedUpdateWithoutUserAnswersInput = {
   order?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  interviewAnswers?: Prisma.InterviewAnswerUncheckedUpdateManyWithoutQuestionNestedInput
+}
+
+export type QuestionCreateWithoutInterviewAnswersInput = {
+  id?: string
+  title: string
+  prompt: string
+  level: $Enums.Level
+  order?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  lessonPart: Prisma.LessonPartCreateNestedOneWithoutQuestionsInput
+  userAnswers?: Prisma.UserAnswerCreateNestedManyWithoutQuestionInput
+}
+
+export type QuestionUncheckedCreateWithoutInterviewAnswersInput = {
+  id?: string
+  lessonPartId: string
+  title: string
+  prompt: string
+  level: $Enums.Level
+  order?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  userAnswers?: Prisma.UserAnswerUncheckedCreateNestedManyWithoutQuestionInput
+}
+
+export type QuestionCreateOrConnectWithoutInterviewAnswersInput = {
+  where: Prisma.QuestionWhereUniqueInput
+  create: Prisma.XOR<Prisma.QuestionCreateWithoutInterviewAnswersInput, Prisma.QuestionUncheckedCreateWithoutInterviewAnswersInput>
+}
+
+export type QuestionUpsertWithoutInterviewAnswersInput = {
+  update: Prisma.XOR<Prisma.QuestionUpdateWithoutInterviewAnswersInput, Prisma.QuestionUncheckedUpdateWithoutInterviewAnswersInput>
+  create: Prisma.XOR<Prisma.QuestionCreateWithoutInterviewAnswersInput, Prisma.QuestionUncheckedCreateWithoutInterviewAnswersInput>
+  where?: Prisma.QuestionWhereInput
+}
+
+export type QuestionUpdateToOneWithWhereWithoutInterviewAnswersInput = {
+  where?: Prisma.QuestionWhereInput
+  data: Prisma.XOR<Prisma.QuestionUpdateWithoutInterviewAnswersInput, Prisma.QuestionUncheckedUpdateWithoutInterviewAnswersInput>
+}
+
+export type QuestionUpdateWithoutInterviewAnswersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  lessonPart?: Prisma.LessonPartUpdateOneRequiredWithoutQuestionsNestedInput
+  userAnswers?: Prisma.UserAnswerUpdateManyWithoutQuestionNestedInput
+}
+
+export type QuestionUncheckedUpdateWithoutInterviewAnswersInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  lessonPartId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  prompt?: Prisma.StringFieldUpdateOperationsInput | string
+  level?: Prisma.EnumLevelFieldUpdateOperationsInput | $Enums.Level
+  order?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userAnswers?: Prisma.UserAnswerUncheckedUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionCreateManyLessonPartInput = {
@@ -642,6 +738,7 @@ export type QuestionUpdateWithoutLessonPartInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAnswers?: Prisma.UserAnswerUpdateManyWithoutQuestionNestedInput
+  interviewAnswers?: Prisma.InterviewAnswerUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionUncheckedUpdateWithoutLessonPartInput = {
@@ -653,6 +750,7 @@ export type QuestionUncheckedUpdateWithoutLessonPartInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userAnswers?: Prisma.UserAnswerUncheckedUpdateManyWithoutQuestionNestedInput
+  interviewAnswers?: Prisma.InterviewAnswerUncheckedUpdateManyWithoutQuestionNestedInput
 }
 
 export type QuestionUncheckedUpdateManyWithoutLessonPartInput = {
@@ -672,10 +770,12 @@ export type QuestionUncheckedUpdateManyWithoutLessonPartInput = {
 
 export type QuestionCountOutputType = {
   userAnswers: number
+  interviewAnswers: number
 }
 
 export type QuestionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   userAnswers?: boolean | QuestionCountOutputTypeCountUserAnswersArgs
+  interviewAnswers?: boolean | QuestionCountOutputTypeCountInterviewAnswersArgs
 }
 
 /**
@@ -695,6 +795,13 @@ export type QuestionCountOutputTypeCountUserAnswersArgs<ExtArgs extends runtime.
   where?: Prisma.UserAnswerWhereInput
 }
 
+/**
+ * QuestionCountOutputType without action
+ */
+export type QuestionCountOutputTypeCountInterviewAnswersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.InterviewAnswerWhereInput
+}
+
 
 export type QuestionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -707,6 +814,7 @@ export type QuestionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   updatedAt?: boolean
   lessonPart?: boolean | Prisma.LessonPartDefaultArgs<ExtArgs>
   userAnswers?: boolean | Prisma.Question$userAnswersArgs<ExtArgs>
+  interviewAnswers?: boolean | Prisma.Question$interviewAnswersArgs<ExtArgs>
   _count?: boolean | Prisma.QuestionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["question"]>
 
@@ -749,6 +857,7 @@ export type QuestionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type QuestionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   lessonPart?: boolean | Prisma.LessonPartDefaultArgs<ExtArgs>
   userAnswers?: boolean | Prisma.Question$userAnswersArgs<ExtArgs>
+  interviewAnswers?: boolean | Prisma.Question$interviewAnswersArgs<ExtArgs>
   _count?: boolean | Prisma.QuestionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type QuestionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -763,6 +872,7 @@ export type $QuestionPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     lessonPart: Prisma.$LessonPartPayload<ExtArgs>
     userAnswers: Prisma.$UserAnswerPayload<ExtArgs>[]
+    interviewAnswers: Prisma.$InterviewAnswerPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1169,6 +1279,7 @@ export interface Prisma__QuestionClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   lessonPart<T extends Prisma.LessonPartDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LessonPartDefaultArgs<ExtArgs>>): Prisma.Prisma__LessonPartClient<runtime.Types.Result.GetResult<Prisma.$LessonPartPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   userAnswers<T extends Prisma.Question$userAnswersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Question$userAnswersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserAnswerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  interviewAnswers<T extends Prisma.Question$interviewAnswersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Question$interviewAnswersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$InterviewAnswerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1628,6 +1739,30 @@ export type Question$userAnswersArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.UserAnswerScalarFieldEnum | Prisma.UserAnswerScalarFieldEnum[]
+}
+
+/**
+ * Question.interviewAnswers
+ */
+export type Question$interviewAnswersArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the InterviewAnswer
+   */
+  select?: Prisma.InterviewAnswerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the InterviewAnswer
+   */
+  omit?: Prisma.InterviewAnswerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.InterviewAnswerInclude<ExtArgs> | null
+  where?: Prisma.InterviewAnswerWhereInput
+  orderBy?: Prisma.InterviewAnswerOrderByWithRelationInput | Prisma.InterviewAnswerOrderByWithRelationInput[]
+  cursor?: Prisma.InterviewAnswerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.InterviewAnswerScalarFieldEnum | Prisma.InterviewAnswerScalarFieldEnum[]
 }
 
 /**
