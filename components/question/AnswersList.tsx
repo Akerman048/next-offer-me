@@ -38,7 +38,7 @@ export default function AnswersList({ answers, path }: Props) {
                 )}
 
                 {answer.aiRoadmap && (
-                  <pre className="mt-3 whitespace-pre-wrap rounded-lg bg-gray-100 p-3 text-sm">
+                  <pre className="mt-3 whitespace-pre-wrap rounded-lg bg-gray-800 p-3 text-sm">
                     {answer.aiRoadmap}
                   </pre>
                 )}

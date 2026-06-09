@@ -38,6 +38,34 @@ export default async function DashboardPage() {
     },
   });
 
+  const weakAnswers = await prisma.userAnswer.findMany({
+  where: {
+    userId: user.id,
+    aiScore: {
+      lt: 8,
+    },
+  },
+  include: {
+    question: {
+      include: {
+        lessonPart: {
+          include: {
+            lesson: {
+              include: {
+                topic: true,
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+  orderBy: {
+    createdAt: "desc",
+  },
+  take: 5,
+});
+
   const getTopicParts = (topic: (typeof topics)[number]) => {
     return topic.lessons.flatMap((lesson) => lesson.parts);
   };
@@ -52,6 +80,12 @@ export default async function DashboardPage() {
     return sum + parts.filter((part) => part.progress.length > 0).length;
   }, 0);
 
+  const startedTopics = topics.filter((topic) => {
+    const parts = getTopicParts(topic);
+
+    return parts.some((part) => part.progress.length > 0)
+  })
+
   return (
     <main className="mx-auto max-w-5xl p-8">
       <h1 className="mb-2 text-4xl font-bold">Dashboard</h1>
@@ -61,7 +95,7 @@ export default async function DashboardPage() {
       </p>
 
       <div className="space-y-4">
-        {topics.map((topic) => {
+        {startedTopics.map((topic) => {
           const parts = getTopicParts(topic);
 
           const completed = parts.filter(
@@ -96,6 +130,58 @@ export default async function DashboardPage() {
           );
         })}
       </div>
+
+      <section className="mt-4">
+  <h2 className="mb-4 text-2xl font-semibold">Weak Answers</h2>
+
+  <div className="space-y-4">
+    {weakAnswers.length === 0 ? (
+      <p className="text-gray-500">No weak answers yet.</p>
+    ) : (
+      weakAnswers.map((answer) => {
+        if (!answer.question) return null;
+
+        const part = answer.question.lessonPart;
+        const lesson = part.lesson;
+        const topic = lesson.topic;
+
+        return (
+          <article
+            key={answer.id}
+            className="rounded-xl border p-5 shadow-sm"
+          >
+            <div className="mb-2 flex items-center justify-between">
+              <h3 className="text-lg font-semibold">
+                {answer.question.title}
+              </h3>
+
+              <span className="rounded-full bg-red-600 px-3 py-1 text-sm text-white">
+                {answer.aiScore}/10
+              </span>
+            </div>
+
+            <p className="mb-2 text-sm text-gray-500">
+              {topic.name} / {lesson.title} / {part.title}
+            </p>
+
+            {answer.aiFeedback && (
+              <p className="mb-4 text-sm text-gray-600">
+                {answer.aiFeedback}
+              </p>
+            )}
+
+            <Link
+              href={`/topics/${topic.slug}/${lesson.slug}/${part.id}`}
+              className="inline-block rounded-lg bg-black px-4 py-2 text-sm text-white"
+            >
+              Review lesson
+            </Link>
+          </article>
+        );
+      })
+    )}
+  </div>
+</section>
     </main>
   );
 }
