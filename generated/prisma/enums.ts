@@ -24,3 +24,12 @@ export const Level = {
 } as const
 
 export type Level = (typeof Level)[keyof typeof Level]
+
+
+export const InterviewMode = {
+  PRACTICE: 'PRACTICE',
+  REAL: 'REAL',
+  HARD: 'HARD'
+} as const
+
+export type InterviewMode = (typeof InterviewMode)[keyof typeof InterviewMode]

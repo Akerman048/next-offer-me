@@ -168,6 +168,7 @@ model InterviewSession {
   level           Level?
   questionCount   Int
   durationSeconds Int
+  mode            InterviewMode @default(PRACTICE)
   status          InterviewStatus @default(IN_PROGRESS)
 
   user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -186,6 +187,15 @@ model InterviewAnswer {
   aiScore    Int?
   aiFeedback String?
 
+  technicalAccuracy Int?
+  clarity           Int?
+  completeness      Int?
+  interviewStyle    Int?
+
+  improvedAnswer    String?
+  missingConcepts   String?
+  timeSpentSeconds  Int?
+
   session    InterviewSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
@@ -202,4 +212,10 @@ enum Level {
   JUNIOR
   MIDDLE
   SENIOR
+}
+
+enum InterviewMode {
+  PRACTICE
+  REAL
+  HARD
 }

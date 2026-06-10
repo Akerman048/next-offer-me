@@ -216,6 +216,7 @@ export const InterviewSessionScalarFieldEnum = {
   level: 'level',
   questionCount: 'questionCount',
   durationSeconds: 'durationSeconds',
+  mode: 'mode',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -231,6 +232,13 @@ export const InterviewAnswerScalarFieldEnum = {
   answerText: 'answerText',
   aiScore: 'aiScore',
   aiFeedback: 'aiFeedback',
+  technicalAccuracy: 'technicalAccuracy',
+  clarity: 'clarity',
+  completeness: 'completeness',
+  interviewStyle: 'interviewStyle',
+  improvedAnswer: 'improvedAnswer',
+  missingConcepts: 'missingConcepts',
+  timeSpentSeconds: 'timeSpentSeconds',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

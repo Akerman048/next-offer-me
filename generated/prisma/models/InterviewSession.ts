@@ -42,6 +42,7 @@ export type InterviewSessionMinAggregateOutputType = {
   level: $Enums.Level | null
   questionCount: number | null
   durationSeconds: number | null
+  mode: $Enums.InterviewMode | null
   status: $Enums.InterviewStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -53,6 +54,7 @@ export type InterviewSessionMaxAggregateOutputType = {
   level: $Enums.Level | null
   questionCount: number | null
   durationSeconds: number | null
+  mode: $Enums.InterviewMode | null
   status: $Enums.InterviewStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -64,6 +66,7 @@ export type InterviewSessionCountAggregateOutputType = {
   level: number
   questionCount: number
   durationSeconds: number
+  mode: number
   status: number
   createdAt: number
   updatedAt: number
@@ -87,6 +90,7 @@ export type InterviewSessionMinAggregateInputType = {
   level?: true
   questionCount?: true
   durationSeconds?: true
+  mode?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -98,6 +102,7 @@ export type InterviewSessionMaxAggregateInputType = {
   level?: true
   questionCount?: true
   durationSeconds?: true
+  mode?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -109,6 +114,7 @@ export type InterviewSessionCountAggregateInputType = {
   level?: true
   questionCount?: true
   durationSeconds?: true
+  mode?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -207,6 +213,7 @@ export type InterviewSessionGroupByOutputType = {
   level: $Enums.Level | null
   questionCount: number
   durationSeconds: number
+  mode: $Enums.InterviewMode
   status: $Enums.InterviewStatus
   createdAt: Date
   updatedAt: Date
@@ -241,6 +248,7 @@ export type InterviewSessionWhereInput = {
   level?: Prisma.EnumLevelNullableFilter<"InterviewSession"> | $Enums.Level | null
   questionCount?: Prisma.IntFilter<"InterviewSession"> | number
   durationSeconds?: Prisma.IntFilter<"InterviewSession"> | number
+  mode?: Prisma.EnumInterviewModeFilter<"InterviewSession"> | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFilter<"InterviewSession"> | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFilter<"InterviewSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InterviewSession"> | Date | string
@@ -254,6 +262,7 @@ export type InterviewSessionOrderByWithRelationInput = {
   level?: Prisma.SortOrderInput | Prisma.SortOrder
   questionCount?: Prisma.SortOrder
   durationSeconds?: Prisma.SortOrder
+  mode?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -270,6 +279,7 @@ export type InterviewSessionWhereUniqueInput = Prisma.AtLeast<{
   level?: Prisma.EnumLevelNullableFilter<"InterviewSession"> | $Enums.Level | null
   questionCount?: Prisma.IntFilter<"InterviewSession"> | number
   durationSeconds?: Prisma.IntFilter<"InterviewSession"> | number
+  mode?: Prisma.EnumInterviewModeFilter<"InterviewSession"> | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFilter<"InterviewSession"> | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFilter<"InterviewSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InterviewSession"> | Date | string
@@ -283,6 +293,7 @@ export type InterviewSessionOrderByWithAggregationInput = {
   level?: Prisma.SortOrderInput | Prisma.SortOrder
   questionCount?: Prisma.SortOrder
   durationSeconds?: Prisma.SortOrder
+  mode?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -302,6 +313,7 @@ export type InterviewSessionScalarWhereWithAggregatesInput = {
   level?: Prisma.EnumLevelNullableWithAggregatesFilter<"InterviewSession"> | $Enums.Level | null
   questionCount?: Prisma.IntWithAggregatesFilter<"InterviewSession"> | number
   durationSeconds?: Prisma.IntWithAggregatesFilter<"InterviewSession"> | number
+  mode?: Prisma.EnumInterviewModeWithAggregatesFilter<"InterviewSession"> | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusWithAggregatesFilter<"InterviewSession"> | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"InterviewSession"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"InterviewSession"> | Date | string
@@ -312,6 +324,7 @@ export type InterviewSessionCreateInput = {
   level?: $Enums.Level | null
   questionCount: number
   durationSeconds: number
+  mode?: $Enums.InterviewMode
   status?: $Enums.InterviewStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -325,6 +338,7 @@ export type InterviewSessionUncheckedCreateInput = {
   level?: $Enums.Level | null
   questionCount: number
   durationSeconds: number
+  mode?: $Enums.InterviewMode
   status?: $Enums.InterviewStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -336,6 +350,7 @@ export type InterviewSessionUpdateInput = {
   level?: Prisma.NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
   questionCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  mode?: Prisma.EnumInterviewModeFieldUpdateOperationsInput | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -349,6 +364,7 @@ export type InterviewSessionUncheckedUpdateInput = {
   level?: Prisma.NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
   questionCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  mode?: Prisma.EnumInterviewModeFieldUpdateOperationsInput | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -361,6 +377,7 @@ export type InterviewSessionCreateManyInput = {
   level?: $Enums.Level | null
   questionCount: number
   durationSeconds: number
+  mode?: $Enums.InterviewMode
   status?: $Enums.InterviewStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -371,6 +388,7 @@ export type InterviewSessionUpdateManyMutationInput = {
   level?: Prisma.NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
   questionCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  mode?: Prisma.EnumInterviewModeFieldUpdateOperationsInput | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -382,6 +400,7 @@ export type InterviewSessionUncheckedUpdateManyInput = {
   level?: Prisma.NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
   questionCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  mode?: Prisma.EnumInterviewModeFieldUpdateOperationsInput | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -403,6 +422,7 @@ export type InterviewSessionCountOrderByAggregateInput = {
   level?: Prisma.SortOrder
   questionCount?: Prisma.SortOrder
   durationSeconds?: Prisma.SortOrder
+  mode?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -419,6 +439,7 @@ export type InterviewSessionMaxOrderByAggregateInput = {
   level?: Prisma.SortOrder
   questionCount?: Prisma.SortOrder
   durationSeconds?: Prisma.SortOrder
+  mode?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -430,6 +451,7 @@ export type InterviewSessionMinOrderByAggregateInput = {
   level?: Prisma.SortOrder
   questionCount?: Prisma.SortOrder
   durationSeconds?: Prisma.SortOrder
+  mode?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -491,6 +513,10 @@ export type NullableEnumLevelFieldUpdateOperationsInput = {
   set?: $Enums.Level | null
 }
 
+export type EnumInterviewModeFieldUpdateOperationsInput = {
+  set?: $Enums.InterviewMode
+}
+
 export type EnumInterviewStatusFieldUpdateOperationsInput = {
   set?: $Enums.InterviewStatus
 }
@@ -514,6 +540,7 @@ export type InterviewSessionCreateWithoutUserInput = {
   level?: $Enums.Level | null
   questionCount: number
   durationSeconds: number
+  mode?: $Enums.InterviewMode
   status?: $Enums.InterviewStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -525,6 +552,7 @@ export type InterviewSessionUncheckedCreateWithoutUserInput = {
   level?: $Enums.Level | null
   questionCount: number
   durationSeconds: number
+  mode?: $Enums.InterviewMode
   status?: $Enums.InterviewStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -566,6 +594,7 @@ export type InterviewSessionScalarWhereInput = {
   level?: Prisma.EnumLevelNullableFilter<"InterviewSession"> | $Enums.Level | null
   questionCount?: Prisma.IntFilter<"InterviewSession"> | number
   durationSeconds?: Prisma.IntFilter<"InterviewSession"> | number
+  mode?: Prisma.EnumInterviewModeFilter<"InterviewSession"> | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFilter<"InterviewSession"> | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFilter<"InterviewSession"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InterviewSession"> | Date | string
@@ -576,6 +605,7 @@ export type InterviewSessionCreateWithoutAnswersInput = {
   level?: $Enums.Level | null
   questionCount: number
   durationSeconds: number
+  mode?: $Enums.InterviewMode
   status?: $Enums.InterviewStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -588,6 +618,7 @@ export type InterviewSessionUncheckedCreateWithoutAnswersInput = {
   level?: $Enums.Level | null
   questionCount: number
   durationSeconds: number
+  mode?: $Enums.InterviewMode
   status?: $Enums.InterviewStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -614,6 +645,7 @@ export type InterviewSessionUpdateWithoutAnswersInput = {
   level?: Prisma.NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
   questionCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  mode?: Prisma.EnumInterviewModeFieldUpdateOperationsInput | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -626,6 +658,7 @@ export type InterviewSessionUncheckedUpdateWithoutAnswersInput = {
   level?: Prisma.NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
   questionCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  mode?: Prisma.EnumInterviewModeFieldUpdateOperationsInput | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -636,6 +669,7 @@ export type InterviewSessionCreateManyUserInput = {
   level?: $Enums.Level | null
   questionCount: number
   durationSeconds: number
+  mode?: $Enums.InterviewMode
   status?: $Enums.InterviewStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -646,6 +680,7 @@ export type InterviewSessionUpdateWithoutUserInput = {
   level?: Prisma.NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
   questionCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  mode?: Prisma.EnumInterviewModeFieldUpdateOperationsInput | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -657,6 +692,7 @@ export type InterviewSessionUncheckedUpdateWithoutUserInput = {
   level?: Prisma.NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
   questionCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  mode?: Prisma.EnumInterviewModeFieldUpdateOperationsInput | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -668,6 +704,7 @@ export type InterviewSessionUncheckedUpdateManyWithoutUserInput = {
   level?: Prisma.NullableEnumLevelFieldUpdateOperationsInput | $Enums.Level | null
   questionCount?: Prisma.IntFieldUpdateOperationsInput | number
   durationSeconds?: Prisma.IntFieldUpdateOperationsInput | number
+  mode?: Prisma.EnumInterviewModeFieldUpdateOperationsInput | $Enums.InterviewMode
   status?: Prisma.EnumInterviewStatusFieldUpdateOperationsInput | $Enums.InterviewStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -710,6 +747,7 @@ export type InterviewSessionSelect<ExtArgs extends runtime.Types.Extensions.Inte
   level?: boolean
   questionCount?: boolean
   durationSeconds?: boolean
+  mode?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -724,6 +762,7 @@ export type InterviewSessionSelectCreateManyAndReturn<ExtArgs extends runtime.Ty
   level?: boolean
   questionCount?: boolean
   durationSeconds?: boolean
+  mode?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -736,6 +775,7 @@ export type InterviewSessionSelectUpdateManyAndReturn<ExtArgs extends runtime.Ty
   level?: boolean
   questionCount?: boolean
   durationSeconds?: boolean
+  mode?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -748,12 +788,13 @@ export type InterviewSessionSelectScalar = {
   level?: boolean
   questionCount?: boolean
   durationSeconds?: boolean
+  mode?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type InterviewSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "level" | "questionCount" | "durationSeconds" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["interviewSession"]>
+export type InterviewSessionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "level" | "questionCount" | "durationSeconds" | "mode" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["interviewSession"]>
 export type InterviewSessionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   answers?: boolean | Prisma.InterviewSession$answersArgs<ExtArgs>
@@ -778,6 +819,7 @@ export type $InterviewSessionPayload<ExtArgs extends runtime.Types.Extensions.In
     level: $Enums.Level | null
     questionCount: number
     durationSeconds: number
+    mode: $Enums.InterviewMode
     status: $Enums.InterviewStatus
     createdAt: Date
     updatedAt: Date
@@ -1211,6 +1253,7 @@ export interface InterviewSessionFieldRefs {
   readonly level: Prisma.FieldRef<"InterviewSession", 'Level'>
   readonly questionCount: Prisma.FieldRef<"InterviewSession", 'Int'>
   readonly durationSeconds: Prisma.FieldRef<"InterviewSession", 'Int'>
+  readonly mode: Prisma.FieldRef<"InterviewSession", 'InterviewMode'>
   readonly status: Prisma.FieldRef<"InterviewSession", 'InterviewStatus'>
   readonly createdAt: Prisma.FieldRef<"InterviewSession", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"InterviewSession", 'DateTime'>

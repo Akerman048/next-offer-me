@@ -1477,6 +1477,7 @@ export const InterviewSessionScalarFieldEnum = {
   level: 'level',
   questionCount: 'questionCount',
   durationSeconds: 'durationSeconds',
+  mode: 'mode',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1492,6 +1493,13 @@ export const InterviewAnswerScalarFieldEnum = {
   answerText: 'answerText',
   aiScore: 'aiScore',
   aiFeedback: 'aiFeedback',
+  technicalAccuracy: 'technicalAccuracy',
+  clarity: 'clarity',
+  completeness: 'completeness',
+  interviewStyle: 'interviewStyle',
+  improvedAnswer: 'improvedAnswer',
+  missingConcepts: 'missingConcepts',
+  timeSpentSeconds: 'timeSpentSeconds',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1589,6 +1597,20 @@ export type ListEnumLevelFieldRefInput<$PrismaModel> = FieldRefInputType<$Prisma
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'InterviewMode'
+ */
+export type EnumInterviewModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InterviewMode'>
+    
+
+
+/**
+ * Reference to a field of type 'InterviewMode[]'
+ */
+export type ListEnumInterviewModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InterviewMode[]'>
     
 
 

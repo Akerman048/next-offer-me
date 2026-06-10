@@ -28,10 +28,20 @@ export type AggregateInterviewAnswer = {
 
 export type InterviewAnswerAvgAggregateOutputType = {
   aiScore: number | null
+  technicalAccuracy: number | null
+  clarity: number | null
+  completeness: number | null
+  interviewStyle: number | null
+  timeSpentSeconds: number | null
 }
 
 export type InterviewAnswerSumAggregateOutputType = {
   aiScore: number | null
+  technicalAccuracy: number | null
+  clarity: number | null
+  completeness: number | null
+  interviewStyle: number | null
+  timeSpentSeconds: number | null
 }
 
 export type InterviewAnswerMinAggregateOutputType = {
@@ -41,6 +51,13 @@ export type InterviewAnswerMinAggregateOutputType = {
   answerText: string | null
   aiScore: number | null
   aiFeedback: string | null
+  technicalAccuracy: number | null
+  clarity: number | null
+  completeness: number | null
+  interviewStyle: number | null
+  improvedAnswer: string | null
+  missingConcepts: string | null
+  timeSpentSeconds: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -52,6 +69,13 @@ export type InterviewAnswerMaxAggregateOutputType = {
   answerText: string | null
   aiScore: number | null
   aiFeedback: string | null
+  technicalAccuracy: number | null
+  clarity: number | null
+  completeness: number | null
+  interviewStyle: number | null
+  improvedAnswer: string | null
+  missingConcepts: string | null
+  timeSpentSeconds: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -63,6 +87,13 @@ export type InterviewAnswerCountAggregateOutputType = {
   answerText: number
   aiScore: number
   aiFeedback: number
+  technicalAccuracy: number
+  clarity: number
+  completeness: number
+  interviewStyle: number
+  improvedAnswer: number
+  missingConcepts: number
+  timeSpentSeconds: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -71,10 +102,20 @@ export type InterviewAnswerCountAggregateOutputType = {
 
 export type InterviewAnswerAvgAggregateInputType = {
   aiScore?: true
+  technicalAccuracy?: true
+  clarity?: true
+  completeness?: true
+  interviewStyle?: true
+  timeSpentSeconds?: true
 }
 
 export type InterviewAnswerSumAggregateInputType = {
   aiScore?: true
+  technicalAccuracy?: true
+  clarity?: true
+  completeness?: true
+  interviewStyle?: true
+  timeSpentSeconds?: true
 }
 
 export type InterviewAnswerMinAggregateInputType = {
@@ -84,6 +125,13 @@ export type InterviewAnswerMinAggregateInputType = {
   answerText?: true
   aiScore?: true
   aiFeedback?: true
+  technicalAccuracy?: true
+  clarity?: true
+  completeness?: true
+  interviewStyle?: true
+  improvedAnswer?: true
+  missingConcepts?: true
+  timeSpentSeconds?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -95,6 +143,13 @@ export type InterviewAnswerMaxAggregateInputType = {
   answerText?: true
   aiScore?: true
   aiFeedback?: true
+  technicalAccuracy?: true
+  clarity?: true
+  completeness?: true
+  interviewStyle?: true
+  improvedAnswer?: true
+  missingConcepts?: true
+  timeSpentSeconds?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +161,13 @@ export type InterviewAnswerCountAggregateInputType = {
   answerText?: true
   aiScore?: true
   aiFeedback?: true
+  technicalAccuracy?: true
+  clarity?: true
+  completeness?: true
+  interviewStyle?: true
+  improvedAnswer?: true
+  missingConcepts?: true
+  timeSpentSeconds?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -204,6 +266,13 @@ export type InterviewAnswerGroupByOutputType = {
   answerText: string | null
   aiScore: number | null
   aiFeedback: string | null
+  technicalAccuracy: number | null
+  clarity: number | null
+  completeness: number | null
+  interviewStyle: number | null
+  improvedAnswer: string | null
+  missingConcepts: string | null
+  timeSpentSeconds: number | null
   createdAt: Date
   updatedAt: Date
   _count: InterviewAnswerCountAggregateOutputType | null
@@ -238,6 +307,13 @@ export type InterviewAnswerWhereInput = {
   answerText?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
   aiScore?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
   aiFeedback?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
+  technicalAccuracy?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  clarity?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  completeness?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  interviewStyle?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  improvedAnswer?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
+  missingConcepts?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
+  timeSpentSeconds?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
   createdAt?: Prisma.DateTimeFilter<"InterviewAnswer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InterviewAnswer"> | Date | string
   session?: Prisma.XOR<Prisma.InterviewSessionScalarRelationFilter, Prisma.InterviewSessionWhereInput>
@@ -251,6 +327,13 @@ export type InterviewAnswerOrderByWithRelationInput = {
   answerText?: Prisma.SortOrderInput | Prisma.SortOrder
   aiScore?: Prisma.SortOrderInput | Prisma.SortOrder
   aiFeedback?: Prisma.SortOrderInput | Prisma.SortOrder
+  technicalAccuracy?: Prisma.SortOrderInput | Prisma.SortOrder
+  clarity?: Prisma.SortOrderInput | Prisma.SortOrder
+  completeness?: Prisma.SortOrderInput | Prisma.SortOrder
+  interviewStyle?: Prisma.SortOrderInput | Prisma.SortOrder
+  improvedAnswer?: Prisma.SortOrderInput | Prisma.SortOrder
+  missingConcepts?: Prisma.SortOrderInput | Prisma.SortOrder
+  timeSpentSeconds?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   session?: Prisma.InterviewSessionOrderByWithRelationInput
@@ -267,6 +350,13 @@ export type InterviewAnswerWhereUniqueInput = Prisma.AtLeast<{
   answerText?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
   aiScore?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
   aiFeedback?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
+  technicalAccuracy?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  clarity?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  completeness?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  interviewStyle?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  improvedAnswer?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
+  missingConcepts?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
+  timeSpentSeconds?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
   createdAt?: Prisma.DateTimeFilter<"InterviewAnswer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InterviewAnswer"> | Date | string
   session?: Prisma.XOR<Prisma.InterviewSessionScalarRelationFilter, Prisma.InterviewSessionWhereInput>
@@ -280,6 +370,13 @@ export type InterviewAnswerOrderByWithAggregationInput = {
   answerText?: Prisma.SortOrderInput | Prisma.SortOrder
   aiScore?: Prisma.SortOrderInput | Prisma.SortOrder
   aiFeedback?: Prisma.SortOrderInput | Prisma.SortOrder
+  technicalAccuracy?: Prisma.SortOrderInput | Prisma.SortOrder
+  clarity?: Prisma.SortOrderInput | Prisma.SortOrder
+  completeness?: Prisma.SortOrderInput | Prisma.SortOrder
+  interviewStyle?: Prisma.SortOrderInput | Prisma.SortOrder
+  improvedAnswer?: Prisma.SortOrderInput | Prisma.SortOrder
+  missingConcepts?: Prisma.SortOrderInput | Prisma.SortOrder
+  timeSpentSeconds?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.InterviewAnswerCountOrderByAggregateInput
@@ -299,6 +396,13 @@ export type InterviewAnswerScalarWhereWithAggregatesInput = {
   answerText?: Prisma.StringNullableWithAggregatesFilter<"InterviewAnswer"> | string | null
   aiScore?: Prisma.IntNullableWithAggregatesFilter<"InterviewAnswer"> | number | null
   aiFeedback?: Prisma.StringNullableWithAggregatesFilter<"InterviewAnswer"> | string | null
+  technicalAccuracy?: Prisma.IntNullableWithAggregatesFilter<"InterviewAnswer"> | number | null
+  clarity?: Prisma.IntNullableWithAggregatesFilter<"InterviewAnswer"> | number | null
+  completeness?: Prisma.IntNullableWithAggregatesFilter<"InterviewAnswer"> | number | null
+  interviewStyle?: Prisma.IntNullableWithAggregatesFilter<"InterviewAnswer"> | number | null
+  improvedAnswer?: Prisma.StringNullableWithAggregatesFilter<"InterviewAnswer"> | string | null
+  missingConcepts?: Prisma.StringNullableWithAggregatesFilter<"InterviewAnswer"> | string | null
+  timeSpentSeconds?: Prisma.IntNullableWithAggregatesFilter<"InterviewAnswer"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"InterviewAnswer"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"InterviewAnswer"> | Date | string
 }
@@ -308,6 +412,13 @@ export type InterviewAnswerCreateInput = {
   answerText?: string | null
   aiScore?: number | null
   aiFeedback?: string | null
+  technicalAccuracy?: number | null
+  clarity?: number | null
+  completeness?: number | null
+  interviewStyle?: number | null
+  improvedAnswer?: string | null
+  missingConcepts?: string | null
+  timeSpentSeconds?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   session: Prisma.InterviewSessionCreateNestedOneWithoutAnswersInput
@@ -321,6 +432,13 @@ export type InterviewAnswerUncheckedCreateInput = {
   answerText?: string | null
   aiScore?: number | null
   aiFeedback?: string | null
+  technicalAccuracy?: number | null
+  clarity?: number | null
+  completeness?: number | null
+  interviewStyle?: number | null
+  improvedAnswer?: string | null
+  missingConcepts?: string | null
+  timeSpentSeconds?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -330,6 +448,13 @@ export type InterviewAnswerUpdateInput = {
   answerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAccuracy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  clarity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  completeness?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interviewStyle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  improvedAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  missingConcepts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeSpentSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   session?: Prisma.InterviewSessionUpdateOneRequiredWithoutAnswersNestedInput
@@ -343,6 +468,13 @@ export type InterviewAnswerUncheckedUpdateInput = {
   answerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAccuracy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  clarity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  completeness?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interviewStyle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  improvedAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  missingConcepts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeSpentSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -354,6 +486,13 @@ export type InterviewAnswerCreateManyInput = {
   answerText?: string | null
   aiScore?: number | null
   aiFeedback?: string | null
+  technicalAccuracy?: number | null
+  clarity?: number | null
+  completeness?: number | null
+  interviewStyle?: number | null
+  improvedAnswer?: string | null
+  missingConcepts?: string | null
+  timeSpentSeconds?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -363,6 +502,13 @@ export type InterviewAnswerUpdateManyMutationInput = {
   answerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAccuracy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  clarity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  completeness?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interviewStyle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  improvedAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  missingConcepts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeSpentSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -374,6 +520,13 @@ export type InterviewAnswerUncheckedUpdateManyInput = {
   answerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAccuracy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  clarity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  completeness?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interviewStyle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  improvedAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  missingConcepts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeSpentSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -395,12 +548,24 @@ export type InterviewAnswerCountOrderByAggregateInput = {
   answerText?: Prisma.SortOrder
   aiScore?: Prisma.SortOrder
   aiFeedback?: Prisma.SortOrder
+  technicalAccuracy?: Prisma.SortOrder
+  clarity?: Prisma.SortOrder
+  completeness?: Prisma.SortOrder
+  interviewStyle?: Prisma.SortOrder
+  improvedAnswer?: Prisma.SortOrder
+  missingConcepts?: Prisma.SortOrder
+  timeSpentSeconds?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type InterviewAnswerAvgOrderByAggregateInput = {
   aiScore?: Prisma.SortOrder
+  technicalAccuracy?: Prisma.SortOrder
+  clarity?: Prisma.SortOrder
+  completeness?: Prisma.SortOrder
+  interviewStyle?: Prisma.SortOrder
+  timeSpentSeconds?: Prisma.SortOrder
 }
 
 export type InterviewAnswerMaxOrderByAggregateInput = {
@@ -410,6 +575,13 @@ export type InterviewAnswerMaxOrderByAggregateInput = {
   answerText?: Prisma.SortOrder
   aiScore?: Prisma.SortOrder
   aiFeedback?: Prisma.SortOrder
+  technicalAccuracy?: Prisma.SortOrder
+  clarity?: Prisma.SortOrder
+  completeness?: Prisma.SortOrder
+  interviewStyle?: Prisma.SortOrder
+  improvedAnswer?: Prisma.SortOrder
+  missingConcepts?: Prisma.SortOrder
+  timeSpentSeconds?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -421,12 +593,24 @@ export type InterviewAnswerMinOrderByAggregateInput = {
   answerText?: Prisma.SortOrder
   aiScore?: Prisma.SortOrder
   aiFeedback?: Prisma.SortOrder
+  technicalAccuracy?: Prisma.SortOrder
+  clarity?: Prisma.SortOrder
+  completeness?: Prisma.SortOrder
+  interviewStyle?: Prisma.SortOrder
+  improvedAnswer?: Prisma.SortOrder
+  missingConcepts?: Prisma.SortOrder
+  timeSpentSeconds?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type InterviewAnswerSumOrderByAggregateInput = {
   aiScore?: Prisma.SortOrder
+  technicalAccuracy?: Prisma.SortOrder
+  clarity?: Prisma.SortOrder
+  completeness?: Prisma.SortOrder
+  interviewStyle?: Prisma.SortOrder
+  timeSpentSeconds?: Prisma.SortOrder
 }
 
 export type InterviewAnswerCreateNestedManyWithoutQuestionInput = {
@@ -518,6 +702,13 @@ export type InterviewAnswerCreateWithoutQuestionInput = {
   answerText?: string | null
   aiScore?: number | null
   aiFeedback?: string | null
+  technicalAccuracy?: number | null
+  clarity?: number | null
+  completeness?: number | null
+  interviewStyle?: number | null
+  improvedAnswer?: string | null
+  missingConcepts?: string | null
+  timeSpentSeconds?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   session: Prisma.InterviewSessionCreateNestedOneWithoutAnswersInput
@@ -529,6 +720,13 @@ export type InterviewAnswerUncheckedCreateWithoutQuestionInput = {
   answerText?: string | null
   aiScore?: number | null
   aiFeedback?: string | null
+  technicalAccuracy?: number | null
+  clarity?: number | null
+  completeness?: number | null
+  interviewStyle?: number | null
+  improvedAnswer?: string | null
+  missingConcepts?: string | null
+  timeSpentSeconds?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -569,6 +767,13 @@ export type InterviewAnswerScalarWhereInput = {
   answerText?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
   aiScore?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
   aiFeedback?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
+  technicalAccuracy?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  clarity?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  completeness?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  interviewStyle?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
+  improvedAnswer?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
+  missingConcepts?: Prisma.StringNullableFilter<"InterviewAnswer"> | string | null
+  timeSpentSeconds?: Prisma.IntNullableFilter<"InterviewAnswer"> | number | null
   createdAt?: Prisma.DateTimeFilter<"InterviewAnswer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"InterviewAnswer"> | Date | string
 }
@@ -578,6 +783,13 @@ export type InterviewAnswerCreateWithoutSessionInput = {
   answerText?: string | null
   aiScore?: number | null
   aiFeedback?: string | null
+  technicalAccuracy?: number | null
+  clarity?: number | null
+  completeness?: number | null
+  interviewStyle?: number | null
+  improvedAnswer?: string | null
+  missingConcepts?: string | null
+  timeSpentSeconds?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   question: Prisma.QuestionCreateNestedOneWithoutInterviewAnswersInput
@@ -589,6 +801,13 @@ export type InterviewAnswerUncheckedCreateWithoutSessionInput = {
   answerText?: string | null
   aiScore?: number | null
   aiFeedback?: string | null
+  technicalAccuracy?: number | null
+  clarity?: number | null
+  completeness?: number | null
+  interviewStyle?: number | null
+  improvedAnswer?: string | null
+  missingConcepts?: string | null
+  timeSpentSeconds?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -625,6 +844,13 @@ export type InterviewAnswerCreateManyQuestionInput = {
   answerText?: string | null
   aiScore?: number | null
   aiFeedback?: string | null
+  technicalAccuracy?: number | null
+  clarity?: number | null
+  completeness?: number | null
+  interviewStyle?: number | null
+  improvedAnswer?: string | null
+  missingConcepts?: string | null
+  timeSpentSeconds?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -634,6 +860,13 @@ export type InterviewAnswerUpdateWithoutQuestionInput = {
   answerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAccuracy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  clarity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  completeness?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interviewStyle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  improvedAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  missingConcepts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeSpentSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   session?: Prisma.InterviewSessionUpdateOneRequiredWithoutAnswersNestedInput
@@ -645,6 +878,13 @@ export type InterviewAnswerUncheckedUpdateWithoutQuestionInput = {
   answerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAccuracy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  clarity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  completeness?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interviewStyle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  improvedAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  missingConcepts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeSpentSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -655,6 +895,13 @@ export type InterviewAnswerUncheckedUpdateManyWithoutQuestionInput = {
   answerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAccuracy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  clarity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  completeness?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interviewStyle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  improvedAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  missingConcepts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeSpentSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -665,6 +912,13 @@ export type InterviewAnswerCreateManySessionInput = {
   answerText?: string | null
   aiScore?: number | null
   aiFeedback?: string | null
+  technicalAccuracy?: number | null
+  clarity?: number | null
+  completeness?: number | null
+  interviewStyle?: number | null
+  improvedAnswer?: string | null
+  missingConcepts?: string | null
+  timeSpentSeconds?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -674,6 +928,13 @@ export type InterviewAnswerUpdateWithoutSessionInput = {
   answerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAccuracy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  clarity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  completeness?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interviewStyle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  improvedAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  missingConcepts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeSpentSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   question?: Prisma.QuestionUpdateOneRequiredWithoutInterviewAnswersNestedInput
@@ -685,6 +946,13 @@ export type InterviewAnswerUncheckedUpdateWithoutSessionInput = {
   answerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAccuracy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  clarity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  completeness?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interviewStyle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  improvedAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  missingConcepts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeSpentSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -695,6 +963,13 @@ export type InterviewAnswerUncheckedUpdateManyWithoutSessionInput = {
   answerText?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiScore?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   aiFeedback?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  technicalAccuracy?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  clarity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  completeness?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  interviewStyle?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  improvedAnswer?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  missingConcepts?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  timeSpentSeconds?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -708,6 +983,13 @@ export type InterviewAnswerSelect<ExtArgs extends runtime.Types.Extensions.Inter
   answerText?: boolean
   aiScore?: boolean
   aiFeedback?: boolean
+  technicalAccuracy?: boolean
+  clarity?: boolean
+  completeness?: boolean
+  interviewStyle?: boolean
+  improvedAnswer?: boolean
+  missingConcepts?: boolean
+  timeSpentSeconds?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   session?: boolean | Prisma.InterviewSessionDefaultArgs<ExtArgs>
@@ -721,6 +1003,13 @@ export type InterviewAnswerSelectCreateManyAndReturn<ExtArgs extends runtime.Typ
   answerText?: boolean
   aiScore?: boolean
   aiFeedback?: boolean
+  technicalAccuracy?: boolean
+  clarity?: boolean
+  completeness?: boolean
+  interviewStyle?: boolean
+  improvedAnswer?: boolean
+  missingConcepts?: boolean
+  timeSpentSeconds?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   session?: boolean | Prisma.InterviewSessionDefaultArgs<ExtArgs>
@@ -734,6 +1023,13 @@ export type InterviewAnswerSelectUpdateManyAndReturn<ExtArgs extends runtime.Typ
   answerText?: boolean
   aiScore?: boolean
   aiFeedback?: boolean
+  technicalAccuracy?: boolean
+  clarity?: boolean
+  completeness?: boolean
+  interviewStyle?: boolean
+  improvedAnswer?: boolean
+  missingConcepts?: boolean
+  timeSpentSeconds?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   session?: boolean | Prisma.InterviewSessionDefaultArgs<ExtArgs>
@@ -747,11 +1043,18 @@ export type InterviewAnswerSelectScalar = {
   answerText?: boolean
   aiScore?: boolean
   aiFeedback?: boolean
+  technicalAccuracy?: boolean
+  clarity?: boolean
+  completeness?: boolean
+  interviewStyle?: boolean
+  improvedAnswer?: boolean
+  missingConcepts?: boolean
+  timeSpentSeconds?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type InterviewAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "questionId" | "answerText" | "aiScore" | "aiFeedback" | "createdAt" | "updatedAt", ExtArgs["result"]["interviewAnswer"]>
+export type InterviewAnswerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sessionId" | "questionId" | "answerText" | "aiScore" | "aiFeedback" | "technicalAccuracy" | "clarity" | "completeness" | "interviewStyle" | "improvedAnswer" | "missingConcepts" | "timeSpentSeconds" | "createdAt" | "updatedAt", ExtArgs["result"]["interviewAnswer"]>
 export type InterviewAnswerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | Prisma.InterviewSessionDefaultArgs<ExtArgs>
   question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
@@ -778,6 +1081,13 @@ export type $InterviewAnswerPayload<ExtArgs extends runtime.Types.Extensions.Int
     answerText: string | null
     aiScore: number | null
     aiFeedback: string | null
+    technicalAccuracy: number | null
+    clarity: number | null
+    completeness: number | null
+    interviewStyle: number | null
+    improvedAnswer: string | null
+    missingConcepts: string | null
+    timeSpentSeconds: number | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["interviewAnswer"]>
@@ -1211,6 +1521,13 @@ export interface InterviewAnswerFieldRefs {
   readonly answerText: Prisma.FieldRef<"InterviewAnswer", 'String'>
   readonly aiScore: Prisma.FieldRef<"InterviewAnswer", 'Int'>
   readonly aiFeedback: Prisma.FieldRef<"InterviewAnswer", 'String'>
+  readonly technicalAccuracy: Prisma.FieldRef<"InterviewAnswer", 'Int'>
+  readonly clarity: Prisma.FieldRef<"InterviewAnswer", 'Int'>
+  readonly completeness: Prisma.FieldRef<"InterviewAnswer", 'Int'>
+  readonly interviewStyle: Prisma.FieldRef<"InterviewAnswer", 'Int'>
+  readonly improvedAnswer: Prisma.FieldRef<"InterviewAnswer", 'String'>
+  readonly missingConcepts: Prisma.FieldRef<"InterviewAnswer", 'String'>
+  readonly timeSpentSeconds: Prisma.FieldRef<"InterviewAnswer", 'Int'>
   readonly createdAt: Prisma.FieldRef<"InterviewAnswer", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"InterviewAnswer", 'DateTime'>
 }
