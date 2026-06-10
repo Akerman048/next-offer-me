@@ -12,8 +12,11 @@ function shuffle<T>(array: T[]) {
 export async function startInterview(formData: FormData) {
   const session = await auth();
 
-  const mode = formData.get("mode") as InterviewMode | null;
+  if (!session?.user?.email) {
+    redirect("/login");
+  }
 
+  const mode = formData.get("mode") as InterviewMode | null;
   const selectedMode = mode ?? InterviewMode.PRACTICE;
 
   const secondsPerQuestion =
@@ -22,10 +25,6 @@ export async function startInterview(formData: FormData) {
       : selectedMode === InterviewMode.REAL
         ? 90
         : 0;
-
-  if (!session?.user?.email) {
-    redirect("/login");
-  }
 
   const user = await prisma.user.findUniqueOrThrow({
     where: {
@@ -75,20 +74,20 @@ export async function startInterview(formData: FormData) {
 
   const selectedQuestions = shuffle(questions).slice(0, questionCount);
 
-const interviewSession = await prisma.interviewSession.create({
-  data: {
-    userId: user.id,
-    level: level || null,
-    questionCount: selectedQuestions.length,
-    durationSeconds,
-    mode: selectedMode,
-    answers: {
-      create: selectedQuestions.map((question) => ({
-        questionId: question.id,
-      })),
+  const interviewSession = await prisma.interviewSession.create({
+    data: {
+      userId: user.id,
+      level: level || null,
+      questionCount: selectedQuestions.length,
+      durationSeconds,
+      mode: selectedMode,
+      answers: {
+        create: selectedQuestions.map((question) => ({
+          questionId: question.id,
+        })),
+      },
     },
-  },
-});
+  });
 
   redirect(`/interview/${interviewSession.id}`);
 }
