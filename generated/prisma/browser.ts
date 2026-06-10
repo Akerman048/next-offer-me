@@ -77,3 +77,8 @@ export type InterviewSession = Prisma.InterviewSessionModel
  * 
  */
 export type InterviewAnswer = Prisma.InterviewAnswerModel
+/**
+ * Model Roadmap
+ * 
+ */
+export type Roadmap = Prisma.RoadmapModel

@@ -395,7 +395,8 @@ export const ModelName = {
   UserProgress: 'UserProgress',
   UserAnswer: 'UserAnswer',
   InterviewSession: 'InterviewSession',
-  InterviewAnswer: 'InterviewAnswer'
+  InterviewAnswer: 'InterviewAnswer',
+  Roadmap: 'Roadmap'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -411,7 +412,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "topic" | "lesson" | "lessonPart" | "question" | "user" | "account" | "session" | "verificationToken" | "userProgress" | "userAnswer" | "interviewSession" | "interviewAnswer"
+    modelProps: "topic" | "lesson" | "lessonPart" | "question" | "user" | "account" | "session" | "verificationToken" | "userProgress" | "userAnswer" | "interviewSession" | "interviewAnswer" | "roadmap"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1303,6 +1304,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Roadmap: {
+      payload: Prisma.$RoadmapPayload<ExtArgs>
+      fields: Prisma.RoadmapFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RoadmapFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoadmapPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RoadmapFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoadmapPayload>
+        }
+        findFirst: {
+          args: Prisma.RoadmapFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoadmapPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RoadmapFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoadmapPayload>
+        }
+        findMany: {
+          args: Prisma.RoadmapFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoadmapPayload>[]
+        }
+        create: {
+          args: Prisma.RoadmapCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoadmapPayload>
+        }
+        createMany: {
+          args: Prisma.RoadmapCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RoadmapCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoadmapPayload>[]
+        }
+        delete: {
+          args: Prisma.RoadmapDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoadmapPayload>
+        }
+        update: {
+          args: Prisma.RoadmapUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoadmapPayload>
+        }
+        deleteMany: {
+          args: Prisma.RoadmapDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RoadmapUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RoadmapUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoadmapPayload>[]
+        }
+        upsert: {
+          args: Prisma.RoadmapUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoadmapPayload>
+        }
+        aggregate: {
+          args: Prisma.RoadmapAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRoadmap>
+        }
+        groupBy: {
+          args: Prisma.RoadmapGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoadmapGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RoadmapCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoadmapCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1505,6 +1580,19 @@ export const InterviewAnswerScalarFieldEnum = {
 } as const
 
 export type InterviewAnswerScalarFieldEnum = (typeof InterviewAnswerScalarFieldEnum)[keyof typeof InterviewAnswerScalarFieldEnum]
+
+
+export const RoadmapScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sessionId: 'sessionId',
+  title: 'title',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoadmapScalarFieldEnum = (typeof RoadmapScalarFieldEnum)[keyof typeof RoadmapScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1763,6 +1851,7 @@ export type GlobalOmitConfig = {
   userAnswer?: Prisma.UserAnswerOmit
   interviewSession?: Prisma.InterviewSessionOmit
   interviewAnswer?: Prisma.InterviewAnswerOmit
+  roadmap?: Prisma.RoadmapOmit
 }
 
 /* Types for Logging */

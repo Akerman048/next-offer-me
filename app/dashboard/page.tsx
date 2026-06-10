@@ -86,6 +86,15 @@ export default async function DashboardPage() {
     return parts.some((part) => part.progress.length > 0)
   })
 
+  const latestRoadmap = await prisma.roadmap.findFirst({
+  where: {
+    userId: user.id,
+  },
+  orderBy: {
+    createdAt: "desc",
+  },
+});
+
   return (
     <main className="mx-auto max-w-5xl p-8">
       <h1 className="mb-2 text-4xl font-bold">Dashboard</h1>
@@ -181,6 +190,54 @@ export default async function DashboardPage() {
       })
     )}
   </div>
+</section>
+
+<section className="mt-8 rounded-xl border p-6 shadow-sm">
+  <div className="mb-4 flex items-center justify-between gap-4">
+    <div>
+      <h2 className="text-2xl font-semibold">Your AI Roadmap</h2>
+      <p className="text-sm text-gray-500">
+        Personalized plan based on your weak interview answers.
+      </p>
+    </div>
+
+    <Link
+      href="/roadmaps"
+      className="rounded-lg border px-4 py-2 text-sm"
+    >
+      View all
+    </Link>
+  </div>
+
+  {!latestRoadmap ? (
+    <div className="rounded-lg bg-slate-100 p-4">
+      <p className="text-sm text-gray-600">
+        You do not have a roadmap yet. Complete an interview and generate your first AI roadmap.
+      </p>
+
+      <Link
+        href="/interview"
+        className="mt-4 inline-block rounded-lg bg-black px-4 py-2 text-sm text-white"
+      >
+        Start interview
+      </Link>
+    </div>
+  ) : (
+    <Link
+      href={`/roadmaps/${latestRoadmap.id}`}
+      className="block rounded-lg bg-slate-100 p-4 transition hover:bg-slate-200"
+    >
+      <h3 className="mb-2 font-semibold">{latestRoadmap.title}</h3>
+
+      <p className="line-clamp-3 text-sm text-gray-600">
+        {latestRoadmap.content}
+      </p>
+
+      <p className="mt-3 text-xs text-gray-500">
+        Created {latestRoadmap.createdAt.toLocaleDateString()}
+      </p>
+    </Link>
+  )}
 </section>
     </main>
   );

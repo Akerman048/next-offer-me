@@ -62,7 +62,8 @@ export const ModelName = {
   UserProgress: 'UserProgress',
   UserAnswer: 'UserAnswer',
   InterviewSession: 'InterviewSession',
-  InterviewAnswer: 'InterviewAnswer'
+  InterviewAnswer: 'InterviewAnswer',
+  Roadmap: 'Roadmap'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -244,6 +245,19 @@ export const InterviewAnswerScalarFieldEnum = {
 } as const
 
 export type InterviewAnswerScalarFieldEnum = (typeof InterviewAnswerScalarFieldEnum)[keyof typeof InterviewAnswerScalarFieldEnum]
+
+
+export const RoadmapScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sessionId: 'sessionId',
+  title: 'title',
+  content: 'content',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoadmapScalarFieldEnum = (typeof RoadmapScalarFieldEnum)[keyof typeof RoadmapScalarFieldEnum]
 
 
 export const SortOrder = {

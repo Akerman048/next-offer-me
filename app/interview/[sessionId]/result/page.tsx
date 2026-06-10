@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
+import { generateRoadmap } from "./actions";
 
 type Props = {
   params: Promise<{
@@ -76,6 +77,17 @@ export default async function InterviewResultPage({ params }: Props) {
       <p className="mb-8 text-xl text-gray-500">
         Average score: {averageScore}/10
       </p>
+
+      <form action={generateRoadmap} className="mb-8">
+  <input type="hidden" name="sessionId" value={interview.id} />
+
+  <button
+    type="submit"
+    className="rounded-lg bg-green-700 px-5 py-3 text-white transition hover:bg-green-800"
+  >
+    Generate roadmap
+  </button>
+</form>
 
       <section className="mb-10">
         <h2 className="mb-4 text-2xl font-semibold">Answers</h2>
