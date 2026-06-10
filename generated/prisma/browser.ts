@@ -82,3 +82,13 @@ export type InterviewAnswer = Prisma.InterviewAnswerModel
  * 
  */
 export type Roadmap = Prisma.RoadmapModel
+/**
+ * Model RoadmapWeek
+ * 
+ */
+export type RoadmapWeek = Prisma.RoadmapWeekModel
+/**
+ * Model RoadmapItem
+ * 
+ */
+export type RoadmapItem = Prisma.RoadmapItemModel

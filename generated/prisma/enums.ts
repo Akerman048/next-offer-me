@@ -9,6 +9,16 @@
 * 🟢 You can import this file directly.
 */
 
+export const RoadmapSection = {
+  TOPICS: 'TOPICS',
+  PRACTICE: 'PRACTICE',
+  PROJECT: 'PROJECT',
+  INTERVIEW: 'INTERVIEW'
+} as const
+
+export type RoadmapSection = (typeof RoadmapSection)[keyof typeof RoadmapSection]
+
+
 export const InterviewStatus = {
   IN_PROGRESS: 'IN_PROGRESS',
   COMPLETED: 'COMPLETED'

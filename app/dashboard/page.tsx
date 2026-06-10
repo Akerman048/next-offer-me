@@ -230,7 +230,8 @@ export default async function DashboardPage() {
       <h3 className="mb-2 font-semibold">{latestRoadmap.title}</h3>
 
       <p className="line-clamp-3 text-sm text-gray-600">
-        {latestRoadmap.content}
+       {latestRoadmap.summary ??
+  "Personalized roadmap based on your weak interview answers."}
       </p>
 
       <p className="mt-3 text-xs text-gray-500">

@@ -25,6 +25,8 @@ export default async function RoadmapsPage() {
     },
   });
 
+  
+
   return (
     <main className="mx-auto max-w-5xl p-8">
       <div className="mb-8 flex items-center justify-between gap-4">
@@ -68,7 +70,7 @@ export default async function RoadmapsPage() {
               <h2 className="mb-2 text-xl font-semibold">{roadmap.title}</h2>
 
               <p className="line-clamp-4 text-sm text-gray-500">
-                {roadmap.content}
+                {roadmap.summary ?? "Personalized roadmap based on your weak interview answers."}
               </p>
 
               <p className="mt-4 text-xs text-gray-500">

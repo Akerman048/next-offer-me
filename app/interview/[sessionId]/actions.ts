@@ -71,9 +71,14 @@ Return only JSON:
     ],
   });
 
-  const raw = aiResponse.choices[0]?.message?.content ?? "{}";
+const raw = aiResponse.choices[0]?.message?.content ?? "{}";
 
-const result = JSON.parse(raw) as {
+const cleaned = raw
+  .replace(/```json/g, "")
+  .replace(/```/g, "")
+  .trim();
+
+const result = JSON.parse(cleaned) as {
   score: number;
   technicalAccuracy: number;
   clarity: number;
@@ -119,15 +124,23 @@ export async function finishInterview(formData: FormData) {
     },
   });
 
-  await prisma.interviewSession.update({
-    where: {
-      id: sessionId,
-      userId: user.id,
-    },
-    data: {
-      status: "COMPLETED",
-    },
-  });
+  const interview = await prisma.interviewSession.findFirstOrThrow({
+  where: {
+    id: sessionId,
+    userId: user.id,
+  },
+});
+
+await prisma.interviewSession.update({
+  where: {
+    id: interview.id,
+  },
+  data: {
+    status: "COMPLETED",
+  },
+});
 
   redirect(`/interview/${sessionId}/result`);
 }
+
+

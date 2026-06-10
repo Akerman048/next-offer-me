@@ -51,6 +51,10 @@ export async function generateRoadmap(formData: FormData) {
     },
   });
 
+  if (interview.answers.length === 0) {
+  redirect(`/interview/${sessionId}/result`);
+}
+
   const weakAnswersText = interview.answers
     .map((answer) => {
       const question = answer.question;
@@ -70,74 +74,107 @@ Missing concepts: ${answer.missingConcepts ?? ""}
     })
     .join("\n---\n");
 
-  const aiResponse = await openai.chat.completions.create({
-    model: "gpt-4.1-mini",
-    messages: [
-      {
-        role: "system",
-        content:
-          "You are an expert programming mentor. Create a practical learning roadmap based on weak interview answers.",
-      },
-      {
-        role: "user",
-        content: `Create a clean 4-week learning roadmap based on these weak interview answers.
+const aiResponse = await openai.chat.completions.create({
+  model: "gpt-4.1-mini",
+  messages: [
+    {
+      role: "system",
+      content:
+        "You are an expert programming mentor. Return raw JSON only. Do not use markdown.",
+    },
+    {
+      role: "user",
+      content: `
+Create a 4-week learning roadmap based on these weak answers.
 
 Weak answers:
 ${weakAnswersText}
 
-Return Markdown only.
+Return only JSON in this format:
 
-Use this exact structure:
+{
+  "title": "Interview improvement roadmap",
+  "summary": "Short roadmap explanation",
+  "weeks": [
+    {
+      "weekNumber": 1,
+      "title": "Foundation",
+      "goal": "Short goal",
+      "description": "Short description",
+      "topics": ["topic 1", "topic 2"],
+      "practice": ["task 1", "task 2"],
+      "project": ["mini project task"],
+      "interview": ["what to explain before interview"]
+    }
+  ]
+}
 
-# 4-Week Learning Roadmap
-
-## Week 1: Title
-
-### Goal
-Short goal for the week.
-
-### Topics to review
-- Topic 1
-- Topic 2
-- Topic 3
-
-### Practice tasks
-- Task 1
-- Task 2
-- Task 3
-
-### Mini project
-Short project idea.
-
-### Before next interview
-- What to repeat
-- What to explain out loud
-
----
-
-## Week 2: Title
-
-Use the same structure for Week 2, Week 3 and Week 4.
-
-Make it concise, readable, and practical.
-Do not write long paragraphs.
-Do not use tables.
+Create exactly 4 weeks.
+Keep every item short and practical.
 `,
-      },
-    ],
-  });
-
-  const content =
-    aiResponse.choices[0]?.message?.content ?? "No roadmap generated.";
-
-  const roadmap = await prisma.roadmap.create({
-    data: {
-      userId: user.id,
-      sessionId: interview.id,
-      title: "Interview improvement roadmap",
-      content,
     },
-  });
+  ],
+});
+
+  
+    const raw = aiResponse.choices[0]?.message?.content ?? "{}";
+
+const cleaned = raw
+  .replace(/```json/g, "")
+  .replace(/```/g, "")
+  .trim();
+
+const result = JSON.parse(cleaned) as {
+  title: string;
+  summary: string;
+  weeks: {
+    weekNumber: number;
+    title: string;
+    goal: string;
+    description: string;
+    topics: string[];
+    practice: string[];
+    project: string[];
+    interview: string[];
+  }[];
+};
+
+const roadmap = await prisma.roadmap.create({
+  data: {
+    userId: user.id,
+    sessionId: interview.id,
+    title: result.title,
+    summary: result.summary,
+    weeks: {
+      create: result.weeks.map((week) => ({
+        weekNumber: week.weekNumber,
+        title: week.title,
+        goal: week.goal,
+        description: week.description,
+        items: {
+          create: [
+            ...week.topics.map((text) => ({
+              section: "TOPICS" as const,
+              text,
+            })),
+            ...week.practice.map((text) => ({
+              section: "PRACTICE" as const,
+              text,
+            })),
+            ...week.project.map((text) => ({
+              section: "PROJECT" as const,
+              text,
+            })),
+            ...week.interview.map((text) => ({
+              section: "INTERVIEW" as const,
+              text,
+            })),
+          ],
+        },
+      })),
+    },
+  },
+});
 
   redirect(`/roadmaps/${roadmap.id}`);
 }

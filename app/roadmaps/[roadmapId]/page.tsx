@@ -1,8 +1,8 @@
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { notFound, redirect } from "next/navigation";
-import MarkdownContent from "@/components/ui/MarkdownContent";
 import Link from "next/link";
+import RoadmapColumn from "@/components/roadmaps/RoadmapColumn";
 
 type Props = {
   params: Promise<{
@@ -25,12 +25,22 @@ export default async function RoadmapPage({ params }: Props) {
     },
   });
 
-  const roadmap = await prisma.roadmap.findFirst({
-    where: {
-      id: roadmapId,
-      userId: user.id,
+const roadmap = await prisma.roadmap.findFirst({
+  where: {
+    id: roadmapId,
+    userId: user.id,
+  },
+  include: {
+    weeks: {
+      orderBy: {
+        weekNumber: "asc",
+      },
+      include: {
+        items: true,
+      },
     },
-  });
+  },
+});
 
   if (!roadmap) {
     notFound();
@@ -89,8 +99,79 @@ export default async function RoadmapPage({ params }: Props) {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-slate-800 bg-white p-8 text-slate-900 shadow-lg">
-          <MarkdownContent content={roadmap.content} />
+        <section className="space-y-6">
+         {roadmap.weeks.map((week) => {
+  const completed = week.items.filter((item) => item.completed).length;
+  const total = week.items.length;
+  const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+  const topics = week.items.filter((item) => item.section === "TOPICS");
+  const practice = week.items.filter((item) => item.section === "PRACTICE");
+  const project = week.items.filter((item) => item.section === "PROJECT");
+  const interview = week.items.filter((item) => item.section === "INTERVIEW");
+
+  return (
+    <section
+      key={week.id}
+      className="mb-6 rounded-2xl border border-slate-800 bg-slate-900 p-6"
+    >
+      <div className="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <p className="mb-2 text-sm text-green-400">
+            Week {week.weekNumber}
+          </p>
+
+          <h2 className="text-2xl font-bold text-white">
+            {week.title}
+          </h2>
+
+          <p className="mt-2 text-sm text-slate-400">
+            {week.description}
+          </p>
+        </div>
+
+        <div className="min-w-40">
+          <p className="mb-2 text-sm text-slate-400">
+            {completed} / {total} completed
+          </p>
+
+          <div className="h-2 rounded-full bg-slate-800">
+            <div
+              className="h-2 rounded-full bg-green-500"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-4">
+        <RoadmapColumn
+          title="Topics to review"
+          items={topics}
+          roadmapId={roadmap.id}
+        />
+
+        <RoadmapColumn
+          title="Practice tasks"
+          items={practice}
+          roadmapId={roadmap.id}
+        />
+
+        <RoadmapColumn
+          title="Mini project"
+          items={project}
+          roadmapId={roadmap.id}
+        />
+
+        <RoadmapColumn
+          title="Before next interview"
+          items={interview}
+          roadmapId={roadmap.id}
+        />
+      </div>
+    </section>
+  );
+})}
         </section>
       </div>
     </main>

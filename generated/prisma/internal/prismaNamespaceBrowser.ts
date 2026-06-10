@@ -63,7 +63,9 @@ export const ModelName = {
   UserAnswer: 'UserAnswer',
   InterviewSession: 'InterviewSession',
   InterviewAnswer: 'InterviewAnswer',
-  Roadmap: 'Roadmap'
+  Roadmap: 'Roadmap',
+  RoadmapWeek: 'RoadmapWeek',
+  RoadmapItem: 'RoadmapItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -252,12 +254,39 @@ export const RoadmapScalarFieldEnum = {
   userId: 'userId',
   sessionId: 'sessionId',
   title: 'title',
-  content: 'content',
+  summary: 'summary',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type RoadmapScalarFieldEnum = (typeof RoadmapScalarFieldEnum)[keyof typeof RoadmapScalarFieldEnum]
+
+
+export const RoadmapWeekScalarFieldEnum = {
+  id: 'id',
+  roadmapId: 'roadmapId',
+  weekNumber: 'weekNumber',
+  title: 'title',
+  goal: 'goal',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoadmapWeekScalarFieldEnum = (typeof RoadmapWeekScalarFieldEnum)[keyof typeof RoadmapWeekScalarFieldEnum]
+
+
+export const RoadmapItemScalarFieldEnum = {
+  id: 'id',
+  weekId: 'weekId',
+  section: 'section',
+  text: 'text',
+  completed: 'completed',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoadmapItemScalarFieldEnum = (typeof RoadmapItemScalarFieldEnum)[keyof typeof RoadmapItemScalarFieldEnum]
 
 
 export const SortOrder = {
