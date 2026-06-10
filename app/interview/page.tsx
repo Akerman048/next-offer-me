@@ -11,16 +11,21 @@ export default async function InterviewPage() {
 
   return (
     <main className="mx-auto max-w-3xl p-8">
-      <h1 className="mb-8 text-4xl font-bold">Interview Mode</h1>
+      <h1 className="mb-8 text-4xl font-bold">Interview Training</h1>
 
-      <form
-        action={startInterview}
-        className="rounded-xl border p-6 shadow-sm"
-      >
+      <form action={startInterview} className="rounded-xl border p-6 shadow-sm">
+        <div className="mb-4">
+          <label className="mb-2 block font-medium">Mode</label>
+
+          <select name="mode" className="w-full rounded-lg border p-3">
+            <option value="PRACTICE">Practice · no pressure</option>
+            <option value="REAL">Real interview · 90 sec/question</option>
+            <option value="HARD">Hard mode · 60 sec/question</option>
+          </select>
+        </div>
+
         <div className="mb-6">
-          <label className="mb-2 block font-medium">
-            Topics
-          </label>
+          <label className="mb-2 block font-medium">Topics</label>
 
           <p className="mb-3 text-sm text-gray-500">
             Leave empty to use all topics.
@@ -29,12 +34,7 @@ export default async function InterviewPage() {
           <div className="grid gap-2 sm:grid-cols-2">
             {topics.map((topic) => (
               <label key={topic.id} className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  name="topics"
-                  value={topic.slug}
-                />
-
+                <input type="checkbox" name="topics" value={topic.slug} />
                 {topic.name}
               </label>
             ))}
@@ -44,10 +44,7 @@ export default async function InterviewPage() {
         <div className="mb-4">
           <label className="mb-2 block font-medium">Level</label>
 
-          <select
-            name="level"
-            className="w-full rounded-lg border p-3"
-          >
+          <select name="level" className="w-full rounded-lg border p-3">
             <option value="">All levels</option>
             <option value={Level.JUNIOR}>Junior</option>
             <option value={Level.MIDDLE}>Middle</option>
@@ -56,9 +53,7 @@ export default async function InterviewPage() {
         </div>
 
         <div className="mb-6">
-          <label className="mb-2 block font-medium">
-            Number of questions
-          </label>
+          <label className="mb-2 block font-medium">Number of questions</label>
 
           <select
             name="questionCount"

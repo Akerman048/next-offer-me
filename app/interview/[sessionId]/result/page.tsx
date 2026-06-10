@@ -60,11 +60,13 @@ export default async function InterviewResultPage({ params }: Props) {
 
   const averageScore =
     scores.length > 0
-      ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length)
+      ? Math.round(
+          scores.reduce((sum, score) => sum + score, 0) / scores.length,
+        )
       : 0;
 
   const weakAnswers = interview.answers.filter(
-    (answer) => answer.aiScore !== null && answer.aiScore < 7,
+    (answer) => answer.aiScore !== null && answer.aiScore < 8,
   );
 
   return (
@@ -86,35 +88,88 @@ export default async function InterviewResultPage({ params }: Props) {
             const topic = lesson.topic;
 
             return (
-              <article
-                key={answer.id}
-                className="rounded-xl border p-5 shadow-sm"
-              >
-                <div className="mb-2 flex items-center justify-between">
-                  <h3 className="font-semibold">{question.title}</h3>
+<article
+  key={answer.id}
+  className="rounded-xl border p-5 shadow-sm"
+>
+  <div className="mb-3 flex items-center justify-between gap-4">
+    <div>
+      <h3 className="font-semibold">{question.title}</h3>
 
-                  <span className="rounded-full bg-slate-800 px-3 py-1 text-sm text-white">
-                    {answer.aiScore ?? 0}/10
-                  </span>
-                </div>
+      <p className="mt-1 text-sm text-gray-500">
+        {topic.name} / {lesson.title} / {part.title}
+      </p>
+    </div>
 
-                <p className="mb-2 text-sm text-gray-500">
-                  {topic.name} / {lesson.title} / {part.title}
-                </p>
+    <span className="shrink-0 rounded-full bg-slate-800 px-3 py-1 text-sm text-white">
+      {answer.aiScore ?? 0}/10
+    </span>
+  </div>
 
-                {answer.aiFeedback && (
-                  <p className="mb-4 text-sm text-gray-600">
-                    {answer.aiFeedback}
-                  </p>
-                )}
+  <div className="grid gap-2 sm:grid-cols-4">
+    <p className="rounded-lg bg-slate-800 p-2 text-sm text-white">
+      Accuracy: {answer.technicalAccuracy ?? 0}/10
+    </p>
 
-                <Link
-                  href={`/topics/${topic.slug}/${lesson.slug}/${part.id}`}
-                  className="inline-block rounded-lg bg-black px-4 py-2 text-sm text-white"
-                >
-                  Review lesson
-                </Link>
-              </article>
+    <p className="rounded-lg bg-slate-800 p-2 text-sm text-white">
+      Clarity: {answer.clarity ?? 0}/10
+    </p>
+
+    <p className="rounded-lg bg-slate-800 p-2 text-sm text-white">
+      Complete: {answer.completeness ?? 0}/10
+    </p>
+
+    <p className="rounded-lg bg-slate-800 p-2 text-sm text-white">
+      Style: {answer.interviewStyle ?? 0}/10
+    </p>
+  </div>
+
+  {answer.timeSpentSeconds !== null && (
+    <p className="mt-3 text-sm text-gray-500">
+      Time spent: {answer.timeSpentSeconds}s
+    </p>
+  )}
+
+  <details className="mt-4 rounded-xl border p-4">
+    <summary className="cursor-pointer font-medium">
+      View detailed feedback
+    </summary>
+
+    <div className="mt-4 space-y-4">
+      {answer.aiFeedback && (
+        <div>
+          <h4 className="mb-1 font-semibold">Feedback</h4>
+          <p className="text-sm text-gray-600">{answer.aiFeedback}</p>
+        </div>
+      )}
+
+      {answer.improvedAnswer && (
+        <div className="rounded-lg bg-green-950 p-4">
+          <h4 className="mb-2 font-semibold text-white">
+            Improved answer
+          </h4>
+          <p className="text-sm text-white">{answer.improvedAnswer}</p>
+        </div>
+      )}
+
+      {answer.missingConcepts && (
+        <div className="rounded-lg bg-red-900 p-4">
+          <h4 className="mb-2 font-semibold text-white">
+            Missing concepts
+          </h4>
+          <p className="text-sm text-white">{answer.missingConcepts}</p>
+        </div>
+      )}
+
+      <Link
+        href={`/topics/${topic.slug}/${lesson.slug}/${part.id}`}
+        className="inline-block rounded-lg bg-black px-4 py-2 text-sm text-white"
+      >
+        Review lesson
+      </Link>
+    </div>
+  </details>
+</article>
             );
           })}
         </div>

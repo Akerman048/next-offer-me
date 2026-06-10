@@ -2,8 +2,9 @@ import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
-import { submitInterviewAnswer, finishInterview } from "./actions";
+import { finishInterview } from "./actions";
 import MarkdownContent from "@/components/ui/MarkdownContent";
+import InterviewAnswerForm from "@/components/interview/InterviewAnswerForm";
 
 type Props = {
   params: Promise<{
@@ -129,32 +130,17 @@ export default async function InterviewSessionPage({ params }: Props) {
         <MarkdownContent content={question.prompt} />{" "}
       </section>
 
-      <form action={submitInterviewAnswer} className="rounded-xl border p-6">
-        <input
-          type="hidden"
-          name="interviewAnswerId"
-          value={currentAnswer.id}
-        />
-
-        <input type="hidden" name="sessionId" value={interview.id} />
-
-        <label className="mb-2 block font-medium">Your answer</label>
-
-        <textarea
-          name="answerText"
-          required
-          rows={8}
-          placeholder="Type your answer like in a real interview..."
-          className="mb-4 w-full rounded-lg border p-3"
-        />
-
-        <button
-          type="submit"
-          className="rounded-lg bg-black px-5 py-3 text-white"
-        >
-          Submit answer
-        </button>
-      </form>
+<InterviewAnswerForm
+  interviewAnswerId={currentAnswer.id}
+  sessionId={interview.id}
+  secondsLimit={
+    interview.mode === "HARD"
+      ? 60
+      : interview.mode === "REAL"
+        ? 90
+        : 0
+  }
+/>
     </main>
   );
 }

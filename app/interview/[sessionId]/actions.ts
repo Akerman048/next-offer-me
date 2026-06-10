@@ -16,6 +16,7 @@ export async function submitInterviewAnswer(formData: FormData) {
   const interviewAnswerId = formData.get("interviewAnswerId") as string;
   const answerText = formData.get("answerText") as string;
   const sessionId = formData.get("sessionId") as string;
+  const timeSpentSeconds = Number(formData.get("timeSpentSeconds") || 0);
 
   const user = await prisma.user.findUniqueOrThrow({
     where: {
@@ -41,21 +42,29 @@ export async function submitInterviewAnswer(formData: FormData) {
       {
         role: "system",
         content:
-          "You are a strict but helpful technical interviewer. Return only valid JSON.",
+          "You are a strict but helpful technical interviewer. Return raw JSON only. Do not use markdown. Do not wrap the response in ```json or ```.",
       },
       {
         role: "user",
-        content: `
+content: `
 Question:
 ${interviewAnswer.question.prompt}
 
 User answer:
 ${answerText}
 
+Time spent: ${timeSpentSeconds} seconds
+
 Return only JSON:
 {
   "score": number,
-  "feedback": string
+  "technicalAccuracy": number,
+  "clarity": number,
+  "completeness": number,
+  "interviewStyle": number,
+  "feedback": string,
+  "improvedAnswer": string,
+  "missingConcepts": string[]
 }
 `,
       },
@@ -64,31 +73,56 @@ Return only JSON:
 
   const raw = aiResponse.choices[0]?.message?.content ?? "{}";
 
-  const result = JSON.parse(raw) as {
-    score: number;
-    feedback: string;
-  };
+const result = JSON.parse(raw) as {
+  score: number;
+  technicalAccuracy: number;
+  clarity: number;
+  completeness: number;
+  interviewStyle: number;
+  feedback: string;
+  improvedAnswer: string;
+  missingConcepts: string[];
+};
 
-  await prisma.interviewAnswer.update({
-    where: {
-      id: interviewAnswer.id,
-    },
-    data: {
-      answerText,
-      aiScore: result.score,
-      aiFeedback: result.feedback,
-    },
-  });
+await prisma.interviewAnswer.update({
+  where: {
+    id: interviewAnswer.id,
+  },
+  data: {
+    answerText,
+    aiScore: result.score,
+    aiFeedback: result.feedback,
+    technicalAccuracy: result.technicalAccuracy,
+    clarity: result.clarity,
+    completeness: result.completeness,
+    interviewStyle: result.interviewStyle,
+    improvedAnswer: result.improvedAnswer,
+    missingConcepts: result.missingConcepts.join(", "),
+    timeSpentSeconds,
+  },
+});
 
   revalidatePath(`/interview/${sessionId}`);
 }
-
 export async function finishInterview(formData: FormData) {
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    redirect("/login");
+  }
+
   const sessionId = formData.get("sessionId") as string;
+
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      email: session.user.email,
+    },
+  });
 
   await prisma.interviewSession.update({
     where: {
       id: sessionId,
+      userId: user.id,
     },
     data: {
       status: "COMPLETED",
