@@ -52,12 +52,20 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   Topic: 'Topic',
+  Lesson: 'Lesson',
+  LessonPart: 'LessonPart',
   Question: 'Question',
   User: 'User',
   Account: 'Account',
   Session: 'Session',
   VerificationToken: 'VerificationToken',
-  UserProgress: 'UserProgress'
+  UserProgress: 'UserProgress',
+  UserAnswer: 'UserAnswer',
+  InterviewSession: 'InterviewSession',
+  InterviewAnswer: 'InterviewAnswer',
+  Roadmap: 'Roadmap',
+  RoadmapWeek: 'RoadmapWeek',
+  RoadmapItem: 'RoadmapItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -87,13 +95,40 @@ export const TopicScalarFieldEnum = {
 export type TopicScalarFieldEnum = (typeof TopicScalarFieldEnum)[keyof typeof TopicScalarFieldEnum]
 
 
-export const QuestionScalarFieldEnum = {
+export const LessonScalarFieldEnum = {
   id: 'id',
   topicId: 'topicId',
   title: 'title',
-  answer: 'answer',
-  explanation: 'explanation',
+  slug: 'slug',
+  description: 'description',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof LessonScalarFieldEnum]
+
+
+export const LessonPartScalarFieldEnum = {
+  id: 'id',
+  lessonId: 'lessonId',
+  title: 'title',
+  content: 'content',
+  order: 'order',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type LessonPartScalarFieldEnum = (typeof LessonPartScalarFieldEnum)[keyof typeof LessonPartScalarFieldEnum]
+
+
+export const QuestionScalarFieldEnum = {
+  id: 'id',
+  lessonPartId: 'lessonPartId',
+  title: 'title',
+  prompt: 'prompt',
   level: 'level',
+  order: 'order',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -154,13 +189,105 @@ export type VerificationTokenScalarFieldEnum = (typeof VerificationTokenScalarFi
 export const UserProgressScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  questionId: 'questionId',
+  lessonPartId: 'lessonPartId',
   completed: 'completed',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserProgressScalarFieldEnum = (typeof UserProgressScalarFieldEnum)[keyof typeof UserProgressScalarFieldEnum]
+
+
+export const UserAnswerScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  questionId: 'questionId',
+  questionText: 'questionText',
+  answerText: 'answerText',
+  aiFeedback: 'aiFeedback',
+  aiScore: 'aiScore',
+  aiRoadmap: 'aiRoadmap',
+  createdAt: 'createdAt'
+} as const
+
+export type UserAnswerScalarFieldEnum = (typeof UserAnswerScalarFieldEnum)[keyof typeof UserAnswerScalarFieldEnum]
+
+
+export const InterviewSessionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  level: 'level',
+  questionCount: 'questionCount',
+  durationSeconds: 'durationSeconds',
+  mode: 'mode',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InterviewSessionScalarFieldEnum = (typeof InterviewSessionScalarFieldEnum)[keyof typeof InterviewSessionScalarFieldEnum]
+
+
+export const InterviewAnswerScalarFieldEnum = {
+  id: 'id',
+  sessionId: 'sessionId',
+  questionId: 'questionId',
+  answerText: 'answerText',
+  aiScore: 'aiScore',
+  aiFeedback: 'aiFeedback',
+  evaluationStatus: 'evaluationStatus',
+  technicalAccuracy: 'technicalAccuracy',
+  clarity: 'clarity',
+  completeness: 'completeness',
+  interviewStyle: 'interviewStyle',
+  improvedAnswer: 'improvedAnswer',
+  missingConcepts: 'missingConcepts',
+  timeSpentSeconds: 'timeSpentSeconds',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InterviewAnswerScalarFieldEnum = (typeof InterviewAnswerScalarFieldEnum)[keyof typeof InterviewAnswerScalarFieldEnum]
+
+
+export const RoadmapScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  sessionId: 'sessionId',
+  title: 'title',
+  summary: 'summary',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoadmapScalarFieldEnum = (typeof RoadmapScalarFieldEnum)[keyof typeof RoadmapScalarFieldEnum]
+
+
+export const RoadmapWeekScalarFieldEnum = {
+  id: 'id',
+  roadmapId: 'roadmapId',
+  weekNumber: 'weekNumber',
+  title: 'title',
+  goal: 'goal',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoadmapWeekScalarFieldEnum = (typeof RoadmapWeekScalarFieldEnum)[keyof typeof RoadmapWeekScalarFieldEnum]
+
+
+export const RoadmapItemScalarFieldEnum = {
+  id: 'id',
+  weekId: 'weekId',
+  section: 'section',
+  text: 'text',
+  completed: 'completed',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type RoadmapItemScalarFieldEnum = (typeof RoadmapItemScalarFieldEnum)[keyof typeof RoadmapItemScalarFieldEnum]
 
 
 export const SortOrder = {

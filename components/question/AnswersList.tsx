@@ -1,0 +1,56 @@
+import type { UserAnswer } from "@/generated/prisma/client";
+
+import { evaluateAnswer } from "@/app/topics/[slug]/[lessonSlug]/[partId]/actions";
+
+type Props = {
+  answers: UserAnswer[];
+  path: string;
+};
+
+export default function AnswersList({ answers, path }: Props) {
+  return (
+    <section className="mt-10">
+      <h2 className="mb-4 text-xl font-semibold">Your answers</h2>
+
+      {answers.length > 0 ? (
+        answers.map((answer) => (
+          <div key={answer.id} className="mb-4 rounded-xl border p-4">
+            <p className="mb-2">{answer.answerText}</p>
+
+            {!answer.aiFeedback ? (
+              <form action={evaluateAnswer} className="mt-4">
+                <input type="hidden" name="answerId" value={answer.id} />
+                <input type="hidden" name="path" value={path} />
+
+                <button
+                  type="submit"
+                  className="rounded-lg bg-black px-4 py-2 text-white transition hover:bg-neutral-800"
+                >
+                  Get AI feedback
+                </button>
+              </form>
+            ) : (
+              <>
+                <p className="text-gray-600">{answer.aiFeedback}</p>
+
+                {answer.aiScore !== null && (
+                  <p className="mt-2 font-medium">Score: {answer.aiScore}/10</p>
+                )}
+
+                {answer.aiRoadmap && (
+                  <pre className="mt-3 whitespace-pre-wrap rounded-lg bg-gray-800 p-3 text-sm">
+                    {answer.aiRoadmap}
+                  </pre>
+                )}
+              </>
+            )}
+          </div>
+        ))
+      ) : (
+        <p className="text-gray-500">
+          You haven&apos;t submitted any answers yet.
+        </p>
+      )}
+    </section>
+  );
+}

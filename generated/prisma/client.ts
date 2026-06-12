@@ -47,6 +47,16 @@ export { Prisma }
  */
 export type Topic = Prisma.TopicModel
 /**
+ * Model Lesson
+ * 
+ */
+export type Lesson = Prisma.LessonModel
+/**
+ * Model LessonPart
+ * 
+ */
+export type LessonPart = Prisma.LessonPartModel
+/**
  * Model Question
  * 
  */
@@ -76,3 +86,33 @@ export type VerificationToken = Prisma.VerificationTokenModel
  * 
  */
 export type UserProgress = Prisma.UserProgressModel
+/**
+ * Model UserAnswer
+ * 
+ */
+export type UserAnswer = Prisma.UserAnswerModel
+/**
+ * Model InterviewSession
+ * 
+ */
+export type InterviewSession = Prisma.InterviewSessionModel
+/**
+ * Model InterviewAnswer
+ * 
+ */
+export type InterviewAnswer = Prisma.InterviewAnswerModel
+/**
+ * Model Roadmap
+ * 
+ */
+export type Roadmap = Prisma.RoadmapModel
+/**
+ * Model RoadmapWeek
+ * 
+ */
+export type RoadmapWeek = Prisma.RoadmapWeekModel
+/**
+ * Model RoadmapItem
+ * 
+ */
+export type RoadmapItem = Prisma.RoadmapItemModel

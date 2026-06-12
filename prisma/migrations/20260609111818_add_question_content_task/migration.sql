@@ -1,0 +1,10 @@
+/*
+  Warnings:
+
+  - Added the required column `content` to the `Question` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- AlterTable
+ALTER TABLE "Question" ADD COLUMN     "content" TEXT NOT NULL,
+ADD COLUMN     "expectedAnswer" TEXT,
+ADD COLUMN     "task" TEXT;

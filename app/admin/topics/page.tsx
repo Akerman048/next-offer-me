@@ -10,7 +10,7 @@ export default async function AdminTopicsPage() {
     include: {
       _count: {
         select: {
-          questions: true,
+          lessons: true,
         },
       },
     },
@@ -22,22 +22,24 @@ export default async function AdminTopicsPage() {
 
       <form
         action={createTopic}
-        className="mb-10 rounded-xl border p-6 shadow-sm"
+        className="mb-10 rounded-2xl border border-border bg-card p-6 shadow-sm"
       >
         <div className="mb-4">
-          <label className="mb-2 block font-medium">Topic name</label>
+          <label className="mb-2 block font-medium text-gray-200">
+            Topic name
+          </label>
 
           <input
             name="name"
             required
             placeholder="React"
-            className="w-full rounded-lg border p-3"
+            className="w-full rounded-xl border border-border bg-background p-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary"
           />
         </div>
 
         <button
           type="submit"
-          className="rounded-lg bg-black px-5 py-3 text-white transition hover:opacity-80"
+          className="rounded-xl bg-primary px-5 py-3 font-semibold text-primary-foreground transition hover:scale-[1.02]"
         >
           Create Topic
         </button>
@@ -50,21 +52,23 @@ export default async function AdminTopicsPage() {
           {topics.map((topic) => (
             <article
               key={topic.id}
-              className="rounded-xl border p-5 shadow-sm"
+              className="rounded-2xl border border-border bg-card p-5 shadow-sm"
             >
               <div className="mb-3 flex items-start justify-between gap-4">
                 <div>
                   <h3 className="font-semibold">{topic.name}</h3>
-                  <p className="text-sm text-gray-500">/{topic.slug}</p>
-                  <p className="text-sm text-gray-500">
-                    Questions: {topic._count.questions}
+
+                  <p className="text-sm text-muted">/{topic.slug}</p>
+
+                  <p className="text-sm text-muted">
+                    Lessons: {topic._count.lessons}
                   </p>
                 </div>
 
                 <div className="flex gap-2">
                   <Link
                     href={`/admin/topics/${topic.id}/edit`}
-                    className="rounded-lg bg-gray-100 px-4 py-2 text-sm transition hover:bg-gray-200"
+                    className="rounded-xl bg-secondary px-4 py-2 text-sm transition hover:bg-card-hover"
                   >
                     Edit
                   </Link>
@@ -74,7 +78,7 @@ export default async function AdminTopicsPage() {
 
                     <button
                       type="submit"
-                      className="rounded-lg bg-red-600 px-4 py-2 text-sm text-white transition hover:opacity-80"
+                      className="rounded-xl bg-danger px-4 py-2 text-sm font-medium text-gray-100 transition hover:scale-[1.02]"
                     >
                       Delete
                     </button>

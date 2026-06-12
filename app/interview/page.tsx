@@ -1,112 +1,122 @@
-import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { Level } from "@/generated/prisma/enums";
+import { startInterview } from "./actions";
 
-type Props = {
-  searchParams: Promise<{
-    topic?: string;
-    level?: Level;
-  }>;
-};
-
-export default async function InterviewPage({ searchParams }: Props) {
-  const { topic, level } = await searchParams;
-
+export default async function InterviewPage() {
   const topics = await prisma.topic.findMany({
     orderBy: {
       name: "asc",
     },
   });
 
- const questions = await prisma.question.findMany({
-  where: {
-    topic: topic
-      ? {
-          slug: topic,
-        }
-      : undefined,
-    level: level || undefined,
-  },
-  include: {
-    topic: true,
-  },
-  take: 1,
-});
-
-const randomQuestion = questions[0];
-
   return (
-    <main className="mx-auto max-w-4xl p-8">
-      <h1 className="mb-8 text-4xl font-bold">Interview Mode</h1>
-
-      <form className="mb-8 grid gap-4 md:grid-cols-3">
-        <select
-          name="topic"
-          defaultValue={topic ?? ""}
-          className="rounded-lg border p-3"
-        >
-          <option value="">All topics</option>
-
-          {topics.map((topic) => (
-            <option key={topic.id} value={topic.slug}>
-              {topic.name}
-            </option>
-          ))}
-        </select>
-
-        <select
-          name="level"
-          defaultValue={level ?? ""}
-          className="rounded-lg border p-3"
-        >
-          <option value="">All levels</option>
-          <option value={Level.JUNIOR}>Junior</option>
-          <option value={Level.MIDDLE}>Middle</option>
-          <option value={Level.SENIOR}>Senior</option>
-        </select>
-
-        <button
-          type="submit"
-          className="rounded-lg bg-black px-5 py-3 text-white"
-        >
-          Start
-        </button>
-      </form>
-
-      {!randomQuestion ? (
-        <p className="text-gray-500">No questions found.</p>
-      ) : (
-        <section className="rounded-xl border p-6 shadow-sm">
-          <p className="mb-2 text-sm text-gray-500">
-            {randomQuestion.topic.name} · {randomQuestion.level}
+    <main className="min-h-screen bg-background px-4 py-8 text-foreground">
+      <div className="mx-auto max-w-4xl">
+        <section className="mb-8 rounded-3xl border border-border bg-card p-8 shadow-2xl">
+          <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-muted">
+            Mock interview
           </p>
 
-          <h2 className="mb-6 text-2xl font-semibold">
-            {randomQuestion.title}
-          </h2>
+          <h1 className="text-5xl font-bold tracking-tight">
+            Interview Training
+          </h1>
 
-          <details className="mb-6 rounded-xl border p-5">
-            <summary className="cursor-pointer font-medium">
-              Show answer
-            </summary>
-
-            <p className="mt-4">{randomQuestion.answer}</p>
-
-            {randomQuestion.explanation && (
-              <p className="mt-4 text-gray-600">
-                {randomQuestion.explanation}
-              </p>
-            )}
-          </details>
-
-          <Link
-            href={`/topics/${randomQuestion.topic.slug}/${randomQuestion.id}`}
-            className="rounded-lg bg-black px-5 py-3 text-white"
-          >
-            Open full question
-          </Link>
+          <p className="mt-4 max-w-2xl text-muted">
+            Choose your mode, topics, level, and question count. Your answers
+            will be evaluated by AI after the interview.
+          </p>
         </section>
-      )}
+
+        <form
+          action={startInterview}
+          className="rounded-3xl border border-border bg-card p-6 shadow-xl"
+        >
+          <div className="mb-6 rounded-2xl border border-border bg-background p-5">
+            <label className="mb-2 block text-sm font-semibold text-gray-200">
+              Mode
+            </label>
+
+            <select
+              name="mode"
+              className="w-full rounded-xl border border-border bg-background p-3 text-foreground outline-none transition focus:border-primary"
+            >
+              <option value="PRACTICE">Practice · no pressure</option>
+              <option value="REAL">Real interview · 90 sec/question</option>
+              <option value="HARD">Hard mode · 60 sec/question</option>
+            </select>
+          </div>
+
+          <div className="mb-6 rounded-2xl border border-border bg-background p-5">
+            <label className="mb-2 block text-sm font-semibold text-gray-200">
+              Topics
+            </label>
+
+            <p className="mb-4 text-sm text-muted">
+              Leave empty to use all topics.
+            </p>
+
+            <div className="grid gap-3 sm:grid-cols-2">
+              {topics.map((topic) => (
+                <label
+                  key={topic.id}
+                  className="flex cursor-pointer items-center gap-3 rounded-xl border border-border bg-card p-3 text-sm transition hover:bg-card-hover"
+                >
+                  <input
+                    type="checkbox"
+                    name="topics"
+                    value={topic.slug}
+                    className="h-4 w-4 accent-primary"
+                  />
+
+                  <span>{topic.name}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="mb-6 grid gap-6 md:grid-cols-2">
+            <div className="rounded-2xl border border-border bg-background p-5">
+              <label className="mb-2 block text-sm font-semibold text-gray-200">
+                Level
+              </label>
+
+              <select
+                name="level"
+                className="w-full rounded-xl border border-border bg-background p-3 text-foreground outline-none transition focus:border-primary"
+              >
+                <option value="">All levels</option>
+                <option value={Level.JUNIOR}>Junior</option>
+                <option value={Level.MIDDLE}>Middle</option>
+                <option value={Level.SENIOR}>Senior</option>
+              </select>
+            </div>
+
+            <div className="rounded-2xl border border-border bg-background p-5">
+              <label className="mb-2 block text-sm font-semibold text-gray-200">
+                Number of questions
+              </label>
+
+              <select
+                name="questionCount"
+                defaultValue="5"
+                className="w-full rounded-xl border border-border bg-background p-3 text-foreground outline-none transition focus:border-primary"
+              >
+                <option value="5">5 questions · about 8 minutes</option>
+                <option value="10">10 questions · about 15 minutes</option>
+                <option value="15">15 questions · about 23 minutes</option>
+                <option value="20">20 questions · about 30 minutes</option>
+              </select>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full rounded-2xl bg-primary px-6 py-4 text-lg font-bold text-primary-foreground shadow-lg transition hover:scale-[1.01]"
+          >
+            Start interview →
+          </button>
+        </form>
+      </div>
     </main>
   );
 }

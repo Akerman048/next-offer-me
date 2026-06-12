@@ -9,6 +9,24 @@
 * 🟢 You can import this file directly.
 */
 
+export const RoadmapSection = {
+  TOPICS: 'TOPICS',
+  PRACTICE: 'PRACTICE',
+  PROJECT: 'PROJECT',
+  INTERVIEW: 'INTERVIEW'
+} as const
+
+export type RoadmapSection = (typeof RoadmapSection)[keyof typeof RoadmapSection]
+
+
+export const InterviewStatus = {
+  IN_PROGRESS: 'IN_PROGRESS',
+  COMPLETED: 'COMPLETED'
+} as const
+
+export type InterviewStatus = (typeof InterviewStatus)[keyof typeof InterviewStatus]
+
+
 export const Level = {
   JUNIOR: 'JUNIOR',
   MIDDLE: 'MIDDLE',
@@ -16,3 +34,22 @@ export const Level = {
 } as const
 
 export type Level = (typeof Level)[keyof typeof Level]
+
+
+export const InterviewMode = {
+  PRACTICE: 'PRACTICE',
+  REAL: 'REAL',
+  HARD: 'HARD'
+} as const
+
+export type InterviewMode = (typeof InterviewMode)[keyof typeof InterviewMode]
+
+
+export const EvaluationStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  COMPLETED: 'COMPLETED',
+  FAILED: 'FAILED'
+} as const
+
+export type EvaluationStatus = (typeof EvaluationStatus)[keyof typeof EvaluationStatus]

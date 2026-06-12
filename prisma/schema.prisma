@@ -8,31 +8,66 @@ datasource db {
 }
 
 model Topic {
-  id        String     @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
-  slug      String     @unique
+  slug      String   @unique
 
-  questions Question[]
+  lessons   Lesson[]
 
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-model Question {
+model Lesson {
   id          String   @id @default(cuid())
   topicId     String
 
   title       String
-  answer      String
-  explanation String?
-  level       Level
+  slug        String
+  description String?
+  order       Int      @default(0)
 
-  topic       Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  topic       Topic        @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  parts       LessonPart[]
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  progress UserProgress[]
+  @@unique([topicId, slug])
+}
+
+model LessonPart {
+  id        String   @id @default(cuid())
+  lessonId  String
+
+  title     String
+  content   String   // пояснення частини
+  order     Int      @default(0)
+
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  questions Question[]
+  progress  UserProgress[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Question {
+  id           String   @id @default(cuid())
+  lessonPartId String
+
+  title        String
+  prompt       String   // питання для юзера / AI
+  level        Level
+  order        Int      @default(0)
+
+  lessonPart   LessonPart @relation(fields: [lessonPartId], references: [id], onDelete: Cascade)
+  userAnswers  UserAnswer[]
+
+interviewAnswers InterviewAnswer[]
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model User {
@@ -46,6 +81,10 @@ model User {
   sessions      Session[]
 
   progress      UserProgress[]
+  answer        UserAnswer[]
+
+  interviewSessions InterviewSession[]
+  roadmaps Roadmap[]
 
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
@@ -88,20 +127,140 @@ model VerificationToken {
 }
 
 model UserProgress {
+  id           String   @id @default(cuid())
+
+  userId       String
+  lessonPartId String
+
+  completed    Boolean  @default(false)
+
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonPart   LessonPart @relation(fields: [lessonPartId], references: [id], onDelete: Cascade)
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([userId, lessonPartId])
+}
+
+model UserAnswer {
   id         String   @id @default(cuid())
 
   userId     String
+  questionId String?
+
+  questionText String
+  answerText   String
+
+  aiFeedback   String?
+  aiScore      Int?
+  aiRoadmap    String?
+
+  createdAt DateTime @default(now())
+
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question   Question? @relation(fields: [questionId], references: [id], onDelete: SetNull)
+}
+
+model InterviewSession {
+  id              String   @id @default(cuid())
+  userId          String
+
+  level           Level?
+  questionCount   Int
+  durationSeconds Int
+  mode            InterviewMode @default(PRACTICE)
+  status          InterviewStatus @default(IN_PROGRESS)
+
+  user            User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  answers         InterviewAnswer[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model InterviewAnswer {
+  id         String @id @default(cuid())
+  sessionId  String
   questionId String
 
-  completed  Boolean  @default(false)
+  answerText String?
+  aiScore    Int?
+  aiFeedback String?
 
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  evaluationStatus EvaluationStatus @default(PENDING)
+
+  technicalAccuracy Int?
+  clarity           Int?
+  completeness      Int?
+  interviewStyle    Int?
+
+  improvedAnswer    String?
+  missingConcepts   String?
+  timeSpentSeconds  Int?
+
+  session    InterviewSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
   question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
 
-  @@unique([userId, questionId])
+model Roadmap {
+  id        String   @id @default(cuid())
+  userId    String
+  sessionId String?
+
+  title     String
+  summary   String?
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  weeks     RoadmapWeek[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RoadmapWeek {
+  id          String @id @default(cuid())
+  roadmapId   String
+
+  weekNumber  Int
+  title       String
+  goal        String
+  description String?
+
+  roadmap     Roadmap @relation(fields: [roadmapId], references: [id], onDelete: Cascade)
+  items       RoadmapItem[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model RoadmapItem {
+  id        String @id @default(cuid())
+  weekId    String
+
+  section   RoadmapSection
+  text      String
+  completed Boolean @default(false)
+
+  week      RoadmapWeek @relation(fields: [weekId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum RoadmapSection {
+  TOPICS
+  PRACTICE
+  PROJECT
+  INTERVIEW
+}
+
+enum InterviewStatus {
+  IN_PROGRESS
+  COMPLETED
 }
 
 enum Level {
@@ -109,3 +268,18 @@ enum Level {
   MIDDLE
   SENIOR
 }
+
+enum InterviewMode {
+  PRACTICE
+  REAL
+  HARD
+}
+
+enum EvaluationStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+}
+
+

@@ -9,10 +9,18 @@
  * 🟢 You can import this file directly.
  */
 export type * from './models/Topic'
+export type * from './models/Lesson'
+export type * from './models/LessonPart'
 export type * from './models/Question'
 export type * from './models/User'
 export type * from './models/Account'
 export type * from './models/Session'
 export type * from './models/VerificationToken'
 export type * from './models/UserProgress'
+export type * from './models/UserAnswer'
+export type * from './models/InterviewSession'
+export type * from './models/InterviewAnswer'
+export type * from './models/Roadmap'
+export type * from './models/RoadmapWeek'
+export type * from './models/RoadmapItem'
 export type * from './commonInputTypes'

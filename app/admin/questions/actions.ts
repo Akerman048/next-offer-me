@@ -6,19 +6,19 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createQuestion(formData: FormData) {
-  const topicId = formData.get("topicId") as string;
+  const lessonPartId = formData.get("lessonPartId") as string;
   const title = formData.get("title") as string;
-  const answer = formData.get("answer") as string;
-  const explanation = formData.get("explanation") as string;
+  const prompt = formData.get("prompt") as string;
   const level = formData.get("level") as Level;
+  const order = Number(formData.get("order") || 0);
 
   await prisma.question.create({
     data: {
-      topicId,
+      lessonPartId,
       title,
-      answer,
-      explanation,
+      prompt,
       level,
+      order,
     },
   });
 
@@ -39,20 +39,20 @@ export async function deleteQuestion(formData: FormData) {
 
 export async function updateQuestion(formData: FormData) {
   const id = formData.get("id") as string;
-  const topicId = formData.get("topicId") as string;
+  const lessonPartId = formData.get("lessonPartId") as string;
   const title = formData.get("title") as string;
-  const answer = formData.get("answer") as string;
-  const explanation = formData.get("explanation") as string;
+  const prompt = formData.get("prompt") as string;
   const level = formData.get("level") as Level;
+  const order = Number(formData.get("order") || 0);
 
   await prisma.question.update({
     where: { id },
     data: {
-      topicId,
+      lessonPartId,
       title,
-      answer,
-      explanation,
+      prompt,
       level,
+      order,
     },
   });
 

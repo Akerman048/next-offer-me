@@ -27,7 +27,7 @@ export type AggregateUserProgress = {
 export type UserProgressMinAggregateOutputType = {
   id: string | null
   userId: string | null
-  questionId: string | null
+  lessonPartId: string | null
   completed: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -36,7 +36,7 @@ export type UserProgressMinAggregateOutputType = {
 export type UserProgressMaxAggregateOutputType = {
   id: string | null
   userId: string | null
-  questionId: string | null
+  lessonPartId: string | null
   completed: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -45,7 +45,7 @@ export type UserProgressMaxAggregateOutputType = {
 export type UserProgressCountAggregateOutputType = {
   id: number
   userId: number
-  questionId: number
+  lessonPartId: number
   completed: number
   createdAt: number
   updatedAt: number
@@ -56,7 +56,7 @@ export type UserProgressCountAggregateOutputType = {
 export type UserProgressMinAggregateInputType = {
   id?: true
   userId?: true
-  questionId?: true
+  lessonPartId?: true
   completed?: true
   createdAt?: true
   updatedAt?: true
@@ -65,7 +65,7 @@ export type UserProgressMinAggregateInputType = {
 export type UserProgressMaxAggregateInputType = {
   id?: true
   userId?: true
-  questionId?: true
+  lessonPartId?: true
   completed?: true
   createdAt?: true
   updatedAt?: true
@@ -74,7 +74,7 @@ export type UserProgressMaxAggregateInputType = {
 export type UserProgressCountAggregateInputType = {
   id?: true
   userId?: true
-  questionId?: true
+  lessonPartId?: true
   completed?: true
   createdAt?: true
   updatedAt?: true
@@ -156,7 +156,7 @@ export type UserProgressGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type UserProgressGroupByOutputType = {
   id: string
   userId: string
-  questionId: string
+  lessonPartId: string
   completed: boolean
   createdAt: Date
   updatedAt: Date
@@ -186,44 +186,44 @@ export type UserProgressWhereInput = {
   NOT?: Prisma.UserProgressWhereInput | Prisma.UserProgressWhereInput[]
   id?: Prisma.StringFilter<"UserProgress"> | string
   userId?: Prisma.StringFilter<"UserProgress"> | string
-  questionId?: Prisma.StringFilter<"UserProgress"> | string
+  lessonPartId?: Prisma.StringFilter<"UserProgress"> | string
   completed?: Prisma.BoolFilter<"UserProgress"> | boolean
   createdAt?: Prisma.DateTimeFilter<"UserProgress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProgress"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  question?: Prisma.XOR<Prisma.QuestionScalarRelationFilter, Prisma.QuestionWhereInput>
+  lessonPart?: Prisma.XOR<Prisma.LessonPartScalarRelationFilter, Prisma.LessonPartWhereInput>
 }
 
 export type UserProgressOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  questionId?: Prisma.SortOrder
+  lessonPartId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
-  question?: Prisma.QuestionOrderByWithRelationInput
+  lessonPart?: Prisma.LessonPartOrderByWithRelationInput
 }
 
 export type UserProgressWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  userId_questionId?: Prisma.UserProgressUserIdQuestionIdCompoundUniqueInput
+  userId_lessonPartId?: Prisma.UserProgressUserIdLessonPartIdCompoundUniqueInput
   AND?: Prisma.UserProgressWhereInput | Prisma.UserProgressWhereInput[]
   OR?: Prisma.UserProgressWhereInput[]
   NOT?: Prisma.UserProgressWhereInput | Prisma.UserProgressWhereInput[]
   userId?: Prisma.StringFilter<"UserProgress"> | string
-  questionId?: Prisma.StringFilter<"UserProgress"> | string
+  lessonPartId?: Prisma.StringFilter<"UserProgress"> | string
   completed?: Prisma.BoolFilter<"UserProgress"> | boolean
   createdAt?: Prisma.DateTimeFilter<"UserProgress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProgress"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-  question?: Prisma.XOR<Prisma.QuestionScalarRelationFilter, Prisma.QuestionWhereInput>
-}, "id" | "userId_questionId">
+  lessonPart?: Prisma.XOR<Prisma.LessonPartScalarRelationFilter, Prisma.LessonPartWhereInput>
+}, "id" | "userId_lessonPartId">
 
 export type UserProgressOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  questionId?: Prisma.SortOrder
+  lessonPartId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -238,7 +238,7 @@ export type UserProgressScalarWhereWithAggregatesInput = {
   NOT?: Prisma.UserProgressScalarWhereWithAggregatesInput | Prisma.UserProgressScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"UserProgress"> | string
   userId?: Prisma.StringWithAggregatesFilter<"UserProgress"> | string
-  questionId?: Prisma.StringWithAggregatesFilter<"UserProgress"> | string
+  lessonPartId?: Prisma.StringWithAggregatesFilter<"UserProgress"> | string
   completed?: Prisma.BoolWithAggregatesFilter<"UserProgress"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"UserProgress"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"UserProgress"> | Date | string
@@ -250,13 +250,13 @@ export type UserProgressCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutProgressInput
-  question: Prisma.QuestionCreateNestedOneWithoutProgressInput
+  lessonPart: Prisma.LessonPartCreateNestedOneWithoutProgressInput
 }
 
 export type UserProgressUncheckedCreateInput = {
   id?: string
   userId: string
-  questionId: string
+  lessonPartId: string
   completed?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -268,13 +268,13 @@ export type UserProgressUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutProgressNestedInput
-  question?: Prisma.QuestionUpdateOneRequiredWithoutProgressNestedInput
+  lessonPart?: Prisma.LessonPartUpdateOneRequiredWithoutProgressNestedInput
 }
 
 export type UserProgressUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  questionId?: Prisma.StringFieldUpdateOperationsInput | string
+  lessonPartId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -283,7 +283,7 @@ export type UserProgressUncheckedUpdateInput = {
 export type UserProgressCreateManyInput = {
   id?: string
   userId: string
-  questionId: string
+  lessonPartId: string
   completed?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -299,7 +299,7 @@ export type UserProgressUpdateManyMutationInput = {
 export type UserProgressUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
-  questionId?: Prisma.StringFieldUpdateOperationsInput | string
+  lessonPartId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -315,15 +315,15 @@ export type UserProgressOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type UserProgressUserIdQuestionIdCompoundUniqueInput = {
+export type UserProgressUserIdLessonPartIdCompoundUniqueInput = {
   userId: string
-  questionId: string
+  lessonPartId: string
 }
 
 export type UserProgressCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  questionId?: Prisma.SortOrder
+  lessonPartId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -332,7 +332,7 @@ export type UserProgressCountOrderByAggregateInput = {
 export type UserProgressMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  questionId?: Prisma.SortOrder
+  lessonPartId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -341,51 +341,51 @@ export type UserProgressMaxOrderByAggregateInput = {
 export type UserProgressMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  questionId?: Prisma.SortOrder
+  lessonPartId?: Prisma.SortOrder
   completed?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
-export type UserProgressCreateNestedManyWithoutQuestionInput = {
-  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutQuestionInput, Prisma.UserProgressUncheckedCreateWithoutQuestionInput> | Prisma.UserProgressCreateWithoutQuestionInput[] | Prisma.UserProgressUncheckedCreateWithoutQuestionInput[]
-  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutQuestionInput | Prisma.UserProgressCreateOrConnectWithoutQuestionInput[]
-  createMany?: Prisma.UserProgressCreateManyQuestionInputEnvelope
+export type UserProgressCreateNestedManyWithoutLessonPartInput = {
+  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutLessonPartInput, Prisma.UserProgressUncheckedCreateWithoutLessonPartInput> | Prisma.UserProgressCreateWithoutLessonPartInput[] | Prisma.UserProgressUncheckedCreateWithoutLessonPartInput[]
+  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutLessonPartInput | Prisma.UserProgressCreateOrConnectWithoutLessonPartInput[]
+  createMany?: Prisma.UserProgressCreateManyLessonPartInputEnvelope
   connect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
 }
 
-export type UserProgressUncheckedCreateNestedManyWithoutQuestionInput = {
-  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutQuestionInput, Prisma.UserProgressUncheckedCreateWithoutQuestionInput> | Prisma.UserProgressCreateWithoutQuestionInput[] | Prisma.UserProgressUncheckedCreateWithoutQuestionInput[]
-  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutQuestionInput | Prisma.UserProgressCreateOrConnectWithoutQuestionInput[]
-  createMany?: Prisma.UserProgressCreateManyQuestionInputEnvelope
+export type UserProgressUncheckedCreateNestedManyWithoutLessonPartInput = {
+  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutLessonPartInput, Prisma.UserProgressUncheckedCreateWithoutLessonPartInput> | Prisma.UserProgressCreateWithoutLessonPartInput[] | Prisma.UserProgressUncheckedCreateWithoutLessonPartInput[]
+  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutLessonPartInput | Prisma.UserProgressCreateOrConnectWithoutLessonPartInput[]
+  createMany?: Prisma.UserProgressCreateManyLessonPartInputEnvelope
   connect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
 }
 
-export type UserProgressUpdateManyWithoutQuestionNestedInput = {
-  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutQuestionInput, Prisma.UserProgressUncheckedCreateWithoutQuestionInput> | Prisma.UserProgressCreateWithoutQuestionInput[] | Prisma.UserProgressUncheckedCreateWithoutQuestionInput[]
-  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutQuestionInput | Prisma.UserProgressCreateOrConnectWithoutQuestionInput[]
-  upsert?: Prisma.UserProgressUpsertWithWhereUniqueWithoutQuestionInput | Prisma.UserProgressUpsertWithWhereUniqueWithoutQuestionInput[]
-  createMany?: Prisma.UserProgressCreateManyQuestionInputEnvelope
+export type UserProgressUpdateManyWithoutLessonPartNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutLessonPartInput, Prisma.UserProgressUncheckedCreateWithoutLessonPartInput> | Prisma.UserProgressCreateWithoutLessonPartInput[] | Prisma.UserProgressUncheckedCreateWithoutLessonPartInput[]
+  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutLessonPartInput | Prisma.UserProgressCreateOrConnectWithoutLessonPartInput[]
+  upsert?: Prisma.UserProgressUpsertWithWhereUniqueWithoutLessonPartInput | Prisma.UserProgressUpsertWithWhereUniqueWithoutLessonPartInput[]
+  createMany?: Prisma.UserProgressCreateManyLessonPartInputEnvelope
   set?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
   disconnect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
   delete?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
   connect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
-  update?: Prisma.UserProgressUpdateWithWhereUniqueWithoutQuestionInput | Prisma.UserProgressUpdateWithWhereUniqueWithoutQuestionInput[]
-  updateMany?: Prisma.UserProgressUpdateManyWithWhereWithoutQuestionInput | Prisma.UserProgressUpdateManyWithWhereWithoutQuestionInput[]
+  update?: Prisma.UserProgressUpdateWithWhereUniqueWithoutLessonPartInput | Prisma.UserProgressUpdateWithWhereUniqueWithoutLessonPartInput[]
+  updateMany?: Prisma.UserProgressUpdateManyWithWhereWithoutLessonPartInput | Prisma.UserProgressUpdateManyWithWhereWithoutLessonPartInput[]
   deleteMany?: Prisma.UserProgressScalarWhereInput | Prisma.UserProgressScalarWhereInput[]
 }
 
-export type UserProgressUncheckedUpdateManyWithoutQuestionNestedInput = {
-  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutQuestionInput, Prisma.UserProgressUncheckedCreateWithoutQuestionInput> | Prisma.UserProgressCreateWithoutQuestionInput[] | Prisma.UserProgressUncheckedCreateWithoutQuestionInput[]
-  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutQuestionInput | Prisma.UserProgressCreateOrConnectWithoutQuestionInput[]
-  upsert?: Prisma.UserProgressUpsertWithWhereUniqueWithoutQuestionInput | Prisma.UserProgressUpsertWithWhereUniqueWithoutQuestionInput[]
-  createMany?: Prisma.UserProgressCreateManyQuestionInputEnvelope
+export type UserProgressUncheckedUpdateManyWithoutLessonPartNestedInput = {
+  create?: Prisma.XOR<Prisma.UserProgressCreateWithoutLessonPartInput, Prisma.UserProgressUncheckedCreateWithoutLessonPartInput> | Prisma.UserProgressCreateWithoutLessonPartInput[] | Prisma.UserProgressUncheckedCreateWithoutLessonPartInput[]
+  connectOrCreate?: Prisma.UserProgressCreateOrConnectWithoutLessonPartInput | Prisma.UserProgressCreateOrConnectWithoutLessonPartInput[]
+  upsert?: Prisma.UserProgressUpsertWithWhereUniqueWithoutLessonPartInput | Prisma.UserProgressUpsertWithWhereUniqueWithoutLessonPartInput[]
+  createMany?: Prisma.UserProgressCreateManyLessonPartInputEnvelope
   set?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
   disconnect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
   delete?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
   connect?: Prisma.UserProgressWhereUniqueInput | Prisma.UserProgressWhereUniqueInput[]
-  update?: Prisma.UserProgressUpdateWithWhereUniqueWithoutQuestionInput | Prisma.UserProgressUpdateWithWhereUniqueWithoutQuestionInput[]
-  updateMany?: Prisma.UserProgressUpdateManyWithWhereWithoutQuestionInput | Prisma.UserProgressUpdateManyWithWhereWithoutQuestionInput[]
+  update?: Prisma.UserProgressUpdateWithWhereUniqueWithoutLessonPartInput | Prisma.UserProgressUpdateWithWhereUniqueWithoutLessonPartInput[]
+  updateMany?: Prisma.UserProgressUpdateManyWithWhereWithoutLessonPartInput | Prisma.UserProgressUpdateManyWithWhereWithoutLessonPartInput[]
   deleteMany?: Prisma.UserProgressScalarWhereInput | Prisma.UserProgressScalarWhereInput[]
 }
 
@@ -435,7 +435,7 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
-export type UserProgressCreateWithoutQuestionInput = {
+export type UserProgressCreateWithoutLessonPartInput = {
   id?: string
   completed?: boolean
   createdAt?: Date | string
@@ -443,7 +443,7 @@ export type UserProgressCreateWithoutQuestionInput = {
   user: Prisma.UserCreateNestedOneWithoutProgressInput
 }
 
-export type UserProgressUncheckedCreateWithoutQuestionInput = {
+export type UserProgressUncheckedCreateWithoutLessonPartInput = {
   id?: string
   userId: string
   completed?: boolean
@@ -451,30 +451,30 @@ export type UserProgressUncheckedCreateWithoutQuestionInput = {
   updatedAt?: Date | string
 }
 
-export type UserProgressCreateOrConnectWithoutQuestionInput = {
+export type UserProgressCreateOrConnectWithoutLessonPartInput = {
   where: Prisma.UserProgressWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserProgressCreateWithoutQuestionInput, Prisma.UserProgressUncheckedCreateWithoutQuestionInput>
+  create: Prisma.XOR<Prisma.UserProgressCreateWithoutLessonPartInput, Prisma.UserProgressUncheckedCreateWithoutLessonPartInput>
 }
 
-export type UserProgressCreateManyQuestionInputEnvelope = {
-  data: Prisma.UserProgressCreateManyQuestionInput | Prisma.UserProgressCreateManyQuestionInput[]
+export type UserProgressCreateManyLessonPartInputEnvelope = {
+  data: Prisma.UserProgressCreateManyLessonPartInput | Prisma.UserProgressCreateManyLessonPartInput[]
   skipDuplicates?: boolean
 }
 
-export type UserProgressUpsertWithWhereUniqueWithoutQuestionInput = {
+export type UserProgressUpsertWithWhereUniqueWithoutLessonPartInput = {
   where: Prisma.UserProgressWhereUniqueInput
-  update: Prisma.XOR<Prisma.UserProgressUpdateWithoutQuestionInput, Prisma.UserProgressUncheckedUpdateWithoutQuestionInput>
-  create: Prisma.XOR<Prisma.UserProgressCreateWithoutQuestionInput, Prisma.UserProgressUncheckedCreateWithoutQuestionInput>
+  update: Prisma.XOR<Prisma.UserProgressUpdateWithoutLessonPartInput, Prisma.UserProgressUncheckedUpdateWithoutLessonPartInput>
+  create: Prisma.XOR<Prisma.UserProgressCreateWithoutLessonPartInput, Prisma.UserProgressUncheckedCreateWithoutLessonPartInput>
 }
 
-export type UserProgressUpdateWithWhereUniqueWithoutQuestionInput = {
+export type UserProgressUpdateWithWhereUniqueWithoutLessonPartInput = {
   where: Prisma.UserProgressWhereUniqueInput
-  data: Prisma.XOR<Prisma.UserProgressUpdateWithoutQuestionInput, Prisma.UserProgressUncheckedUpdateWithoutQuestionInput>
+  data: Prisma.XOR<Prisma.UserProgressUpdateWithoutLessonPartInput, Prisma.UserProgressUncheckedUpdateWithoutLessonPartInput>
 }
 
-export type UserProgressUpdateManyWithWhereWithoutQuestionInput = {
+export type UserProgressUpdateManyWithWhereWithoutLessonPartInput = {
   where: Prisma.UserProgressScalarWhereInput
-  data: Prisma.XOR<Prisma.UserProgressUpdateManyMutationInput, Prisma.UserProgressUncheckedUpdateManyWithoutQuestionInput>
+  data: Prisma.XOR<Prisma.UserProgressUpdateManyMutationInput, Prisma.UserProgressUncheckedUpdateManyWithoutLessonPartInput>
 }
 
 export type UserProgressScalarWhereInput = {
@@ -483,7 +483,7 @@ export type UserProgressScalarWhereInput = {
   NOT?: Prisma.UserProgressScalarWhereInput | Prisma.UserProgressScalarWhereInput[]
   id?: Prisma.StringFilter<"UserProgress"> | string
   userId?: Prisma.StringFilter<"UserProgress"> | string
-  questionId?: Prisma.StringFilter<"UserProgress"> | string
+  lessonPartId?: Prisma.StringFilter<"UserProgress"> | string
   completed?: Prisma.BoolFilter<"UserProgress"> | boolean
   createdAt?: Prisma.DateTimeFilter<"UserProgress"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"UserProgress"> | Date | string
@@ -494,12 +494,12 @@ export type UserProgressCreateWithoutUserInput = {
   completed?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  question: Prisma.QuestionCreateNestedOneWithoutProgressInput
+  lessonPart: Prisma.LessonPartCreateNestedOneWithoutProgressInput
 }
 
 export type UserProgressUncheckedCreateWithoutUserInput = {
   id?: string
-  questionId: string
+  lessonPartId: string
   completed?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -531,7 +531,7 @@ export type UserProgressUpdateManyWithWhereWithoutUserInput = {
   data: Prisma.XOR<Prisma.UserProgressUpdateManyMutationInput, Prisma.UserProgressUncheckedUpdateManyWithoutUserInput>
 }
 
-export type UserProgressCreateManyQuestionInput = {
+export type UserProgressCreateManyLessonPartInput = {
   id?: string
   userId: string
   completed?: boolean
@@ -539,7 +539,7 @@ export type UserProgressCreateManyQuestionInput = {
   updatedAt?: Date | string
 }
 
-export type UserProgressUpdateWithoutQuestionInput = {
+export type UserProgressUpdateWithoutLessonPartInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -547,7 +547,7 @@ export type UserProgressUpdateWithoutQuestionInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutProgressNestedInput
 }
 
-export type UserProgressUncheckedUpdateWithoutQuestionInput = {
+export type UserProgressUncheckedUpdateWithoutLessonPartInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -555,7 +555,7 @@ export type UserProgressUncheckedUpdateWithoutQuestionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type UserProgressUncheckedUpdateManyWithoutQuestionInput = {
+export type UserProgressUncheckedUpdateManyWithoutLessonPartInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -565,7 +565,7 @@ export type UserProgressUncheckedUpdateManyWithoutQuestionInput = {
 
 export type UserProgressCreateManyUserInput = {
   id?: string
-  questionId: string
+  lessonPartId: string
   completed?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -576,12 +576,12 @@ export type UserProgressUpdateWithoutUserInput = {
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  question?: Prisma.QuestionUpdateOneRequiredWithoutProgressNestedInput
+  lessonPart?: Prisma.LessonPartUpdateOneRequiredWithoutProgressNestedInput
 }
 
 export type UserProgressUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  questionId?: Prisma.StringFieldUpdateOperationsInput | string
+  lessonPartId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -589,7 +589,7 @@ export type UserProgressUncheckedUpdateWithoutUserInput = {
 
 export type UserProgressUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  questionId?: Prisma.StringFieldUpdateOperationsInput | string
+  lessonPartId?: Prisma.StringFieldUpdateOperationsInput | string
   completed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -600,69 +600,69 @@ export type UserProgressUncheckedUpdateManyWithoutUserInput = {
 export type UserProgressSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  questionId?: boolean
+  lessonPartId?: boolean
   completed?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
+  lessonPart?: boolean | Prisma.LessonPartDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userProgress"]>
 
 export type UserProgressSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  questionId?: boolean
+  lessonPartId?: boolean
   completed?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
+  lessonPart?: boolean | Prisma.LessonPartDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userProgress"]>
 
 export type UserProgressSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   userId?: boolean
-  questionId?: boolean
+  lessonPartId?: boolean
   completed?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
+  lessonPart?: boolean | Prisma.LessonPartDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["userProgress"]>
 
 export type UserProgressSelectScalar = {
   id?: boolean
   userId?: boolean
-  questionId?: boolean
+  lessonPartId?: boolean
   completed?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "questionId" | "completed" | "createdAt" | "updatedAt", ExtArgs["result"]["userProgress"]>
+export type UserProgressOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "lessonPartId" | "completed" | "createdAt" | "updatedAt", ExtArgs["result"]["userProgress"]>
 export type UserProgressInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
+  lessonPart?: boolean | Prisma.LessonPartDefaultArgs<ExtArgs>
 }
 export type UserProgressIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
+  lessonPart?: boolean | Prisma.LessonPartDefaultArgs<ExtArgs>
 }
 export type UserProgressIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
-  question?: boolean | Prisma.QuestionDefaultArgs<ExtArgs>
+  lessonPart?: boolean | Prisma.LessonPartDefaultArgs<ExtArgs>
 }
 
 export type $UserProgressPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "UserProgress"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
-    question: Prisma.$QuestionPayload<ExtArgs>
+    lessonPart: Prisma.$LessonPartPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     userId: string
-    questionId: string
+    lessonPartId: string
     completed: boolean
     createdAt: Date
     updatedAt: Date
@@ -1061,7 +1061,7 @@ readonly fields: UserProgressFieldRefs;
 export interface Prisma__UserProgressClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  question<T extends Prisma.QuestionDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.QuestionDefaultArgs<ExtArgs>>): Prisma.Prisma__QuestionClient<runtime.Types.Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  lessonPart<T extends Prisma.LessonPartDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LessonPartDefaultArgs<ExtArgs>>): Prisma.Prisma__LessonPartClient<runtime.Types.Result.GetResult<Prisma.$LessonPartPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1093,7 +1093,7 @@ export interface Prisma__UserProgressClient<T, Null = never, ExtArgs extends run
 export interface UserProgressFieldRefs {
   readonly id: Prisma.FieldRef<"UserProgress", 'String'>
   readonly userId: Prisma.FieldRef<"UserProgress", 'String'>
-  readonly questionId: Prisma.FieldRef<"UserProgress", 'String'>
+  readonly lessonPartId: Prisma.FieldRef<"UserProgress", 'String'>
   readonly completed: Prisma.FieldRef<"UserProgress", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"UserProgress", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"UserProgress", 'DateTime'>

@@ -2,56 +2,104 @@ import Link from "next/link";
 
 export default function HomePage() {
   return (
-    <main className="mx-auto max-w-6xl p-8">
-      <section className="py-20 text-center">
-        <h1 className="mb-6 text-5xl font-bold">
-          Prepare for your developer interview
-        </h1>
+    <main className="min-h-screen bg-background px-8 text-foreground">
+      <div className="mx-auto max-w-6xl">
+        {/* Hero */}
+        <section className="py-4 text-center">
+          <p className="mb-4 text-sm font-medium uppercase tracking-[0.3em] text-muted">
+            AI Interview Trainer
+          </p>
 
-        <p className="mx-auto mb-8 max-w-2xl text-lg text-gray-500">
-          Practice JavaScript, React, Next.js, TypeScript, Node.js and database
-          questions with explanations, progress tracking and interview mode.
-        </p>
+          <h1 className="mb-8 text-6xl font-bold leading-tight">
+            Prepare for your
+            <br />
+            developer interview 🚀
+          </h1>
 
-        <div className="flex justify-center gap-4">
-          <Link
-            href="/topics"
-            className="rounded-lg bg-black px-6 py-3 text-white"
-          >
-            Start learning
-          </Link>
+          <p className="mx-auto mb-10 max-w-3xl text-lg text-muted">
+            Practice JavaScript, React, Next.js, TypeScript, Node.js and
+            databases with AI feedback, personalized roadmaps and realistic
+            interview simulations.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-4">
+            <Link
+              href="/topics"
+              className="rounded-2xl bg-primary px-8 py-4 font-semibold text-primary-foreground transition hover:scale-[1.03]"
+            >
+              Start learning →
+            </Link>
+
+            <Link
+              href="/interview"
+              className="rounded-2xl border border-border bg-card px-8 py-4 font-semibold transition hover:bg-card-hover"
+            >
+              Try interview mode
+            </Link>
+          </div>
+        </section>
+
+        {/* Features */}
+        <section className="grid gap-6 md:grid-cols-3">
+          <div className="rounded-3xl border border-border bg-card p-8 shadow-xl">
+            <div className="mb-4 text-4xl">📚</div>
+
+            <h2 className="mb-3 text-2xl font-semibold">
+              Question Library
+            </h2>
+
+            <p className="text-muted">
+              Learn from structured lessons and questions grouped by topic and
+              difficulty.
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-border bg-card p-8 shadow-xl">
+            <div className="mb-4 text-4xl">📈</div>
+
+            <h2 className="mb-3 text-2xl font-semibold">
+              Progress Tracking
+            </h2>
+
+            <p className="text-muted">
+              Track completed lessons, identify weak areas and monitor your
+              preparation.
+            </p>
+          </div>
+
+          <div className="rounded-3xl border border-border bg-card p-8 shadow-xl">
+            <div className="mb-4 text-4xl">🤖</div>
+
+            <h2 className="mb-3 text-2xl font-semibold">
+              AI Interview Mode
+            </h2>
+
+            <p className="text-muted">
+              Answer real interview questions and receive detailed AI feedback
+              and improvement suggestions.
+            </p>
+          </div>
+        </section>
+
+        {/* Bottom CTA */}
+        <section className="mt-24 rounded-[2rem] border border-border bg-card p-12 text-center shadow-2xl">
+          <h2 className="mb-4 text-4xl font-bold">
+            Ready to get hired? 💼
+          </h2>
+
+          <p className="mx-auto mb-8 max-w-2xl text-muted">
+            Build confidence, improve your interview skills and prepare with
+            personalized AI-generated roadmaps.
+          </p>
 
           <Link
             href="/interview"
-            className="rounded-lg border px-6 py-3"
+            className="inline-block rounded-2xl bg-primary px-8 py-4 text-lg font-bold text-primary-foreground transition hover:scale-[1.03]"
           >
-            Try interview mode
+            Start Interview Training
           </Link>
-        </div>
-      </section>
-
-      <section className="grid gap-6 md:grid-cols-3">
-        <div className="rounded-xl border p-6">
-          <h2 className="mb-2 font-semibold">Question library</h2>
-          <p className="text-gray-500">
-            Learn from structured questions by topic and difficulty.
-          </p>
-        </div>
-
-        <div className="rounded-xl border p-6">
-          <h2 className="mb-2 font-semibold">Progress tracking</h2>
-          <p className="text-gray-500">
-            Mark questions as completed and track your preparation.
-          </p>
-        </div>
-
-        <div className="rounded-xl border p-6">
-          <h2 className="mb-2 font-semibold">Interview mode</h2>
-          <p className="text-gray-500">
-            Practice random questions like in a real interview.
-          </p>
-        </div>
-      </section>
+        </section>
+      </div>
     </main>
   );
 }

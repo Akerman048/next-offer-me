@@ -13,13 +13,39 @@ export default async function EditQuestionPage({ params }: Props) {
   const { id } = await params;
 
   const question = await prisma.question.findUnique({
-    where: { id },
+    where: {
+      id,
+    },
+    include: {
+      lessonPart: true,
+    },
   });
 
-  const topics = await prisma.topic.findMany({
-    orderBy: {
-      name: "asc",
+  const parts = await prisma.lessonPart.findMany({
+    include: {
+      lesson: {
+        include: {
+          topic: true,
+        },
+      },
     },
+    orderBy: [
+      {
+        lesson: {
+          topic: {
+            name: "asc",
+          },
+        },
+      },
+      {
+        lesson: {
+          order: "asc",
+        },
+      },
+      {
+        order: "asc",
+      },
+    ],
   });
 
   if (!question) {
@@ -32,69 +58,79 @@ export default async function EditQuestionPage({ params }: Props) {
 
       <form
         action={updateQuestion}
-        className="rounded-xl border p-6 shadow-sm"
+        className="rounded-2xl border border-border bg-card p-6 shadow-sm"
       >
         <input type="hidden" name="id" value={question.id} />
 
         <div className="mb-4">
-          <label className="mb-2 block font-medium">Topic</label>
+          <label className="mb-2 block font-medium text-gray-200">
+            Lesson Part
+          </label>
 
           <select
-            name="topicId"
+            name="lessonPartId"
             required
-            defaultValue={question.topicId}
-            className="w-full rounded-lg border p-3"
+            defaultValue={question.lessonPartId}
+            className="w-full rounded-xl border border-border bg-background p-3 text-foreground outline-none transition focus:border-primary"
           >
-            {topics.map((topic) => (
-              <option key={topic.id} value={topic.id}>
-                {topic.name}
+            {parts.map((part) => (
+              <option key={part.id} value={part.id}>
+                {part.lesson.topic.name} / {part.lesson.title} / {part.title}
               </option>
             ))}
           </select>
         </div>
 
         <div className="mb-4">
-          <label className="mb-2 block font-medium">Title</label>
+          <label className="mb-2 block font-medium text-gray-200">
+            Question title
+          </label>
 
           <input
             name="title"
             required
             defaultValue={question.title}
-            className="w-full rounded-lg border p-3"
+            className="w-full rounded-xl border border-border bg-background p-3 text-foreground outline-none transition placeholder:text-muted focus:border-primary"
           />
         </div>
 
         <div className="mb-4">
-          <label className="mb-2 block font-medium">Answer</label>
+          <label className="mb-2 block font-medium text-gray-200">
+            Prompt
+          </label>
 
           <textarea
-            name="answer"
+            name="prompt"
             required
-            rows={5}
-            defaultValue={question.answer}
-            className="w-full rounded-lg border p-3"
+            rows={6}
+            defaultValue={question.prompt}
+            className="w-full rounded-xl border border-border bg-background p-3 font-mono text-foreground outline-none transition placeholder:text-muted focus:border-primary"
           />
         </div>
 
         <div className="mb-4">
-          <label className="mb-2 block font-medium">Explanation</label>
+          <label className="mb-2 block font-medium text-gray-200">
+            Order
+          </label>
 
-          <textarea
-            name="explanation"
-            rows={8}
-            defaultValue={question.explanation ?? ""}
-            className="w-full rounded-lg border p-3"
+          <input
+            name="order"
+            type="number"
+            defaultValue={question.order}
+            className="w-full rounded-xl border border-border bg-background p-3 text-foreground outline-none transition focus:border-primary"
           />
         </div>
 
         <div className="mb-6">
-          <label className="mb-2 block font-medium">Level</label>
+          <label className="mb-2 block font-medium text-gray-200">
+            Level
+          </label>
 
           <select
             name="level"
             required
             defaultValue={question.level}
-            className="w-full rounded-lg border p-3"
+            className="w-full rounded-xl border border-border bg-background p-3 text-foreground outline-none transition focus:border-primary"
           >
             <option value={Level.JUNIOR}>Junior</option>
             <option value={Level.MIDDLE}>Middle</option>
@@ -104,7 +140,7 @@ export default async function EditQuestionPage({ params }: Props) {
 
         <button
           type="submit"
-          className="rounded-lg bg-black px-5 py-3 text-white transition hover:opacity-80"
+          className="rounded-xl bg-primary px-5 py-3 font-semibold text-primary-foreground transition hover:scale-[1.02]"
         >
           Save Changes
         </button>
