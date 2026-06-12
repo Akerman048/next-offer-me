@@ -1,5 +1,8 @@
-import { toggleRoadmapItem } from "@/app/roadmaps/[roadmapId]/actions";
+"use client";
+
+import { useOptimistic, useTransition } from "react";
 import type { RoadmapItem } from "@/generated/prisma/client";
+import { toggleRoadmapItem } from "@/app/roadmaps/[roadmapId]/actions";
 
 type Props = {
   title: string;
@@ -8,23 +11,41 @@ type Props = {
 };
 
 export default function RoadmapColumn({ title, items, roadmapId }: Props) {
+  const [isPending, startTransition] = useTransition();
+
+  const [optimisticItems, toggleOptimisticItem] = useOptimistic(
+    items,
+    (currentItems, itemId: string) =>
+      currentItems.map((item) =>
+        item.id === itemId
+          ? { ...item, completed: !item.completed }
+          : item,
+      ),
+  );
+
   return (
     <div className="border-slate-800 md:border-l md:pl-5">
-      <h3 className="mb-4 text-sm font-semibold text-green-400">
-        {title}
-      </h3>
+      <h3 className="mb-4 text-sm font-semibold text-green-400">{title}</h3>
 
-<div className="space-y-3">
-  {items.length === 0 ? (
-    <p className="text-sm text-slate-500">No tasks yet.</p>
-  ) : (
-    items.map((item) => (
-          <form key={item.id} action={toggleRoadmapItem}>
-            <input type="hidden" name="itemId" value={item.id} />
-            <input type="hidden" name="roadmapId" value={roadmapId} />
-
+      <div className="space-y-3">
+        {optimisticItems.length === 0 ? (
+          <p className="text-sm text-slate-500">No tasks yet.</p>
+        ) : (
+          optimisticItems.map((item) => (
             <button
-              type="submit"
+              key={item.id}
+              type="button"
+              onClick={() => {
+                toggleOptimisticItem(item.id);
+
+                startTransition(async () => {
+                  const formData = new FormData();
+                  formData.set("itemId", item.id);
+                  formData.set("roadmapId", roadmapId);
+
+                  await toggleRoadmapItem(formData);
+                });
+              }}
               className="flex w-full items-start gap-3 text-left text-sm text-slate-300 transition hover:text-white"
             >
               <span
@@ -41,8 +62,8 @@ export default function RoadmapColumn({ title, items, roadmapId }: Props) {
                 {item.text}
               </span>
             </button>
-          </form>)
-        ))}
+          ))
+        )}
       </div>
     </div>
   );
