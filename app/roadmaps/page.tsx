@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
+import { deleteRoadmap } from "./actions";
+
 export default async function RoadmapsPage() {
   const session = await auth();
 
@@ -129,40 +131,51 @@ export default async function RoadmapsPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               {roadmaps.map((roadmap) => (
-                <Link
-                  key={roadmap.id}
-                  href={`/roadmaps/${roadmap.id}`}
-                  className="group rounded-2xl border border-border bg-card p-6 shadow-lg transition hover:-translate-y-1 hover:bg-card-hover"
-                >
-                  <div className="mb-5 flex items-start justify-between gap-4">
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-lg font-bold text-primary-foreground">
-                      AI
-                    </div>
+<div
+  key={roadmap.id}
+  className="rounded-2xl border border-border bg-card p-6 shadow-lg transition hover:-translate-y-1 hover:bg-card-hover"
+>
+  <Link href={`/roadmaps/${roadmap.id}`} className="block">
+    <div className="mb-5 flex items-start justify-between gap-4">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary text-lg font-bold text-primary-foreground">
+        AI
+      </div>
 
-                    <span className="rounded-full bg-secondary px-3 py-1 text-xs text-muted">
-                      {roadmap.createdAt.toLocaleDateString()}
-                    </span>
-                  </div>
+      <span className="rounded-full bg-secondary px-3 py-1 text-xs text-muted">
+        {roadmap.createdAt.toLocaleDateString()}
+      </span>
+    </div>
 
-                  <h3 className="mb-2 text-xl font-semibold transition group-hover:text-gray-100">
-                    {roadmap.title}
-                  </h3>
+    <h3 className="mb-2 text-xl font-semibold transition hover:text-gray-100">
+      {roadmap.title}
+    </h3>
 
-                  <p className="line-clamp-3 text-sm text-muted">
-                    {roadmap.summary ??
-                      "Personalized roadmap based on your weak interview answers."}
-                  </p>
+    <p className="line-clamp-3 text-sm text-muted">
+      {roadmap.summary ??
+        "Personalized roadmap based on your weak interview answers."}
+    </p>
+  </Link>
 
-                  <div className="mt-5 flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-200">
-                      Open roadmap
-                    </span>
+  <div className="mt-5 flex items-center justify-between">
+    <Link
+      href={`/roadmaps/${roadmap.id}`}
+      className="text-sm font-medium text-gray-200"
+    >
+      Open roadmap
+    </Link>
 
-                    <span className="rounded-full bg-secondary px-3 py-1 text-sm transition group-hover:bg-primary group-hover:text-primary-foreground">
-                      →
-                    </span>
-                  </div>
-                </Link>
+    <form action={deleteRoadmap}>
+      <input type="hidden" name="roadmapId" value={roadmap.id} />
+
+      <button
+        type="submit"
+        className="rounded-full bg-red-900 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700"
+      >
+        Delete
+      </button>
+    </form>
+  </div>
+</div>
               ))}
             </div>
           </section>
