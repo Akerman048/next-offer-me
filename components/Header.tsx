@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { auth } from "@/auth";
 import { logout } from "@/app/actions/auth";
+import NavLink from "@/components/layout/NavLink";
 
 export async function Header() {
   const session = await auth();
@@ -25,22 +26,14 @@ export async function Header() {
         </Link>
 
         {isLoggedIn && (
-          <div className="hidden items-center gap-10 md:flex">
-            <Link href="/dashboard" className="nav-link-active">
-              Dashboard
-            </Link>
+          <div className="hidden items-center gap-6 md:flex">
+            <NavLink href="/dashboard">Dashboard</NavLink>
 
-            <Link href="/topics" className="nav-link">
-              Learn
-            </Link>
+            <NavLink href="/topics">Learn</NavLink>
 
-            <Link href="/interview" className="nav-link">
-              Interview
-            </Link>
+            <NavLink href="/interview">Interview</NavLink>
 
-            <Link href="/roadmaps" className="nav-link">
-              Roadmaps
-            </Link>
+            <NavLink href="/roadmaps">Roadmaps</NavLink>
           </div>
         )}
 

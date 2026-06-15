@@ -144,9 +144,9 @@ export default async function AdminQuestionsPage() {
                 {question.lessonPart.lesson.title} / {question.lessonPart.title}
               </p>
 
-              <div className="rounded-xl border border-border bg-background p-4">
+              {/* <div className="rounded-xl border border-border bg-background p-4">
                 <MarkdownContent content={question.prompt} />
-              </div>
+              </div> */}
 
               <form action={deleteQuestion} className="mt-4 flex gap-2">
                 <input type="hidden" name="id" value={question.id} />

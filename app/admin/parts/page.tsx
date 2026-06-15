@@ -173,9 +173,9 @@ export default async function AdminPartsPage() {
                 </div>
               </div>
 
-              <div className="mt-4 rounded-xl border border-border bg-background p-4 text-sm">
+              {/* <div className="mt-4 rounded-xl border border-border bg-background p-4 text-sm">
                 <MarkdownContent content={part.content} />
-              </div>
+              </div> */}
             </article>
           ))}
         </div>
