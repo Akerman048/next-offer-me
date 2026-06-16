@@ -11,17 +11,30 @@ type Props = {
 export default async function EditLessonPage({ params }: Props) {
   const { id } = await params;
 
-  const lesson = await prisma.lesson.findUnique({
-    where: {
-      id,
-    },
-  });
+  const [lesson, topics] = await Promise.all([
+    prisma.lesson.findUnique({
+      where: {
+        id,
+      },
+      select: {
+        id: true,
+        topicId: true,
+        title: true,
+        description: true,
+        order: true,
+      },
+    }),
 
-  const topics = await prisma.topic.findMany({
-    orderBy: {
-      name: "asc",
-    },
-  });
+    prisma.topic.findMany({
+      select: {
+        id: true,
+        name: true,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    }),
+  ]);
 
   if (!lesson) {
     notFound();

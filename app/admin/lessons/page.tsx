@@ -1,35 +1,68 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { createLesson, deleteLesson } from "./actions";
-import MarkdownContent from "@/components/ui/MarkdownContent";
 
-export default async function AdminLessonsPage() {
-  const topics = await prisma.topic.findMany({
-    orderBy: {
-      name: "asc",
-    },
-  });
+type Props = {
+  searchParams?: Promise<{
+    page?: string;
+  }>;
+};
 
-  const lessons = await prisma.lesson.findMany({
-    include: {
-      topic: true,
-      _count: {
-        select: {
-          parts: true,
-        },
+const PAGE_SIZE = 20;
+
+export default async function AdminLessonsPage({ searchParams }: Props) {
+  const resolvedSearchParams = await searchParams;
+
+  const currentPage = Math.max(Number(resolvedSearchParams?.page || 1), 1);
+  const skip = (currentPage - 1) * PAGE_SIZE;
+
+  const [topics, lessons, totalLessons] = await Promise.all([
+    prisma.topic.findMany({
+      select: {
+        id: true,
+        name: true,
       },
-    },
-    orderBy: [
-      {
+      orderBy: {
+        name: "asc",
+      },
+    }),
+
+    prisma.lesson.findMany({
+      select: {
+        id: true,
+        title: true,
+        slug: true,
+        description: true,
+        order: true,
         topic: {
-          name: "asc",
+          select: {
+            name: true,
+          },
+        },
+        _count: {
+          select: {
+            parts: true,
+          },
         },
       },
-      {
-        order: "asc",
-      },
-    ],
-  });
+      orderBy: [
+        {
+          topic: {
+            name: "asc",
+          },
+        },
+        {
+          order: "asc",
+        },
+      ],
+      take: PAGE_SIZE,
+      skip,
+    }),
+
+    prisma.lesson.count(),
+  ]);
+
+  const totalPages = Math.max(Math.ceil(totalLessons / PAGE_SIZE), 1);
 
   return (
     <main className="mx-auto max-w-5xl p-8">
@@ -105,7 +138,13 @@ export default async function AdminLessonsPage() {
       </form>
 
       <section>
-        <h2 className="mb-4 text-2xl font-semibold">Existing Lessons</h2>
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <h2 className="text-2xl font-semibold">Existing Lessons</h2>
+
+          <span className="text-sm text-muted">
+            Page {currentPage} of {totalPages}
+          </span>
+        </div>
 
         <div className="space-y-4">
           {lessons.map((lesson) => (
@@ -150,12 +189,43 @@ export default async function AdminLessonsPage() {
               </div>
 
               {lesson.description && (
-                <div className="mt-4 rounded-xl border border-border bg-background p-4 text-sm">
-                  <MarkdownContent content={lesson.description} />
-                </div>
+                <p className="mt-4 line-clamp-3 rounded-xl border border-border bg-background p-4 text-sm text-muted">
+                  {lesson.description}
+                </p>
               )}
             </article>
           ))}
+        </div>
+
+        <div className="mt-8 flex items-center justify-between gap-4">
+          <Link
+            href={`/admin/lessons?page=${Math.max(currentPage - 1, 1)}`}
+            aria-disabled={currentPage === 1}
+            className={[
+              "rounded-xl px-4 py-2 text-sm font-semibold transition",
+              currentPage === 1
+                ? "pointer-events-none bg-secondary text-muted opacity-50"
+                : "bg-secondary hover:bg-card-hover",
+            ].join(" ")}
+          >
+            ← Previous
+          </Link>
+
+          <Link
+            href={`/admin/lessons?page=${Math.min(
+              currentPage + 1,
+              totalPages,
+            )}`}
+            aria-disabled={currentPage === totalPages}
+            className={[
+              "rounded-xl px-4 py-2 text-sm font-semibold transition",
+              currentPage === totalPages
+                ? "pointer-events-none bg-secondary text-muted opacity-50"
+                : "bg-secondary hover:bg-card-hover",
+            ].join(" ")}
+          >
+            Next →
+          </Link>
         </div>
       </section>
     </main>
