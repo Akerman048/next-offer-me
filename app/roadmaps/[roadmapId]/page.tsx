@@ -23,6 +23,9 @@ export default async function RoadmapPage({ params }: Props) {
     where: {
       email: session.user.email,
     },
+    select: {
+      id: true,
+    },
   });
 
   const roadmap = await prisma.roadmap.findFirst({
@@ -30,13 +33,29 @@ export default async function RoadmapPage({ params }: Props) {
       id: roadmapId,
       userId: user.id,
     },
-    include: {
+    select: {
+      id: true,
+      title: true,
+      summary: true,
+      createdAt: true,
       weeks: {
         orderBy: {
           weekNumber: "asc",
         },
-        include: {
-          items: true,
+        select: {
+          id: true,
+          weekNumber: true,
+          title: true,
+          goal: true,
+          description: true,
+          items: {
+            select: {
+              id: true,
+              section: true,
+              text: true,
+              completed: true,
+            },
+          },
         },
       },
     },

@@ -16,11 +16,20 @@ export default async function RoadmapsPage() {
     where: {
       email: session.user.email,
     },
+    select: {
+      id: true,
+    },
   });
 
   const roadmaps = await prisma.roadmap.findMany({
     where: {
       userId: user.id,
+    },
+    select: {
+      id: true,
+      title: true,
+      summary: true,
+      createdAt: true,
     },
     orderBy: {
       createdAt: "desc",
@@ -178,7 +187,10 @@ export default async function RoadmapsPage() {
                 >
                   <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-violet-500/10 blur-2xl transition group-hover:bg-violet-500/20" />
 
-                  <Link href={`/roadmaps/${roadmap.id}`} className="relative block">
+                  <Link
+                    href={`/roadmaps/${roadmap.id}`}
+                    className="relative block"
+                  >
                     <div className="mb-6 flex items-start justify-between gap-4">
                       <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-violet-500/15 text-lg font-black text-violet-200">
                         AI

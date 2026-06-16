@@ -19,6 +19,9 @@ export async function toggleRoadmapItem(formData: FormData) {
     where: {
       email: session.user.email,
     },
+    select: {
+      id: true,
+    },
   });
 
   const item = await prisma.roadmapItem.findFirstOrThrow({
@@ -29,6 +32,10 @@ export async function toggleRoadmapItem(formData: FormData) {
           userId: user.id,
         },
       },
+    },
+    select: {
+      id: true,
+      completed: true,
     },
   });
 

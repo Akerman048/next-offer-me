@@ -1,8 +1,15 @@
-import type { RoadmapItem } from "@/generated/prisma/client";
+type RoadmapItemSection = "TOPICS" | "PRACTICE" | "PROJECT" | "INTERVIEW";
+
+type RoadmapColumnItem = {
+  id: string;
+  section: RoadmapItemSection;
+  text: string;
+  completed: boolean;
+};
 
 type Props = {
   title: string;
-  items: RoadmapItem[];
+  items: RoadmapColumnItem[];
   onToggle: (itemId: string) => void;
 };
 

@@ -1,16 +1,29 @@
 "use client";
 
 import { useOptimistic, useTransition } from "react";
-import type { RoadmapItem, RoadmapWeek } from "@/generated/prisma/client";
 import { toggleRoadmapItem } from "@/app/roadmaps/[roadmapId]/actions";
 import RoadmapColumn from "./RoadmapColumn";
 
-type WeekWithItems = RoadmapWeek & {
-  items: RoadmapItem[];
+type RoadmapItemSection = "TOPICS" | "PRACTICE" | "PROJECT" | "INTERVIEW";
+
+type RoadmapItemView = {
+  id: string;
+  section: RoadmapItemSection;
+  text: string;
+  completed: boolean;
+};
+
+type RoadmapWeekView = {
+  id: string;
+  weekNumber: number;
+  title: string;
+  goal: string;
+  description: string | null;
+  items: RoadmapItemView[];
 };
 
 type Props = {
-  week: WeekWithItems;
+  week: RoadmapWeekView;
   roadmapId: string;
 };
 
@@ -29,17 +42,17 @@ export default function RoadmapWeekCard({ week, roadmapId }: Props) {
   const total = items.length;
   const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
 
-const handleToggle = (itemId: string) => {
-  startTransition(async () => {
-    toggleItem(itemId);
+  const handleToggle = (itemId: string) => {
+    startTransition(async () => {
+      toggleItem(itemId);
 
-    const formData = new FormData();
-    formData.set("itemId", itemId);
-    formData.set("roadmapId", roadmapId);
+      const formData = new FormData();
+      formData.set("itemId", itemId);
+      formData.set("roadmapId", roadmapId);
 
-    await toggleRoadmapItem(formData);
-  });
-};
+      await toggleRoadmapItem(formData);
+    });
+  };
 
   const topics = items.filter((item) => item.section === "TOPICS");
   const practice = items.filter((item) => item.section === "PRACTICE");
@@ -51,8 +64,12 @@ const handleToggle = (itemId: string) => {
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
           <p className="mb-2 text-sm text-success">Week {week.weekNumber}</p>
+
           <h2 className="text-2xl font-bold">{week.title}</h2>
-          <p className="mt-2 text-sm text-muted">{week.description}</p>
+
+          {week.description && (
+            <p className="mt-2 text-sm text-muted">{week.description}</p>
+          )}
         </div>
 
         <div className="min-w-40">
@@ -70,29 +87,29 @@ const handleToggle = (itemId: string) => {
       </div>
 
       <div className="grid gap-6 md:grid-cols-4">
-<RoadmapColumn
-  title="Topics to review"
-  items={topics}
-  onToggle={handleToggle}
-/>
+        <RoadmapColumn
+          title="Topics to review"
+          items={topics}
+          onToggle={handleToggle}
+        />
 
-<RoadmapColumn
-  title="Practice tasks"
-  items={practice}
-  onToggle={handleToggle}
-/>
+        <RoadmapColumn
+          title="Practice tasks"
+          items={practice}
+          onToggle={handleToggle}
+        />
 
-<RoadmapColumn
-  title="Mini project"
-  items={project}
-  onToggle={handleToggle}
-/>
+        <RoadmapColumn
+          title="Mini project"
+          items={project}
+          onToggle={handleToggle}
+        />
 
-<RoadmapColumn
-  title="Before next interview"
-  items={interview}
-  onToggle={handleToggle}
-/>
+        <RoadmapColumn
+          title="Before next interview"
+          items={interview}
+          onToggle={handleToggle}
+        />
       </div>
     </section>
   );

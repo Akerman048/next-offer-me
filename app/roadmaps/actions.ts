@@ -18,6 +18,9 @@ export async function deleteRoadmap(formData: FormData) {
     where: {
       email: session.user.email,
     },
+    select: {
+      id: true,
+    },
   });
 
   await prisma.roadmap.delete({
