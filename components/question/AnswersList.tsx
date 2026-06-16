@@ -1,4 +1,5 @@
 import { evaluateAnswer } from "@/app/topics/[slug]/[lessonSlug]/[partId]/actions";
+import EvaluateAnswerButton from "@/components/question/EvaluateAnswerButton";
 
 type AnswerItem = {
   id: string;
@@ -30,12 +31,7 @@ export default function AnswersList({ answers, path }: Props) {
                 <input type="hidden" name="answerId" value={answer.id} />
                 <input type="hidden" name="path" value={path} />
 
-                <button
-                  type="submit"
-                  className="rounded-lg bg-black px-4 py-2 text-white transition hover:bg-neutral-800"
-                >
-                  Get AI feedback
-                </button>
+                <EvaluateAnswerButton />
               </form>
             ) : (
               <>

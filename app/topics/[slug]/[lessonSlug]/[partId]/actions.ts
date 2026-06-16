@@ -6,6 +6,35 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { openai } from "@/lib/openai";
 
+type AnswerAIResult = {
+  score: number;
+  feedback: string;
+  improvedAnswer: string;
+  weakPoints: string[];
+  studyPlan: string[];
+};
+
+const fallbackAnswer: AnswerAIResult = {
+  score: 0,
+  feedback: "AI feedback could not be parsed. Please try again.",
+  improvedAnswer: "No improved answer was generated.",
+  weakPoints: ["AI response parsing failed"],
+  studyPlan: ["Try again or review the lesson manually"],
+};
+
+function parseAIJson(raw: string): AnswerAIResult {
+  try {
+    const cleaned = raw
+      .replace(/```json/g, "")
+      .replace(/```/g, "")
+      .trim();
+
+    return JSON.parse(cleaned) as AnswerAIResult;
+  } catch {
+    return fallbackAnswer;
+  }
+}
+
 export const submitAnswer = async (formData: FormData) => {
   const session = await auth();
 
@@ -65,7 +94,7 @@ export const evaluateAnswer = async (formData: FormData) => {
       {
         role: "system",
         content:
-          "You are a strict but helpful technical interviewer. Return only valid JSON.",
+          "You are a strict but helpful technical interviewer. Return raw JSON only. Do not use markdown. Do not wrap the response in ```json or ```.",
       },
       {
         role: "user",
@@ -92,13 +121,7 @@ Return only JSON:
 
   const feedback = aiResponse.choices[0]?.message?.content ?? "{}";
 
-  const result = JSON.parse(feedback) as {
-    score: number;
-    feedback: string;
-    improvedAnswer: string;
-    weakPoints: string[];
-    studyPlan: string[];
-  };
+  const result = parseAIJson(feedback);
 
   await prisma.userAnswer.update({
     where: {
