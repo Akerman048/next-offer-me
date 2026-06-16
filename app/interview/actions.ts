@@ -6,7 +6,7 @@ import { Level, InterviewMode } from "@/generated/prisma/enums";
 import { redirect } from "next/navigation";
 
 function shuffle<T>(array: T[]) {
-  return array.sort(() => Math.random() - 0.5);
+  return [...array].sort(() => Math.random() - 0.5);
 }
 
 export async function startInterview(formData: FormData) {
@@ -30,6 +30,9 @@ export async function startInterview(formData: FormData) {
     where: {
       email: session.user.email,
     },
+    select: {
+      id: true,
+    },
   });
 
   const selectedTopics = formData.getAll("topics") as string[];
@@ -45,7 +48,6 @@ export async function startInterview(formData: FormData) {
   const questions = await prisma.question.findMany({
     where: {
       level: level || undefined,
-
       lessonPart:
         selectedTopics.length > 0
           ? {
@@ -59,16 +61,8 @@ export async function startInterview(formData: FormData) {
             }
           : undefined,
     },
-    include: {
-      lessonPart: {
-        include: {
-          lesson: {
-            include: {
-              topic: true,
-            },
-          },
-        },
-      },
+    select: {
+      id: true,
     },
   });
 
@@ -86,6 +80,9 @@ export async function startInterview(formData: FormData) {
           questionId: question.id,
         })),
       },
+    },
+    select: {
+      id: true,
     },
   });
 

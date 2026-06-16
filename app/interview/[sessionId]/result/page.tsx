@@ -20,27 +20,51 @@ export default async function InterviewResultPage({ params }: Props) {
 
   const { sessionId } = await params;
 
-  const user = await prisma.user.findUniqueOrThrow({
-    where: {
-      email: session.user.email,
-    },
-  });
+const user = await prisma.user.findUniqueOrThrow({
+  where: {
+    email: session.user.email,
+  },
+  select: {
+    id: true,
+  },
+});
 
-  const interview = await prisma.interviewSession.findFirst({
-    where: {
-      id: sessionId,
-      userId: user.id,
-    },
-    include: {
-      answers: {
-        include: {
-          question: {
-            include: {
-              lessonPart: {
-                include: {
-                  lesson: {
-                    include: {
-                      topic: true,
+const interview = await prisma.interviewSession.findFirst({
+  where: {
+    id: sessionId,
+    userId: user.id,
+  },
+  select: {
+    id: true,
+    answers: {
+      select: {
+        id: true,
+        aiScore: true,
+        aiFeedback: true,
+        evaluationStatus: true,
+        technicalAccuracy: true,
+        clarity: true,
+        completeness: true,
+        interviewStyle: true,
+        improvedAnswer: true,
+        missingConcepts: true,
+        timeSpentSeconds: true,
+        question: {
+          select: {
+            title: true,
+            lessonPart: {
+              select: {
+                id: true,
+                title: true,
+                lesson: {
+                  select: {
+                    title: true,
+                    slug: true,
+                    topic: {
+                      select: {
+                        name: true,
+                        slug: true,
+                      },
                     },
                   },
                 },
@@ -50,7 +74,8 @@ export default async function InterviewResultPage({ params }: Props) {
         },
       },
     },
-  });
+  },
+});
 
   if (!interview) {
     notFound();

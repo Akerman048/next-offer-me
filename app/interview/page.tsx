@@ -3,11 +3,16 @@ import { Level } from "@/generated/prisma/enums";
 import { startInterview } from "./actions";
 
 export default async function InterviewPage() {
-  const topics = await prisma.topic.findMany({
-    orderBy: {
-      name: "asc",
-    },
-  });
+const topics = await prisma.topic.findMany({
+  select: {
+    id: true,
+    name: true,
+    slug: true,
+  },
+  orderBy: {
+    name: "asc",
+  },
+});
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background px-4 py-8 text-foreground">

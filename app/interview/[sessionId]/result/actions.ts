@@ -5,6 +5,87 @@ import { prisma } from "@/lib/prisma";
 import { openai } from "@/lib/openai";
 import { redirect } from "next/navigation";
 
+type RoadmapAIResult = {
+  title: string;
+  summary: string;
+  weeks: {
+    weekNumber: number;
+    title: string;
+    goal: string;
+    description: string;
+    topics: string[];
+    practice: string[];
+    project: string[];
+    interview: string[];
+  }[];
+};
+
+function parseRoadmapResponse(raw: string): RoadmapAIResult {
+  const cleaned = raw
+    .replace(/```json/g, "")
+    .replace(/```/g, "")
+    .trim();
+
+  const fallback: RoadmapAIResult = {
+    title: "Interview improvement roadmap",
+    summary: "A focused 4-week roadmap based on your weak interview answers.",
+    weeks: [
+      {
+        weekNumber: 1,
+        title: "Foundation",
+        goal: "Review weak fundamentals",
+        description: "Focus on the concepts that caused the lowest scores.",
+        topics: ["Review missing concepts"],
+        practice: ["Explain each weak answer again"],
+        project: ["Build a small practice example"],
+        interview: ["Practice concise technical explanations"],
+      },
+      {
+        weekNumber: 2,
+        title: "Practice",
+        goal: "Improve problem explanation",
+        description: "Practice answering similar questions with structure.",
+        topics: ["Review related lessons"],
+        practice: ["Write improved answers"],
+        project: ["Add examples to your notes"],
+        interview: ["Practice STAR-style technical answers"],
+      },
+      {
+        weekNumber: 3,
+        title: "Application",
+        goal: "Apply concepts in code",
+        description: "Use weak topics in small coding tasks.",
+        topics: ["Deepen weak topics"],
+        practice: ["Solve focused exercises"],
+        project: ["Create a mini feature"],
+        interview: ["Explain tradeoffs clearly"],
+      },
+      {
+        weekNumber: 4,
+        title: "Mock interview",
+        goal: "Prepare for real interview conditions",
+        description: "Repeat questions under time pressure.",
+        topics: ["Review all weak areas"],
+        practice: ["Do timed answers"],
+        project: ["Polish final examples"],
+        interview: ["Run a full mock interview"],
+      },
+    ],
+  };
+
+  try {
+    const parsed = JSON.parse(cleaned) as RoadmapAIResult;
+
+    if (!Array.isArray(parsed.weeks) || parsed.weeks.length === 0) {
+      return fallback;
+    }
+
+    return parsed;
+  } catch {
+    return fallback;
+  }
+}
+
 export async function generateRoadmap(formData: FormData) {
   const session = await auth();
 
@@ -18,6 +99,9 @@ export async function generateRoadmap(formData: FormData) {
     where: {
       email: session.user.email,
     },
+    select: {
+      id: true,
+    },
   });
 
   const interview = await prisma.interviewSession.findFirstOrThrow({
@@ -25,21 +109,32 @@ export async function generateRoadmap(formData: FormData) {
       id: sessionId,
       userId: user.id,
     },
-    include: {
+    select: {
+      id: true,
       answers: {
         where: {
           aiScore: {
             lt: 8,
           },
         },
-        include: {
+        select: {
+          aiScore: true,
+          aiFeedback: true,
+          missingConcepts: true,
           question: {
-            include: {
+            select: {
+              prompt: true,
               lessonPart: {
-                include: {
+                select: {
+                  title: true,
                   lesson: {
-                    include: {
-                      topic: true,
+                    select: {
+                      title: true,
+                      topic: {
+                        select: {
+                          name: true,
+                        },
+                      },
                     },
                   },
                 },
@@ -52,8 +147,8 @@ export async function generateRoadmap(formData: FormData) {
   });
 
   if (interview.answers.length === 0) {
-  redirect(`/interview/${sessionId}/result`);
-}
+    redirect(`/interview/${sessionId}/result`);
+  }
 
   const weakAnswersText = interview.answers
     .map((answer) => {
@@ -74,17 +169,17 @@ Missing concepts: ${answer.missingConcepts ?? ""}
     })
     .join("\n---\n");
 
-const aiResponse = await openai.chat.completions.create({
-  model: "gpt-4.1-mini",
-  messages: [
-    {
-      role: "system",
-      content:
-        "You are an expert programming mentor. Return raw JSON only. Do not use markdown.",
-    },
-    {
-      role: "user",
-      content: `
+  const aiResponse = await openai.chat.completions.create({
+    model: "gpt-4.1-mini",
+    messages: [
+      {
+        role: "system",
+        content:
+          "You are an expert programming mentor. Return raw JSON only. Do not use markdown.",
+      },
+      {
+        role: "user",
+        content: `
 Create a 4-week learning roadmap based on these weak answers.
 
 Weak answers:
@@ -112,69 +207,49 @@ Return only JSON in this format:
 Create exactly 4 weeks.
 Keep every item short and practical.
 `,
+      },
+    ],
+  });
+
+  const raw = aiResponse.choices[0]?.message?.content ?? "{}";
+  const result = parseRoadmapResponse(raw);
+
+  const roadmap = await prisma.roadmap.create({
+    data: {
+      userId: user.id,
+      sessionId: interview.id,
+      title: result.title,
+      summary: result.summary,
+      weeks: {
+        create: result.weeks.map((week) => ({
+          weekNumber: week.weekNumber,
+          title: week.title,
+          goal: week.goal,
+          description: week.description,
+          items: {
+            create: [
+              ...week.topics.map((text) => ({
+                section: "TOPICS" as const,
+                text,
+              })),
+              ...week.practice.map((text) => ({
+                section: "PRACTICE" as const,
+                text,
+              })),
+              ...week.project.map((text) => ({
+                section: "PROJECT" as const,
+                text,
+              })),
+              ...week.interview.map((text) => ({
+                section: "INTERVIEW" as const,
+                text,
+              })),
+            ],
+          },
+        })),
+      },
     },
-  ],
-});
-
-  
-    const raw = aiResponse.choices[0]?.message?.content ?? "{}";
-
-const cleaned = raw
-  .replace(/```json/g, "")
-  .replace(/```/g, "")
-  .trim();
-
-const result = JSON.parse(cleaned) as {
-  title: string;
-  summary: string;
-  weeks: {
-    weekNumber: number;
-    title: string;
-    goal: string;
-    description: string;
-    topics: string[];
-    practice: string[];
-    project: string[];
-    interview: string[];
-  }[];
-};
-
-const roadmap = await prisma.roadmap.create({
-  data: {
-    userId: user.id,
-    sessionId: interview.id,
-    title: result.title,
-    summary: result.summary,
-    weeks: {
-      create: result.weeks.map((week) => ({
-        weekNumber: week.weekNumber,
-        title: week.title,
-        goal: week.goal,
-        description: week.description,
-        items: {
-          create: [
-            ...week.topics.map((text) => ({
-              section: "TOPICS" as const,
-              text,
-            })),
-            ...week.practice.map((text) => ({
-              section: "PRACTICE" as const,
-              text,
-            })),
-            ...week.project.map((text) => ({
-              section: "PROJECT" as const,
-              text,
-            })),
-            ...week.interview.map((text) => ({
-              section: "INTERVIEW" as const,
-              text,
-            })),
-          ],
-        },
-      })),
-    },
-  },
-});
+  });
 
   redirect(`/roadmaps/${roadmap.id}`);
 }

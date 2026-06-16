@@ -21,6 +21,9 @@ export async function submitInterviewAnswer(formData: FormData) {
     where: {
       email: session.user.email,
     },
+    select: {
+      id: true,
+    },
   });
 
   const interviewAnswer = await prisma.interviewAnswer.findFirstOrThrow({
@@ -30,21 +33,24 @@ export async function submitInterviewAnswer(formData: FormData) {
         userId: user.id,
       },
     },
+    select: {
+      id: true,
+    },
   });
 
-await prisma.interviewAnswer.update({
-  where: {
-    id: interviewAnswer.id,
-  },
-  data: {
-    answerText,
-    timeSpentSeconds,
-    evaluationStatus: "PENDING",
-  },
-});
+  await prisma.interviewAnswer.update({
+    where: {
+      id: interviewAnswer.id,
+    },
+    data: {
+      answerText,
+      timeSpentSeconds,
+      evaluationStatus: "PENDING",
+    },
+  });
 
-revalidatePath(`/interview/${sessionId}`);
-redirect(`/interview/${sessionId}`);
+  revalidatePath(`/interview/${sessionId}`);
+  redirect(`/interview/${sessionId}`);
 }
 
 export async function finishInterview(formData: FormData) {
@@ -60,12 +66,18 @@ export async function finishInterview(formData: FormData) {
     where: {
       email: session.user.email,
     },
+    select: {
+      id: true,
+    },
   });
 
   const interview = await prisma.interviewSession.findFirstOrThrow({
     where: {
       id: sessionId,
       userId: user.id,
+    },
+    select: {
+      id: true,
     },
   });
 
@@ -80,5 +92,3 @@ export async function finishInterview(formData: FormData) {
 
   redirect(`/interview/${sessionId}/result`);
 }
-
-
