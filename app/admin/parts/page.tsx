@@ -1,56 +1,90 @@
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { createLessonPart, deleteLessonPart } from "./actions";
-import MarkdownContent from "@/components/ui/MarkdownContent";
 
-export default async function AdminPartsPage() {
-  const lessons = await prisma.lesson.findMany({
-    include: {
-      topic: true,
-    },
-    orderBy: [
-      {
+type Props = {
+  searchParams?: Promise<{
+    page?: string;
+  }>;
+};
+
+const PAGE_SIZE = 20;
+
+export default async function AdminPartsPage({ searchParams }: Props) {
+  const resolvedSearchParams = await searchParams;
+
+  const currentPage = Math.max(Number(resolvedSearchParams?.page || 1), 1);
+  const skip = (currentPage - 1) * PAGE_SIZE;
+
+  const [lessons, parts, totalParts] = await Promise.all([
+    prisma.lesson.findMany({
+      select: {
+        id: true,
+        title: true,
         topic: {
-          name: "asc",
+          select: {
+            name: true,
+          },
         },
       },
-      {
-        order: "asc",
-      },
-    ],
-  });
-
-  const parts = await prisma.lessonPart.findMany({
-    include: {
-      lesson: {
-        include: {
-          topic: true,
-        },
-      },
-      _count: {
-        select: {
-          questions: true,
-        },
-      },
-    },
-    orderBy: [
-      {
-        lesson: {
+      orderBy: [
+        {
           topic: {
             name: "asc",
           },
         },
-      },
-      {
-        lesson: {
+        {
           order: "asc",
         },
+      ],
+    }),
+
+    prisma.lessonPart.findMany({
+      select: {
+        id: true,
+        title: true,
+        order: true,
+        lesson: {
+          select: {
+            title: true,
+            topic: {
+              select: {
+                name: true,
+              },
+            },
+          },
+        },
+        _count: {
+          select: {
+            questions: true,
+          },
+        },
       },
-      {
-        order: "asc",
-      },
-    ],
-  });
+      orderBy: [
+        {
+          lesson: {
+            topic: {
+              name: "asc",
+            },
+          },
+        },
+        {
+          lesson: {
+            order: "asc",
+          },
+        },
+        {
+          order: "asc",
+        },
+      ],
+      take: PAGE_SIZE,
+      skip,
+    }),
+
+    prisma.lessonPart.count(),
+  ]);
+
+  const totalPages = Math.max(Math.ceil(totalParts / PAGE_SIZE), 1);
 
   return (
     <main className="mx-auto max-w-5xl p-8">
@@ -127,7 +161,13 @@ export default async function AdminPartsPage() {
       </form>
 
       <section>
-        <h2 className="mb-4 text-2xl font-semibold">Existing Parts</h2>
+        <div className="mb-4 flex items-center justify-between gap-4">
+          <h2 className="text-2xl font-semibold">Existing Parts</h2>
+
+          <span className="text-sm text-muted">
+            Page {currentPage} of {totalPages}
+          </span>
+        </div>
 
         <div className="space-y-4">
           {parts.map((part) => (
@@ -147,9 +187,7 @@ export default async function AdminPartsPage() {
                     Questions: {part._count.questions}
                   </p>
 
-                  <p className="text-sm text-muted">
-                    Order: {part.order}
-                  </p>
+                  <p className="text-sm text-muted">Order: {part.order}</p>
                 </div>
 
                 <div className="flex gap-2">
@@ -172,12 +210,36 @@ export default async function AdminPartsPage() {
                   </form>
                 </div>
               </div>
-
-              {/* <div className="mt-4 rounded-xl border border-border bg-background p-4 text-sm">
-                <MarkdownContent content={part.content} />
-              </div> */}
             </article>
           ))}
+        </div>
+
+        <div className="mt-8 flex items-center justify-between gap-4">
+          <Link
+            href={`/admin/parts?page=${Math.max(currentPage - 1, 1)}`}
+            aria-disabled={currentPage === 1}
+            className={[
+              "rounded-xl px-4 py-2 text-sm font-semibold transition",
+              currentPage === 1
+                ? "pointer-events-none bg-secondary text-muted opacity-50"
+                : "bg-secondary hover:bg-card-hover",
+            ].join(" ")}
+          >
+            ← Previous
+          </Link>
+
+          <Link
+            href={`/admin/parts?page=${Math.min(currentPage + 1, totalPages)}`}
+            aria-disabled={currentPage === totalPages}
+            className={[
+              "rounded-xl px-4 py-2 text-sm font-semibold transition",
+              currentPage === totalPages
+                ? "pointer-events-none bg-secondary text-muted opacity-50"
+                : "bg-secondary hover:bg-card-hover",
+            ].join(" ")}
+          >
+            Next →
+          </Link>
         </div>
       </section>
     </main>
