@@ -5,6 +5,11 @@ import { SiJavascript } from "react-icons/si";
 
 const Topics = async () => {
   const topics = await prisma.topic.findMany({
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+    },
     orderBy: {
       name: "asc",
     },
@@ -109,8 +114,8 @@ const Topics = async () => {
 
                     <div className="relative">
                       <div className="mb-6 flex items-start justify-between gap-4">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 text-3xl">
-                          <Icon color={color} />
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 text-3xl shadow-lg">
+                          <Icon size={30} color={color} />
                         </div>
 
                         <span className="rounded-full bg-white/5 px-3 py-1 text-xs font-semibold text-slate-400">
