@@ -1,9 +1,17 @@
-import type { UserAnswer } from "@/generated/prisma/client";
-
 import { evaluateAnswer } from "@/app/topics/[slug]/[lessonSlug]/[partId]/actions";
 
+type AnswerItem = {
+  id: string;
+  questionId: string | null;
+  answerText: string;
+  aiFeedback: string | null;
+  aiScore: number | null;
+  aiRoadmap: string | null;
+  createdAt: Date;
+};
+
 type Props = {
-  answers: UserAnswer[];
+  answers: AnswerItem[];
   path: string;
 };
 
