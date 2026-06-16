@@ -1,0 +1,10 @@
+import PageLoading from "@/components/ui/PageLoading";
+
+export default function Loading() {
+  return (
+    <PageLoading
+      title="Loading admin"
+      description="Preparing content management tools."
+    />
+  );
+}
