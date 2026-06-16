@@ -2,6 +2,8 @@ import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { topicColors, topicIcons } from "@/lib/topic-icons";
+import { SiJavascript } from "react-icons/si";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -277,9 +279,7 @@ export default async function DashboardPage() {
             ) : (
               <div className="space-y-4">
                 {startedTopics.map((topic) => {
-                  const parts = topic.lessons.flatMap(
-                    (lesson) => lesson.parts,
-                  );
+                  const parts = topic.lessons.flatMap((lesson) => lesson.parts);
 
                   const completed = parts.filter(
                     (part) => part.progress.length > 0,
@@ -290,6 +290,14 @@ export default async function DashboardPage() {
                   const topicProgress =
                     total > 0 ? Math.round((completed / total) * 100) : 0;
 
+                  const Icon =
+                    topicIcons[topic.slug as keyof typeof topicIcons] ??
+                    SiJavascript;
+
+                  const color =
+                    topicColors[topic.slug as keyof typeof topicColors] ??
+                    "#A855F7";
+
                   return (
                     <Link
                       key={topic.id}
@@ -297,8 +305,8 @@ export default async function DashboardPage() {
                       className="group flex items-center justify-between gap-5 rounded-[24px] border border-white/10 bg-card p-5 shadow-2xl backdrop-blur-xl transition hover:-translate-y-1 hover:bg-card-hover"
                     >
                       <div className="flex items-center gap-4">
-                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-yellow-400 text-2xl font-black text-slate-950">
-                          JS
+                        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/5 text-3xl text-violet-300">
+                          <Icon color={color}/>
                         </div>
 
                         <div>
