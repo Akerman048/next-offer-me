@@ -29,25 +29,45 @@ export default async function LessonPartPage({ params }: Props) {
     where: {
       email: session.user.email,
     },
+    select: {
+      id: true,
+    },
   });
 
   const part = await prisma.lessonPart.findUnique({
     where: {
       id: partId,
     },
-    include: {
+    select: {
+      id: true,
+      title: true,
+      content: true,
       lesson: {
-        include: {
-          topic: true,
+        select: {
+          id: true,
+          title: true,
+          slug: true,
+          topic: {
+            select: {
+              id: true,
+              name: true,
+              slug: true,
+            },
+          },
           parts: {
             orderBy: {
               order: "asc",
             },
-            include: {
+            select: {
+              id: true,
+              title: true,
               progress: {
                 where: {
                   userId: user.id,
                   completed: true,
+                },
+                select: {
+                  id: true,
                 },
               },
             },
@@ -57,6 +77,12 @@ export default async function LessonPartPage({ params }: Props) {
       questions: {
         orderBy: {
           order: "asc",
+        },
+        select: {
+          id: true,
+          title: true,
+          prompt: true,
+          order: true,
         },
       },
     },
@@ -96,6 +122,15 @@ export default async function LessonPartPage({ params }: Props) {
       questionId: {
         in: questionIds,
       },
+    },
+    select: {
+      id: true,
+      questionId: true,
+      answerText: true,
+      aiFeedback: true,
+      aiScore: true,
+      aiRoadmap: true,
+      createdAt: true,
     },
     orderBy: {
       createdAt: "desc",
