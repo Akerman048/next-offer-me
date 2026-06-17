@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { submitInterviewAnswer } from "@/app/interview/[sessionId]/actions";
+import SubmitAnswerButton from "./SubmitAnswerButton";
 
 type Props = {
   interviewAnswerId: string;
@@ -55,12 +56,7 @@ export default function InterviewAnswerForm({
         className="mb-4 w-full rounded-lg border p-3"
       />
 
-      <button
-        type="submit"
-        className="rounded-lg bg-black px-5 py-3 text-white"
-      >
-        Submit answer
-      </button>
+      <SubmitAnswerButton />
     </form>
   );
 }

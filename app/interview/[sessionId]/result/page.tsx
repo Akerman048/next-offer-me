@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import Link from "next/link";
 import { generateRoadmap } from "./actions";
 import AutoEvaluateAnswers from "@/components/interview/AutoEvaluateAnswers";
+import GenerateRoadmapButton from "@/components/interview/GenerateRoadmapButton";
 
 type Props = {
   params: Promise<{
@@ -170,15 +171,7 @@ const interview = await prisma.interviewSession.findFirst({
           <form action={generateRoadmap} className="mb-8">
             <input type="hidden" name="sessionId" value={interview.id} />
 
-            <button
-              type="submit"
-              className="group flex items-center justify-center gap-3 rounded-[24px] bg-emerald-500 px-6 py-4 text-sm font-black text-white shadow-2xl shadow-emerald-500/20 transition hover:-translate-y-1 hover:bg-emerald-400"
-            >
-              Generate roadmap
-              <span className="text-xl transition group-hover:translate-x-1">
-                ›
-              </span>
-            </button>
+            <GenerateRoadmapButton />
           </form>
         )}
 
