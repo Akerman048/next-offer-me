@@ -9,16 +9,7 @@ export default function SubmitAnswerButton() {
     <button
       type="submit"
       disabled={pending}
-      className="
-        rounded-lg
-        bg-black
-        px-5
-        py-3
-        text-white
-        transition
-        disabled:cursor-not-allowed
-        disabled:opacity-50
-      "
+      className="w-full rounded-xl bg-violet-500 px-5 py-3 font-bold text-white shadow-lg shadow-violet-500/20 transition hover:bg-violet-400 disabled:cursor-not-allowed disabled:opacity-50 sm:w-auto"
     >
       {pending
         ? "Submitting answer..."

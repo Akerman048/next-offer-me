@@ -181,7 +181,7 @@ const interview = await prisma.interviewSession.findFirst({
           </div>
         </section>
 
-        <div className="rounded-[32px] border border-white/10 bg-card p-6 shadow-2xl backdrop-blur-xl md:p-8">
+        <div className="rounded-[32px] border border-white/10 bg-card p-2 shadow-2xl backdrop-blur-xl sm:p-3">
           <InterviewAnswerForm
             interviewAnswerId={currentAnswer.id}
             sessionId={interview.id}
