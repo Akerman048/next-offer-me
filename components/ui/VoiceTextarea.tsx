@@ -171,8 +171,13 @@ export default function VoiceTextarea({
           </>
         ) : (
           <p className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm leading-6 text-muted">
-            Voice button is not supported in this browser. Tap the answer field
-            and use the microphone on your keyboard.
+            <span className="sm:hidden">
+              Tap the answer field and use the microphone on your keyboard.
+            </span>
+            <span className="hidden sm:inline">
+              Voice button is not supported in this browser. Tap the answer
+              field and use the microphone on your keyboard.
+            </span>
           </p>
         )}
       </div>
