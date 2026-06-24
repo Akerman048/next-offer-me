@@ -1,19 +1,26 @@
 import Link from "next/link";
+import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { topicIcons, topicColors } from "@/lib/topic-icons";
 import { SiJavascript } from "react-icons/si";
 
 const Topics = async () => {
-  const topics = await prisma.topic.findMany({
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-    },
-    orderBy: {
-      name: "asc",
-    },
-  });
+  const [session, topics] = await Promise.all([
+    auth(),
+    prisma.topic.findMany({
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+      },
+      orderBy: {
+        name: "asc",
+      },
+    }),
+  ]);
+
+  const isAdmin =
+    !!session?.user?.email && session.user.email === process.env.ADMIN_EMAIL;
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background px-4 py-8 text-foreground">
@@ -68,12 +75,18 @@ const Topics = async () => {
               library.
             </p>
 
-            <Link
-              href="/admin/topics"
-              className="mt-6 inline-flex rounded-2xl bg-violet-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-violet-400"
-            >
-              Go to admin
-            </Link>
+            {isAdmin ? (
+              <Link
+                href="/admin/topics"
+                className="mt-6 inline-flex rounded-2xl bg-violet-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-violet-400"
+              >
+                Go to admin
+              </Link>
+            ) : (
+              <p className="mt-6 text-sm text-slate-500">
+                Topics will appear here once they are published.
+              </p>
+            )}
           </section>
         ) : (
           <section>
