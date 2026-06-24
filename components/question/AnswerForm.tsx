@@ -1,4 +1,5 @@
 import { submitAnswer } from "@/app/topics/[slug]/[lessonSlug]/[partId]/actions";
+import VoiceTextarea from "@/components/ui/VoiceTextarea";
 
 type Props = {
   questionId: string;
@@ -13,7 +14,7 @@ export default function AnswerForm({ questionId, questionText, path }: Props) {
       <input type="hidden" name="questionText" value={questionText} />
       <input type="hidden" name="path" value={path} />
 
-      <textarea
+      <VoiceTextarea
         name="answerText"
         required
         rows={6}

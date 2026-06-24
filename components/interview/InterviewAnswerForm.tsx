@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { submitInterviewAnswer } from "@/app/interview/[sessionId]/actions";
+import VoiceTextarea from "@/components/ui/VoiceTextarea";
 import SubmitAnswerButton from "./SubmitAnswerButton";
 
 type Props = {
@@ -55,7 +56,7 @@ export default function InterviewAnswerForm({
         Your answer
       </label>
 
-      <textarea
+      <VoiceTextarea
         name="answerText"
         required
         rows={8}
@@ -63,7 +64,9 @@ export default function InterviewAnswerForm({
         className="mb-4 w-full rounded-xl border border-white/15 bg-background p-3 text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-violet-400"
       />
 
-      <SubmitAnswerButton />
+      <div className="mt-4">
+        <SubmitAnswerButton />
+      </div>
     </form>
   );
 }
