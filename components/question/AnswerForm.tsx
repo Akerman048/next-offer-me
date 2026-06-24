@@ -18,12 +18,12 @@ export default function AnswerForm({ questionId, questionText, path }: Props) {
         required
         rows={6}
         placeholder="Write your answer..."
-        className="w-full rounded-xl border p-3"
+        className="w-full min-w-0 rounded-xl border p-3"
       />
 
       <button
         type="submit"
-        className="rounded-xl bg-black px-5 py-3 text-white transition hover:cursor-pointer hover:bg-neutral-800"
+        className="w-full rounded-xl bg-black px-5 py-3 text-white transition hover:cursor-pointer hover:bg-neutral-800 sm:w-auto"
       >
         Submit answer
       </button>

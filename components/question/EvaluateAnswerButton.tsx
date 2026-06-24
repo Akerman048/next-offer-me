@@ -9,7 +9,7 @@ export default function EvaluateAnswerButton() {
     <button
       type="submit"
       disabled={pending}
-      className="rounded-lg bg-black px-4 py-2 text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+      className="w-full rounded-lg bg-black px-4 py-2 text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
     >
       {pending ? "Evaluating answer..." : "Get AI feedback"}
     </button>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { auth } from "@/auth";
 import HeaderMenu from "@/components/layout/HeaderMenu";
 
@@ -10,10 +11,16 @@ export async function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6">
-        <Link href="/" className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-white text-xl shadow-lg">
-            🚀
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-0">
+        <Link href="/" className="flex items-center gap-1.5">
+          <div className="flex h-20 w-20 items-center justify-center overflow-hidden">
+            <Image
+              src="/favicon.ico"
+              alt=""
+              width={80}
+              height={80}
+              className="h-full w-full object-cover"
+            />
           </div>
 
           <div>

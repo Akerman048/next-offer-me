@@ -138,18 +138,18 @@ export default async function LessonPartPage({ params }: Props) {
   });
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-background px-4 py-8 text-foreground">
+    <main className="relative min-h-screen overflow-x-hidden bg-background px-3 py-6 text-foreground sm:px-4 sm:py-8">
       <div className="pointer-events-none absolute left-[-120px] top-20 h-80 w-80 rounded-full bg-blue-600/20 blur-3xl" />
       <div className="pointer-events-none absolute right-[-140px] top-10 h-96 w-96 rounded-full bg-violet-600/25 blur-3xl" />
       <div className="pointer-events-none absolute bottom-0 right-20 h-80 w-80 rounded-full bg-emerald-600/10 blur-3xl" />
 
-      <div className="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[300px_1fr]">
-        <aside className="h-fit rounded-[32px] border border-white/10 bg-card p-5 shadow-2xl backdrop-blur-xl lg:sticky lg:top-8">
+      <div className="relative mx-auto grid max-w-7xl min-w-0 gap-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:gap-8">
+        <aside className="min-w-0 h-fit rounded-[28px] border border-white/10 bg-card p-4 shadow-2xl backdrop-blur-xl sm:p-5 lg:sticky lg:top-8">
           <Link
             href={`/topics/${slug}`}
-            className="mb-6 inline-flex items-center rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white"
+            className="mb-6 inline-flex max-w-full items-center rounded-2xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm font-semibold text-slate-300 transition hover:bg-white/10 hover:text-white"
           >
-            ← Back to {topic.name}
+            <span className="truncate">← Back to {topic.name}</span>
           </Link>
 
           <div className="mb-6">
@@ -157,7 +157,7 @@ export default async function LessonPartPage({ params }: Props) {
               Lesson
             </p>
 
-            <h2 className="text-2xl font-black leading-tight text-white">
+            <h2 className="break-words text-2xl font-black leading-tight text-white">
               {lesson.title}
             </h2>
           </div>
@@ -212,23 +212,25 @@ export default async function LessonPartPage({ params }: Props) {
                     {isCompleted ? "✓" : index + 1}
                   </span>
 
-                  <span className="line-clamp-2">{item.title}</span>
+                  <span className="min-w-0 break-words line-clamp-2">
+                    {item.title}
+                  </span>
                 </Link>
               );
             })}
           </div>
         </aside>
 
-        <div>
-          <section className="mb-8 overflow-hidden rounded-[32px] border border-white/10 bg-card shadow-2xl backdrop-blur-xl">
-            <div className="relative overflow-hidden border-b border-white/10 bg-gradient-to-r from-[#17164a] via-[#11194b] to-[#08142d] px-8 py-8">
+        <div className="min-w-0">
+          <section className="mb-8 min-w-0 overflow-hidden rounded-[28px] border border-white/10 bg-card shadow-2xl backdrop-blur-xl sm:rounded-[32px]">
+            <div className="relative overflow-hidden border-b border-white/10 bg-gradient-to-r from-[#17164a] via-[#11194b] to-[#08142d] px-4 py-6 sm:px-6 md:px-8 md:py-8">
               <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full border border-violet-400/10" />
 
-              <p className="mb-3 text-sm font-semibold text-slate-300">
+              <p className="mb-3 break-words text-sm font-semibold text-slate-300">
                 {topic.name} / {lesson.title}
               </p>
 
-              <h1 className="text-4xl font-black tracking-tight text-white md:text-5xl">
+              <h1 className="break-words text-3xl font-black tracking-tight text-white sm:text-4xl md:text-5xl">
                 {part.title}
               </h1>
 
@@ -238,19 +240,19 @@ export default async function LessonPartPage({ params }: Props) {
               </p>
             </div>
 
-            <div className="prose prose-invert max-w-none bg-background/60 p-6 text-slate-200 md:p-8">
+            <div className="prose prose-invert max-w-none min-w-0 bg-background/60 p-4 text-slate-200 sm:p-6 md:p-8">
               <MarkdownContent content={part.content} />
             </div>
           </section>
 
           {questions.length > 0 && (
-            <section className="mb-8 rounded-[32px] border border-white/10 bg-card p-6 shadow-2xl backdrop-blur-xl md:p-8">
+            <section className="mb-8 min-w-0 rounded-[28px] border border-white/10 bg-card p-4 shadow-2xl backdrop-blur-xl sm:rounded-[32px] sm:p-6 md:p-8">
               <div className="mb-8">
                 <p className="mb-3 text-xs font-bold uppercase tracking-[0.28em] text-violet-400">
                   Practice
                 </p>
 
-                <h2 className="text-4xl font-black text-white">
+                <h2 className="break-words text-3xl font-black text-white sm:text-4xl">
                   Practice questions
                 </h2>
 
@@ -268,29 +270,29 @@ export default async function LessonPartPage({ params }: Props) {
                   return (
                     <article
                       key={question.id}
-                      className="rounded-[28px] border border-white/10 bg-background/60 p-5 shadow-xl transition hover:bg-card-hover md:p-6"
+                      className="min-w-0 rounded-[24px] border border-white/10 bg-background/60 p-4 shadow-xl transition hover:bg-card-hover sm:rounded-[28px] sm:p-5 md:p-6"
                     >
                       <div className="mb-5 flex items-start gap-4">
                         <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-violet-500 text-sm font-black text-white shadow-lg shadow-violet-500/25">
                           {index + 1}
                         </span>
 
-                        <div>
+                        <div className="min-w-0">
                           <p className="mb-2 text-xs font-bold uppercase tracking-[0.24em] text-violet-400">
                             Question
                           </p>
 
-                          <h3 className="text-2xl font-black text-white">
+                          <h3 className="break-words text-2xl font-black text-white">
                             {question.title}
                           </h3>
                         </div>
                       </div>
 
-                      <div className="prose prose-invert mb-6 max-w-none text-slate-300">
+                      <div className="prose prose-invert mb-6 max-w-none min-w-0 text-slate-300">
                         <MarkdownContent content={question.prompt} />
                       </div>
 
-                      <div className="rounded-[24px] border border-white/10 bg-card/70 p-5">
+                      <div className="min-w-0 rounded-[20px] border border-white/10 bg-card/70 p-4 sm:rounded-[24px] sm:p-5">
                         <AnswerForm
                           questionId={question.id}
                           questionText={question.prompt}

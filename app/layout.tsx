@@ -34,6 +34,10 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Get hired",
   description: "Learn frontend and get a job",
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

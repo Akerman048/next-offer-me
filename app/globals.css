@@ -77,16 +77,31 @@
 
 html {
   background: var(--background);
+  overflow-x: hidden;
 }
 
 body {
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   background:
     radial-gradient(circle at top right, rgba(88, 28, 135, 0.35), transparent 32%),
     radial-gradient(circle at bottom left, rgba(30, 64, 175, 0.26), transparent 34%),
     var(--background);
   color: var(--foreground);
   font-family: var(--font-cantarell);
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+pre,
+code {
+  max-width: 100%;
 }
 
 h1,
