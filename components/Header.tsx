@@ -2,13 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { auth } from "@/auth";
 import HeaderMenu from "@/components/layout/HeaderMenu";
+import { isAdminEmail } from "@/lib/admin";
 import logo from "@/app/logo.png";
 
 export async function Header() {
   const session = await auth();
 
   const isLoggedIn = !!session?.user?.email;
-  const isAdmin = session?.user?.email === process.env.ADMIN_EMAIL;
+  const isAdmin = isAdminEmail(session?.user?.email);
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/5 bg-background/80 backdrop-blur-xl">

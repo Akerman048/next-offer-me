@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { isAdminEmail } from "@/lib/admin";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 
@@ -9,10 +10,11 @@ export default async function AdminLayout({
 }) {
   const session = await auth();
 
-  const isAdmin = session?.user?.email === process.env.ADMIN_EMAIL;
+  const isLoggedIn = !!session?.user?.email;
+  const isAdmin = isAdminEmail(session?.user?.email);
 
   if (!isAdmin) {
-    redirect("/dashboard");
+    redirect(isLoggedIn ? "/dashboard" : "/login");
   }
 
   return (

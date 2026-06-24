@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { auth } from "@/auth";
+import { isAdminEmail } from "@/lib/admin";
 import { prisma } from "@/lib/prisma";
 import { topicIcons, topicColors } from "@/lib/topic-icons";
 import { SiJavascript } from "react-icons/si";
@@ -19,8 +20,7 @@ const Topics = async () => {
     }),
   ]);
 
-  const isAdmin =
-    !!session?.user?.email && session.user.email === process.env.ADMIN_EMAIL;
+  const isAdmin = isAdminEmail(session?.user?.email);
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-background px-4 py-8 text-foreground">
@@ -71,8 +71,9 @@ const Topics = async () => {
             </h2>
 
             <p className="mt-3 max-w-xl text-sm leading-6 text-slate-400">
-              Add topics from the admin panel to start building your interview
-              library.
+              {isAdmin
+                ? "Add topics from the admin panel to start building your interview library."
+                : "Topics will appear here once the interview library is ready."}
             </p>
 
             {isAdmin ? (
