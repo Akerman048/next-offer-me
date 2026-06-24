@@ -1,6 +1,12 @@
 import Link from "next/link";
+import { prisma } from "@/lib/prisma";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [topicsCount, questionsCount] = await Promise.all([
+    prisma.topic.count(),
+    prisma.question.count(),
+  ]);
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-background px-4 text-foreground">
       <div className="pointer-events-none absolute left-[-120px] top-20 h-80 w-80 rounded-full bg-blue-600/20 blur-3xl" />
@@ -103,13 +109,17 @@ export default function HomePage() {
           <div className="rounded-[32px] border border-white/10 bg-card p-8 shadow-2xl backdrop-blur-xl">
             <p className="text-sm text-slate-400">Topics</p>
 
-            <h2 className="mt-3 text-5xl font-black text-white">10+</h2>
+            <h2 className="mt-3 text-5xl font-black text-white">
+              {topicsCount}
+            </h2>
           </div>
 
           <div className="rounded-[32px] border border-white/10 bg-card p-8 shadow-2xl backdrop-blur-xl">
             <p className="text-sm text-slate-400">Interview questions</p>
 
-            <h2 className="mt-3 text-5xl font-black text-white">500+</h2>
+            <h2 className="mt-3 text-5xl font-black text-white">
+              {questionsCount}
+            </h2>
           </div>
 
           <div className="rounded-[32px] border border-white/10 bg-card p-8 shadow-2xl backdrop-blur-xl">
