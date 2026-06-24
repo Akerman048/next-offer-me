@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { auth } from "@/auth";
 import HeaderMenu from "@/components/layout/HeaderMenu";
+import logo from "@/app/logo.png";
 
 export async function Header() {
   const session = await auth();
@@ -15,7 +16,7 @@ export async function Header() {
         <Link href="/" className="flex items-center gap-1.5">
           <div className="flex h-20 w-20 items-center justify-center overflow-hidden">
             <Image
-              src="/favicon.ico"
+              src={logo}
               alt=""
               width={80}
               height={80}

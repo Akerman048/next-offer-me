@@ -121,8 +121,10 @@ h6 {
   transition: 0.2s;
 }
 
-.nav-link:hover {
-  color: white;
+@media (hover: hover) and (pointer: fine) {
+  .nav-link:hover {
+    color: white;
+  }
 }
 
 .nav-link-active {
