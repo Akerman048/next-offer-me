@@ -144,28 +144,37 @@ export default function VoiceTextarea({
         placeholder={placeholder}
         value={value}
         onChange={(event) => setValue(event.target.value)}
+        inputMode="text"
+        autoCapitalize="sentences"
+        autoCorrect="on"
         className={className}
       />
 
       <div className="flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          onClick={toggleListening}
-          disabled={!isSupported}
-          className="voice-button inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-100 transition disabled:cursor-not-allowed disabled:opacity-50"
-          aria-pressed={isListening}
-        >
-          {isListening ? <FiSquare aria-hidden /> : <FiMic aria-hidden />}
-          {isListening ? "Stop voice" : "Start voice"}
-        </button>
+        {isSupported ? (
+          <>
+            <button
+              type="button"
+              onClick={toggleListening}
+              className="voice-button inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-4 py-2 text-sm font-semibold text-slate-100 transition"
+              aria-pressed={isListening}
+            >
+              {isListening ? <FiSquare aria-hidden /> : <FiMic aria-hidden />}
+              {isListening ? "Stop voice" : "Start voice"}
+            </button>
 
-        <p className="text-sm text-muted">
-          {isSupported
-            ? isListening
-              ? "Listening..."
-              : "Use your microphone to fill the answer."
-            : "Voice input is not supported in this browser."}
-        </p>
+            <p className="text-sm text-muted">
+              {isListening
+                ? "Listening..."
+                : "Use your microphone to fill the answer."}
+            </p>
+          </>
+        ) : (
+          <p className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm leading-6 text-muted">
+            Voice button is not supported in this browser. Tap the answer field
+            and use the microphone on your keyboard.
+          </p>
+        )}
       </div>
     </div>
   );
